@@ -1,12 +1,11 @@
 import './App.css'
-import ItemList from './views/ItemList'
+import LayoutSelector from './views/LayoutSelector'
 
-function App() {
+export default function App() {
+
   return (
-    <div>
-      <ItemList />
-    </div>
+    <>
+      <LayoutSelector />
+    </>
   )
 }
-
-export default App
