@@ -1,50 +1,43 @@
-# React + TypeScript + Vite
+# Metroid Prime Hint Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A hint tracker for Metroid Prime 2: Echoes Randomizer which helps organize the hints that players write down during a play session.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+If you're looking to use the tracker, go to the **Releases** page.
 
-## Expanding the ESLint configuration
+## Build from Source
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Prerequisites
 
-- Configure the top-level `parserOptions` property like this:
+You will need PNPM installed. I recommend installing Node.js and then installing through corepack:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+corepack enable pnpm
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Instructions
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+Install the project dependencies.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+pnpm install
+```
+
+Run the tracker in development mode (supports hot reloading):
+
+```bash
+pnpm run dev
+```
+
+Build an executable of the tracker:
+
+**NOTE**: You need to be using the operating system you intend to build for.
+
+To clarify, you need to be using macOS to build for macOS.
+
+```bash
+pnpm run dist:win # Windows 64-bit
+pnpm run dist:mac # macOS ARM
+pnpm run dist:linux # Linux 64-bit
 ```
