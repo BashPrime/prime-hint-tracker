@@ -4,6 +4,7 @@ import { Button } from "../components/ui/button"
 import { cn } from "../lib/utils"
 import { PrimitiveAtom, useAtom } from "jotai"
 
+
 type Props = {
   name: string
   hints: PrimitiveAtom<Hint[]>
@@ -33,7 +34,16 @@ export default function HintPanel(props: Props) {
           <HintElem key={`hint-${idx}`} hint={hint} />
         ))}
         {props.allowNew && (
-          <Button onClick={createNewHint} variant="ghost" className={cn('w-3/5 place-self-center bg-zinc-900')}>+ Add new hint</Button>
+          <Button 
+            onClick={createNewHint} 
+            variant="ghost" 
+            className={cn(
+              'w-4/5 place-self-center bg-zinc-900',
+              !hints.length && 'my-1',
+            )}
+          >
+            + Add new hint
+          </Button>
         )}
       </div>
 
