@@ -16,6 +16,7 @@ export default function HintElem({ hint }: Props) {
       <Input
         type="text"
         value={label}
+        placeholder="?"
         disabled={hint.fixedLabel}
         onChange={(event) => {
           setLabel(event.target.value)
