@@ -1,11 +1,10 @@
 import { useState } from "react"
-import { Prime2Items } from "../types/Prime2.types"
 import HintPanel from "./HintPanel"
 import { Hint } from "../types/Hint.types"
 
 export default function Prime2Layout() {
   // !STATE
-  const [itemHints, setItemHints] = useState<Hint<Prime2Items, string>[]>([])
+  const [itemHints, setItemHints] = useState<Hint[]>([])
 
   return (
     <>
