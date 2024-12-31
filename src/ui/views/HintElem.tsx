@@ -20,7 +20,7 @@ export default function HintElem({ hint }: Props) {
         onChange={(event) => {
           setLabel(event.target.value)
         }}
-        className={cn('font-medium border-0 disabled:opacity-100 shadow-none')}
+        className={cn('font-medium border-0 disabled:opacity-100 shadow-none h-7')}
       />
       <Input
         type="text"
@@ -29,7 +29,7 @@ export default function HintElem({ hint }: Props) {
         onChange={(event) => {
           setValue(event.target.value)
         }}
-        className={cn('font-light border-0 shadow-none')}
+        className={cn('font-light border-0 shadow-none h-7')}
       />
     </div>
   )
