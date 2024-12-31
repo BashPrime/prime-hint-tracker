@@ -1,21 +1,22 @@
 import { useState } from 'react'
 import { Input } from '../components/ui/input'
 import { cn } from '../lib/utils'
+import { Hint } from '../types/Hint.types'
 
-type Props = {
-  label?: string
+type Props<Label, Value> = {
+  hint: Hint<Label, Value>
 }
 
-export default function ItemLocationHint(props: Props) {
+export default function HintElem<Label extends string, Value extends string>({hint}: Props<Label, Value>) {
   const [label, setLabel] = useState<string>('')
   const [value, setValue] = useState<string>('')
 
   return (
     <>
-      {props.label && (
-        <p className={cn('font-semibold')}>{props.label}</p>
+      {hint.label && (
+        <p className={cn('font-semibold')}>{hint.label}</p>
       )}
-      {!props.label && (
+      {!hint.label && (
         <Input
           type="text"
           value={label}
