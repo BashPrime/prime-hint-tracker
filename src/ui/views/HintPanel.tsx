@@ -8,7 +8,7 @@ type Props = {
   name: string
   hints: PrimitiveAtom<Hint[]>
   allowNew?: boolean,
-  color?: string,
+  className?: string,
 }
 
 export default function HintPanel(props: Props) {
@@ -26,14 +26,17 @@ export default function HintPanel(props: Props) {
   }
 
   return (
-    <div className={cn('flex flex-col')}>
-      <h2 className={cn('font-bold bg-zinc-900 w-full')}>{props.name}</h2>
-      {hints.map((hint, idx) => (
-        <HintElem key={`hint-${idx}`} hint={hint} />
-      ))}
-      {props.allowNew && (
-        <Button onClick={createNewHint}>+ Add New Hint</Button>
-      )}
+    <div className={cn('flex flex-col bg-zinc-800', props.className)}>
+      <h2 className={cn('font-bold bg-zinc-900 w-full p-2')}>{props.name}</h2>
+      <div className={cn('p-2')}>
+        {hints.map((hint, idx) => (
+          <HintElem key={`hint-${idx}`} hint={hint} />
+        ))}
+        {props.allowNew && (
+          <Button onClick={createNewHint}>+ Add New Hint</Button>
+        )}
+      </div>
+
     </div>
   )
 }

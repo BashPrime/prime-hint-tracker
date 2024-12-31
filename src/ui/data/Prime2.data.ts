@@ -57,6 +57,40 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
   'Sky Temple Key 9'
 ] as const
 
+export const PRIME_2_VIOLET_HINTS: Hint[] = [
+  { label: 'Main Energy Controller', value: '' },
+  { label: 'Transport to Agon Wastes', value: '' },
+  { label: 'Fortress Transport Access', value: '' },
+  { label: 'Meeting Grounds', value: '' },
+  { label: 'Path of Eyes', value: '' },
+] as const
+
+export const PRIME_2_AMBER_HINTS: Hint[] = [
+  { label: 'Agon Energy Controller', value: '' },
+  { label: 'Mining Plaza', value: '' },
+  { label: 'Portal Terminal', value: '' },
+  { label: 'Mining Station A', value: '' },
+  { label: 'Mining Station B', value: '' },
+] as const
+
+export const PRIME_2_EMERALD_HINTS: Hint[] = [
+  { label: 'Torvus Energy Controller', value: '' },
+  { label: 'Path of Roots', value: '' },
+  { label: 'Underground Tunnel', value: '' },
+  { label: 'Catacombs', value: '' },
+  { label: 'Gathering Hall', value: '' },
+  { label: 'Training Chamber', value: '' },
+] as const
+
+export const PRIME_2_COBALT_HINTS: Hint[] = [
+  { label: 'Sanctuary Energy Controller', value: '' },
+  { label: 'Sanctuary Entrance', value: '' },
+  { label: 'Hall of Combat Mastery', value: '' },
+  { label: 'Main Gyro Chamber', value: '' },
+  { label: 'Main Research', value: '' },
+  { label: 'Watch Station', value: '' },
+] as const
+
 export const PRIME_2_KEYBEARER_HINTS: Hint[] = [
   { label: 'Industrial Site', value: '' },
   { label: 'Storage Cavern B', value: '' },
