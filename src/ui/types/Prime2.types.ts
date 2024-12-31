@@ -28,7 +28,6 @@ export type Prime2Items = z.infer<typeof Prime2ItemsSchema>
 export const Prime2ProgressiveItemsScema = z.enum([
     'Progressive Suit',
     'Progressive Grapple',
-    'Progressive Missile',
 ])
 export type Prime2ProgressiveItems = z.infer<typeof Prime2ProgressiveItemsScema>
 
