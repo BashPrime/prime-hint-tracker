@@ -24,4 +24,10 @@
   },
   "include": ["src"],
   "exclude": ["src/electron"],
+  "baseUrl": ".",
+  "paths": {
+    "@/*": [
+      "./src/ui/*"
+    ]
+  }
 }
