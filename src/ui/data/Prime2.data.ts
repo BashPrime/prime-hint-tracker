@@ -58,51 +58,51 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
 ] as const
 
 export const PRIME_2_VIOLET_HINTS: Hint[] = [
-  { label: 'Main Energy Controller', value: '' },
-  { label: 'Transport to Agon Wastes', value: '' },
-  { label: 'Fortress Transport Access', value: '' },
-  { label: 'Meeting Grounds', value: '' },
-  { label: 'Path of Eyes', value: '' },
+  { label: 'Main Energy Controller', value: '', fixedLabel: true },
+  { label: 'Transport to Agon Wastes', value: '', fixedLabel: true },
+  { label: 'Fortress Transport Access', value: '', fixedLabel: true },
+  { label: 'Meeting Grounds', value: '', fixedLabel: true },
+  { label: 'Path of Eyes', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_AMBER_HINTS: Hint[] = [
-  { label: 'Agon Energy Controller', value: '' },
-  { label: 'Mining Plaza', value: '' },
-  { label: 'Portal Terminal', value: '' },
-  { label: 'Mining Station A', value: '' },
-  { label: 'Mining Station B', value: '' },
+  { label: 'Agon Energy Controller', value: '', fixedLabel: true },
+  { label: 'Mining Plaza', value: '', fixedLabel: true },
+  { label: 'Portal Terminal', value: '', fixedLabel: true },
+  { label: 'Mining Station A', value: '', fixedLabel: true },
+  { label: 'Mining Station B', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_EMERALD_HINTS: Hint[] = [
-  { label: 'Torvus Energy Controller', value: '' },
-  { label: 'Path of Roots', value: '' },
-  { label: 'Underground Tunnel', value: '' },
-  { label: 'Catacombs', value: '' },
-  { label: 'Gathering Hall', value: '' },
-  { label: 'Training Chamber', value: '' },
+  { label: 'Torvus Energy Controller', value: '', fixedLabel: true },
+  { label: 'Path of Roots', value: '', fixedLabel: true },
+  { label: 'Underground Tunnel', value: '', fixedLabel: true },
+  { label: 'Catacombs', value: '', fixedLabel: true },
+  { label: 'Gathering Hall', value: '', fixedLabel: true },
+  { label: 'Training Chamber', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_COBALT_HINTS: Hint[] = [
-  { label: 'Sanctuary Energy Controller', value: '' },
-  { label: 'Sanctuary Entrance', value: '' },
-  { label: 'Hall of Combat Mastery', value: '' },
-  { label: 'Main Gyro Chamber', value: '' },
-  { label: 'Main Research', value: '' },
-  { label: 'Watch Station', value: '' },
+  { label: 'Sanctuary Energy Controller', value: '', fixedLabel: true },
+  { label: 'Sanctuary Entrance', value: '', fixedLabel: true },
+  { label: 'Hall of Combat Mastery', value: '', fixedLabel: true },
+  { label: 'Main Gyro Chamber', value: '', fixedLabel: true },
+  { label: 'Main Research', value: '', fixedLabel: true },
+  { label: 'Watch Station', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_KEYBEARER_HINTS: Hint[] = [
-  { label: 'Industrial Site', value: '' },
-  { label: 'Storage Cavern B', value: '' },
-  { label: 'Landing Site', value: '' },
-  { label: 'Central Mining Station', value: '' },
-  { label: 'Main Reactor', value: '' },
-  { label: 'Torvus Lagoon', value: '' },
-  { label: 'Catacombs', value: '' },
-  { label: 'Dynamo Works', value: '' },
-  { label: 'Sanctuary Entrance', value: '' },
+  { label: 'Industrial Site', value: '', fixedLabel: true },
+  { label: 'Storage Cavern B', value: '', fixedLabel: true },
+  { label: 'Landing Site', value: '', fixedLabel: true },
+  { label: 'Central Mining Station', value: '', fixedLabel: true },
+  { label: 'Main Reactor', value: '', fixedLabel: true },
+  { label: 'Torvus Lagoon', value: '', fixedLabel: true },
+  { label: 'Catacombs', value: '', fixedLabel: true },
+  { label: 'Dynamo Works', value: '', fixedLabel: true },
+  { label: 'Sanctuary Entrance', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] = PRIME_2_TEMPLE_KEYS_VALUES
   .filter((key) => key.toLowerCase().includes('sky'))
-  .map((key) => ({ label: key as string, value: '' }))
+  .map((key) => ({ label: key as string, value: '', fixedLabel: true }))

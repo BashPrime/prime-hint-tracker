@@ -22,29 +22,29 @@ export default function Prime2Layout() {
   const stkHints = atom<Hint[]>([...PRIME_2_SKY_TEMPLE_KEY_HINTS])
 
   return (
-    <div className={cn('flex flex-row gap-2')}>
+    <div className={cn('flex flex-row gap-2 h-full')}>
       <HintPanel
         name="Items"
         hints={itemHints}
         allowNew
       />
-      <div className={cn('flex flex-col gap-2')}>
+      <div className={cn('flex flex-col flex-auto gap-2')}>
         <HintPanel
           name="Violet Hints"
           hints={violetHints}
           className={cn('border-l-2 border-fuchsia-500')}
         />
         <HintPanel
-          name="Amber Hints"
-          hints={amberHints}
-          className={cn('border-l-2 border-orange-500')}
-        />
-      </div>
-      <div className={cn('flex flex-col gap-2')}>
-        <HintPanel
           name="Emerald Hints"
           hints={emeraldHints}
           className={cn('border-l-2 border-green-500')}
+        />
+      </div>
+      <div className={cn('flex flex-col flex-auto gap-2')}>
+        <HintPanel
+          name="Amber Hints"
+          hints={amberHints}
+          className={cn('border-l-2 border-orange-500')}
         />
         <HintPanel
           name="Cobalt Hints"
@@ -53,22 +53,16 @@ export default function Prime2Layout() {
         />
       </div>
       <HintPanel
-        name="Keybearer Hints"
+        name="Keybearers"
         hints={keybearerHints}
+        className={cn('border-l-2 border-zinc-200')}
       />
       <HintPanel
         name="Sky Temple Keys"
         hints={stkHints}
         className={cn('border-l-2 border-lime-500')}
       />
-      {/* <p>Items</p>
-      <p>STKs</p>
-      <p>Violet hints</p>
-      <p>Amber hints</p>
-      <p>Emerald hints</p>
-      <p>Cobalt hints</p>
-      <p>Keybearer hints</p>
-      <p>Bosses and Temple Keys</p> */}
+      {/* <p>Bosses and Temple Keys</p> */}
     </div>
   )
 }

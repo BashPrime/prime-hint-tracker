@@ -10,4 +10,5 @@ export type Hint = {
   label?: string
   value?: string
   proximity?: ProximityType
+  fixedLabel?: boolean
 }
