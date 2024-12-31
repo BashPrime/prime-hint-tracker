@@ -12,7 +12,7 @@ export default function HintElem({ hint }: Props) {
   const [value, setValue] = useState<string>(hint.value ?? '')
 
   return (
-    <div className={cn('bg-zinc-700 border-2 border-zinc-800')}>
+    <div className={cn('bg-zinc-700')}>
       <Input
         type="text"
         value={label}

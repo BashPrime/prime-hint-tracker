@@ -26,14 +26,14 @@ export default function HintPanel(props: Props) {
   }
 
   return (
-    <div className={cn('bg-zinc-800 flex-auto', props.className)}>
+    <div className={cn('bg-zinc-800', props.className)}>
       <h2 className={cn('font-bold bg-zinc-900 p-2 uppercase text-sm')}>{props.name}</h2>
-      <div className={cn('flex flex-col')}>
+      <div className={cn('flex flex-col gap-2')}>
         {hints.map((hint, idx) => (
           <HintElem key={`hint-${idx}`} hint={hint} />
         ))}
         {props.allowNew && (
-          <Button onClick={createNewHint} variant="ghost" className={cn('place-content-center')}>+ Add New Hint</Button>
+          <Button onClick={createNewHint} variant="ghost" className={cn('w-3/5 place-self-center bg-zinc-900')}>+ Add new hint</Button>
         )}
       </div>
 

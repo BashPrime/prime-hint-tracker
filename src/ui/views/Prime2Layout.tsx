@@ -27,40 +27,41 @@ export default function Prime2Layout() {
         name="Items"
         hints={itemHints}
         allowNew
+        className={cn('flex-auto')}
       />
       <div className={cn('flex flex-col flex-auto gap-2')}>
         <HintPanel
           name="Violet Hints"
           hints={violetHints}
-          className={cn('border-l-2 border-fuchsia-500')}
+          className={cn('border-l-2 border-violet-600 h-full')}
         />
         <HintPanel
           name="Emerald Hints"
           hints={emeraldHints}
-          className={cn('border-l-2 border-green-500')}
+          className={cn('border-l-2 border-emerald-600 h-full')}
         />
       </div>
       <div className={cn('flex flex-col flex-auto gap-2')}>
         <HintPanel
           name="Amber Hints"
           hints={amberHints}
-          className={cn('border-l-2 border-orange-500')}
+          className={cn('border-l-2 border-amber-600 h-full')}
         />
         <HintPanel
           name="Cobalt Hints"
           hints={cobaltHints}
-          className={cn('border-l-2 border-blue-500')}
+          className={cn('border-l-2 border-sky-600 h-full')}
         />
       </div>
       <HintPanel
         name="Keybearers"
         hints={keybearerHints}
-        className={cn('border-l-2 border-zinc-200')}
+        className={cn('flex-auto border-l-2 border-rose-600')}
       />
       <HintPanel
         name="Sky Temple Keys"
         hints={stkHints}
-        className={cn('border-l-2 border-lime-500')}
+        className={cn('flex-auto border-l-2 border-lime-600')}
       />
       {/* <p>Bosses and Temple Keys</p> */}
     </div>
