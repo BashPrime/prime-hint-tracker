@@ -6,8 +6,8 @@ export const ProximityTypeSchema = z.enum([
 ])
 export type ProximityType = z.infer<typeof ProximityTypeSchema>
 
-export type Hint<Label, Value> = {
-  label?: Label
-  value?: Value
+export type Hint = {
+  label?: string
+  value?: string
   proximity?: ProximityType
 }

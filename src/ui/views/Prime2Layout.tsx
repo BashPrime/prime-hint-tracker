@@ -10,7 +10,7 @@ export default function Prime2Layout() {
   return (
     <>
       {/* <HintElem label="Dark Beam" /> */}
-      <HintPanel<Prime2Items, string>
+      <HintPanel
         name="Items"
         hints={itemHints}
         onCreateNewHint={() => {

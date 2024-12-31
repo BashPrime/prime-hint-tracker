@@ -3,11 +3,11 @@ import { Input } from '../components/ui/input'
 import { cn } from '../lib/utils'
 import { Hint } from '../types/Hint.types'
 
-type Props<Label, Value> = {
-  hint: Hint<Label, Value>
+type Props = {
+  hint: Hint
 }
 
-export default function HintElem<Label extends string, Value extends string>({hint}: Props<Label, Value>) {
+export default function HintElem({hint}: Props) {
   const [label, setLabel] = useState<string>('')
   const [value, setValue] = useState<string>('')
 

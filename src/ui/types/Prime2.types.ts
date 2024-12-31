@@ -1,6 +1,6 @@
 import z from 'zod'
 
-export const Prime2ItemsSchema = z.enum([
+const PRIME_2_ITEMS_VALUES = [
     'Super Missile',
     'Seeker Launcher',
     'Dark Beam',
@@ -22,24 +22,27 @@ export const Prime2ItemsSchema = z.enum([
     'Amber Translator',
     'Emerald Translator',
     'Cobalt Translator',
-])
+] as const
+export const Prime2ItemsSchema = z.enum(PRIME_2_ITEMS_VALUES)
 export type Prime2Items = z.infer<typeof Prime2ItemsSchema>
 
-export const Prime2ProgressiveItemsScema = z.enum([
+export const PRIME_2_PROGRESSIVE_ITEMS_VALUES = [
     'Progressive Suit',
     'Progressive Grapple',
-])
+] as const
+export const Prime2ProgressiveItemsScema = z.enum(PRIME_2_PROGRESSIVE_ITEMS_VALUES)
 export type Prime2ProgressiveItems = z.infer<typeof Prime2ProgressiveItemsScema>
 
-export const Prime2ExpansionsSchema = z.enum([
+export const PRIME_2_EXPANSIONS_VALUES = [
     'Energy Tank',
     'Missile Expansion',
     'Beam Ammo Expansion',
     'Power Bomb Expansion',
-])
+] as const
+export const Prime2ExpansionsSchema = z.enum(PRIME_2_EXPANSIONS_VALUES)
 export type Prime2Expansions = z.infer<typeof Prime2ExpansionsSchema>
 
-const Prime2TempleKeysSchema = z.enum([
+export const PRIME_2_TEMPLE_KEYS_VALUES = [
     'Dark Agon Key 1',
     'Dark Agon Key 2',
     'Dark Agon Key 3',
@@ -58,5 +61,6 @@ const Prime2TempleKeysSchema = z.enum([
     'Sky Temple Key 7',
     'Sky Temple Key 8',
     'Sky Temple Key 9'
-])
+] as const
+export const Prime2TempleKeysSchema = z.enum(PRIME_2_TEMPLE_KEYS_VALUES)
 export type Prime2TempleKeys = z.infer<typeof Prime2TempleKeysSchema>
