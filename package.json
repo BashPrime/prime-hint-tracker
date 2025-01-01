@@ -17,9 +17,12 @@
     "dist:linux": "pnpm run transpile:electron && npm run build && electron-builder --linux --x64"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.4",
+    "@radix-ui/react-popover": "^1.1.4",
     "@radix-ui/react-slot": "^1.1.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "1.0.0",
     "jotai": "^2.11.0",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
