@@ -1,5 +1,5 @@
 import ComboBox from "@/components/ui/combo-box";
-import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_ALL_LOCATIONS } from "@/data/Prime2.data";
+import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_ALL_LOCATIONS, PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
 import { createOptions } from "@/lib/utils";
 
 export type Props = {
@@ -34,4 +34,16 @@ export function Prime2LocationInput() {
   );
 }
 
-
+export function Prime2ItemLocationInput() {
+  const options = createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS]);
+  return (
+    <ComboBox
+      options={options}
+      text={{
+        empty: "No location found.",
+        select: "Select location...",
+        search: "Search for location",
+      }}
+    />
+  );
+}
