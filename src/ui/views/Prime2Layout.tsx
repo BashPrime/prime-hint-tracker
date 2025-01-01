@@ -14,7 +14,7 @@ export default function Prime2Layout() {
   // !STATE
 
   return (
-    <div className={cn("flex flex-row gap-2 h-full")}>
+    <div className={cn("grid grid-cols-5 gap-x-2 h-full")}>
       <HintPanel
         name="Items"
         hints={prime2ItemHintsState}
