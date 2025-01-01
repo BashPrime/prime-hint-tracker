@@ -1,6 +1,6 @@
 import { Hint } from "../types/Hint.types";
 
-export const PRIME_2_ITEMS_VALUES = [
+export const PRIME_2_MAJORS_VALUES = [
   "Super Missile",
   "Seeker Launcher",
   "Dark Beam",
@@ -24,7 +24,7 @@ export const PRIME_2_ITEMS_VALUES = [
   "Cobalt Translator",
 ] as const;
 
-export const PRIME_2_PROGRESSIVE_ITEMS_VALUES = [
+export const PRIME_2_PROGRESSIVE_MAJORS_VALUES = [
   "Progressive Suit",
   "Progressive Grapple",
 ] as const;
@@ -55,6 +55,13 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
   "Sky Temple Key 7",
   "Sky Temple Key 8",
   "Sky Temple Key 9",
+] as const;
+
+export const PRIME_2_ALL_ITEMS_VALUES = [
+  ...PRIME_2_MAJORS_VALUES,
+  ...PRIME_2_PROGRESSIVE_MAJORS_VALUES,
+  ...PRIME_2_EXPANSIONS_VALUES,
+  ...PRIME_2_TEMPLE_KEYS_VALUES
 ] as const;
 
 export const PRIME_2_VIOLET_HINTS: Hint[] = [

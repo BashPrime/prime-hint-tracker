@@ -1,6 +1,6 @@
 import { useAtomValue } from "jotai";
 import { selectedGameState } from "../states/App.states";
-import Prime2Layout from "./Prime2Layout";
+import Prime2Layout from "./prime2/layout";
 
 export default function LayoutSelector() {
   // ! STATE

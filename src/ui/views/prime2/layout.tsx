@@ -1,5 +1,5 @@
-import HintPanel from "./HintPanel";
-import { cn } from "../lib/utils";
+import HintPanel from "../HintPanel";
+import { cn } from "../../lib/utils";
 import {
   prime2AmberHintsState,
   prime2CobaltHintsState,
@@ -11,10 +11,8 @@ import {
 } from "@/states/Prime2.states";
 
 export default function Prime2Layout() {
-  // !STATE
-
   return (
-    <div className={cn("grid grid-cols-5 gap-x-2 h-full")}>
+    <div className={cn("grid grid-cols-5 gap-x-2 h-full bg-slate-900")}>
       <HintPanel
         name="Items"
         hints={prime2ItemHintsState}
