@@ -467,7 +467,6 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Undertransit One",
   "Venomous Pond",
   "Main Energy Controller",
-  "Main Energy Controller",
   "Temple Sanctuary",
   "Transport A Access",
   "Transport B Access",
