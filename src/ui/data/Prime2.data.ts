@@ -92,15 +92,15 @@ export const PRIME_2_COBALT_HINTS: Hint[] = [
 ] as const
 
 export const PRIME_2_KEYBEARER_HINTS: Hint[] = [
-  { label: 'Industrial Site', value: '', fixedLabel: true },
-  { label: 'Storage Cavern A', value: '', fixedLabel: true },
-  { label: 'Landing Site', value: '', fixedLabel: true },
-  { label: 'Central Mining Station', value: '', fixedLabel: true },
-  { label: 'Main Reactor', value: '', fixedLabel: true },
-  { label: 'Torvus Lagoon', value: '', fixedLabel: true },
-  { label: 'Catacombs', value: '', fixedLabel: true },
-  { label: 'Dynamo Works', value: '', fixedLabel: true },
-  { label: 'Sanctuary Entrance', value: '', fixedLabel: true },
+  { label: 'Accursed Lake', value: '', fixedLabel: true },
+  { label: 'Ing Reliquary', value: '', fixedLabel: true },
+  { label: 'Defiled Shrine', value: '', fixedLabel: true },
+  { label: 'Battleground', value: '', fixedLabel: true },
+  { label: 'Dark Oasis', value: '', fixedLabel: true },
+  { label: 'Poisoned Bog', value: '', fixedLabel: true },
+  { label: 'Dungeon', value: '', fixedLabel: true },
+  { label: 'Hive Dynamo Works', value: '', fixedLabel: true },
+  { label: 'Hive Entrance', value: '', fixedLabel: true },
 ] as const
 
 export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] = PRIME_2_TEMPLE_KEYS_VALUES

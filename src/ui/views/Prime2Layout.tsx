@@ -46,7 +46,7 @@ export default function Prime2Layout() {
         />
       </div>
       <HintPanel
-        name="Keybearers"
+        name="Keybearer Hints"
         hints={prime2KeybearerHintsState}
         className={cn("flex-auto border-l-2 border-rose-600")}
       />
