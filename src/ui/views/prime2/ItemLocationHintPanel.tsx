@@ -6,6 +6,7 @@ import {
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
 import Prime2ItemLocationHint from "./ItemLocationHint";
+import Hint from "../Hint";
 
 type Props = {
   name: string;
@@ -31,9 +32,11 @@ export default function Prime2ItemLocationHintPanel(props: Props) {
       <h2 className={cn("font-bold bg-zinc-900 p-2 uppercase text-sm")}>
         {props.name}
       </h2>
-      <div className={cn("flex flex-col")}>
+      <div className={cn("flex flex-col gap-2")}>
         {hints.map((hint, idx) => (
-          <Prime2ItemLocationHint key={`hint-${idx}`} />
+          <Hint key={`hint-${idx}`}>
+            <Prime2ItemLocationHint hint={hint} />
+          </Hint>
         ))}
         {props.allowNew && (
           <Button

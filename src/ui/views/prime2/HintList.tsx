@@ -20,7 +20,7 @@ type Props = {
   className?: string;
 };
 
-export default function Prime2HintPanel(props: Props) {
+export default function Prime2HintList(props: Props) {
   // !STATE
   const [hints, setHints] = useAtom(props.hints);
 
