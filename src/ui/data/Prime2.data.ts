@@ -93,7 +93,7 @@ export const PRIME_2_COBALT_HINTS: Hint[] = [
 
 export const PRIME_2_KEYBEARER_HINTS: Hint[] = [
   { label: 'Industrial Site', value: '', fixedLabel: true },
-  { label: 'Storage Cavern B', value: '', fixedLabel: true },
+  { label: 'Storage Cavern A', value: '', fixedLabel: true },
   { label: 'Landing Site', value: '', fixedLabel: true },
   { label: 'Central Mining Station', value: '', fixedLabel: true },
   { label: 'Main Reactor', value: '', fixedLabel: true },
