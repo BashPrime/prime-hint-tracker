@@ -1,8 +1,9 @@
 import z from 'zod'
 
 export const ProximityTypeSchema = z.enum([
-  'up-to',
-  'exactly'
+  'in',
+  'up to',
+  'exactly',
 ])
 export type ProximityType = z.infer<typeof ProximityTypeSchema>
 

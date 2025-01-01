@@ -31,13 +31,6 @@ export const Prime2ItemSchema = z.union([
 ]);
 export type Prime2Item = z.infer<typeof Prime2ItemSchema>;
 
-export const Prime2ItemLocationHintSchema = z.object({
-  item: Prime2ItemSchema,
-  location: z.string(),
-  proximityType: ProximityTypeSchema,
-  numRooms: z.number(),
-});
-
 export const Prime2LocationSchema = z.enum(PRIME_2_ALL_LOCATIONS);
 export type Prime2Location = z.infer<typeof Prime2LocationSchema>;
 
@@ -47,3 +40,18 @@ export const Prime2LocationWithItemSchema = z.enum(
 export type Prime2LocationWithItem = z.infer<
   typeof Prime2LocationWithItemSchema
 >;
+
+export const Prime2ItemLocationHintSchema = z.object({
+  item: Prime2ItemSchema.nullable(),
+  location: Prime2LocationSchema.nullable(),
+  proximityType: ProximityTypeSchema.default("in"),
+  numRooms: z.number(),
+});
+
+export const MajorGuardianHintsSchema = z.object({
+  amorbis: Prime2ItemSchema.nullable(),
+  chykka: Prime2ItemSchema.nullable(),
+  quadraxis: Prime2ItemSchema.nullable(),
+  umosReward: Prime2ItemSchema.nullable()
+})
+export type MajorGuardianHints = z.infer<typeof MajorGuardianHintsSchema>
