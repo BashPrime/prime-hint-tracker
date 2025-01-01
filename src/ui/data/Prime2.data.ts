@@ -1,6 +1,5 @@
 import {
   Prime2ItemLocationHint,
-  Prime2ItemLocationHintSchema,
 } from "@/types/Prime2.types";
 import { Hint } from "../types/Hint.types";
 

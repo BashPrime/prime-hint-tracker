@@ -3,44 +3,28 @@ import { PrimitiveAtom, useAtom } from "jotai";
 import {
   Prime2ItemLocationHintSchema,
   Prime2ItemLocationHint as Prime2ItemLocationHintType,
-  Prime2Location,
-  Prime2RelatedUpgradesHint,
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
 import Prime2ItemLocationHint from "./ItemLocationHint";
-import { Atom } from "jotai";
+import Hint from "../Hint";
 
 type Props = {
   name: string;
-  variant: "item-location" | "location" | "related-upgrade";
-  hints: Atom<
-    Prime2ItemLocationHintType[] | Prime2Location[] | Prime2RelatedUpgradesHint[]
-  >;
+  hints: PrimitiveAtom<Prime2ItemLocationHintType[]>;
   allowNew?: boolean;
   className?: string;
 };
 
-export default function Prime2HintList(props: Props) {
+export default function Prime2ItemLocationHintList(props: Props) {
   // !STATE
   const [hints, setHints] = useAtom(props.hints);
 
   // !FUNCTION
   function createNewHint() {
-    switch (props.variant) {
-      case "item-location":
-        setHints([
-          ...(hints as Prime2ItemLocationHintType[]),
-          Prime2ItemLocationHintSchema.parse({}),
-        ]);
-        break;
-      case "location":
-        setHints([...(hints as Prime2Location[]), null]);
-        break;
-      case "related-upgrade":
-        setHints([...(hints as Prime2RelatedUpgradesHint[]), null]);
-        break;
-      default:
-    }
+    setHints([
+      ...(hints as Prime2ItemLocationHintType[]),
+      Prime2ItemLocationHintSchema.parse({}),
+    ]);
   }
 
   return (
@@ -49,9 +33,11 @@ export default function Prime2HintList(props: Props) {
         {props.name}
       </h2>
       <div className={cn("flex flex-col gap-2")}>
-        {props.variant === "item-location" && (
-          <Prime2ItemLocationHint />
-        )}
+        {hints.map((hint, idx) => (
+          <Hint key={`hint-${idx}`}>
+            <Prime2ItemLocationHint hint={hint} />
+          </Hint>
+        ))}
         {props.allowNew && (
           <Button
             onClick={createNewHint}
