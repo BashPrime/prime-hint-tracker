@@ -1,4 +1,3 @@
-import HintPanel from "../HintPanel";
 import { cn, createOptions } from "../../lib/utils";
 import {
   prime2VioletHintsState,
@@ -14,7 +13,6 @@ import HintListWrapper from "../HintListWrapper";
 import HintList from "../HintList";
 import { PRIME_2_LOCATIONS_WITH_ITEMS, PRIME_2_RELATED_UPGRADES_HINTS } from "@/data/Prime2.data";
 import { Prime2ItemHintSchema, Prime2LocationHintSchema } from "@/types/Prime2.types";
-import Prime2GuardianHintPanel from "./GuardianHintPanel";
 
 export default function Prime2Layout() {
   return (
