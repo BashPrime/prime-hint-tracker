@@ -9,7 +9,6 @@ import Prime2ItemLocationHint from "./ItemLocationHint";
 import Hint from "../Hint";
 
 type Props = {
-  name: string;
   hints: PrimitiveAtom<Prime2ItemLocationHintType[]>;
   allowNew?: boolean;
   className?: string;
@@ -22,35 +21,30 @@ export default function Prime2ItemLocationHintList(props: Props) {
   // !FUNCTION
   function createNewHint() {
     setHints([
-      ...(hints as Prime2ItemLocationHintType[]),
+      ...hints,
       Prime2ItemLocationHintSchema.parse({}),
     ]);
   }
 
   return (
-    <div className={cn("bg-zinc-800", props.className)}>
-      <h2 className={cn("font-bold bg-zinc-900 p-2 uppercase text-sm")}>
-        {props.name}
-      </h2>
-      <div className={cn("flex flex-col gap-2")}>
-        {hints.map((hint, idx) => (
-          <Hint label={hint.label ?? ''} key={`hint-${idx}`}>
-            <Prime2ItemLocationHint hint={hint} />
-          </Hint>
-        ))}
-        {props.allowNew && (
-          <Button
-            onClick={createNewHint}
-            variant="ghost"
-            className={cn(
-              "w-4/5 place-self-center bg-zinc-900",
-              !hints.length && "my-1"
-            )}
-          >
-            + Add new hint
-          </Button>
-        )}
-      </div>
-    </div>
+    <>
+      {hints.map((hint, idx) => (
+        <Hint label={hint.label ?? ''} key={`prime-il-hint-${idx}`}>
+          <Prime2ItemLocationHint hint={hint} />
+        </Hint>
+      ))}
+      {props.allowNew && (
+        <Button
+          onClick={createNewHint}
+          variant="ghost"
+          className={cn(
+            "w-4/5 place-self-center bg-zinc-900",
+            !hints.length && "my-1"
+          )}
+        >
+          + Add new hint
+        </Button>
+      )}
+    </>
   );
 }
