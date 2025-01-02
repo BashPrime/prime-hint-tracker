@@ -15,15 +15,15 @@ export default function TranslatorHints({ regionHints }: Props) {
   const locationOptions = createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)
 
   return (
-    <div className="inline grid grid-cols-2" data-name="translator-hints">
+    <div className="grid grid-cols-2 gap-2 bg-zinc-800 px-2 pt-1" data-name="translator-hints">
       {hints.translatorHints.map((translatorHint, idx) => (
         <div key={`trans-hint-${idx}`}>
-          <p className="uppercase font-bold text-xs">
+          <p className="uppercase font-bold text-xs border-b border-zinc-600/50 pb-2">
             {translatorHint.name}
           </p>
-          <div className="bg-zinc-900">
-            <AutoComplete placeholder="Item..." emptyMessage="No item found." options={itemOptions} className="text-xs" />
-            <AutoComplete placeholder="Location..." emptyMessage="No location found." options={locationOptions} className="text-xs" />
+          <div>
+            <AutoComplete placeholder="Item..." emptyMessage="No item found." options={itemOptions} className="text-sm h-6" />
+            <AutoComplete placeholder="Location..." emptyMessage="No location found." options={locationOptions} className="text-sm h-6" />
           </div>
         </div>
       ))}

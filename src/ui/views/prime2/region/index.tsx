@@ -13,11 +13,13 @@ type Props = {
 
 export default function Region({ name, hints, className }: Props) {
   return (
-    <div className={cn("flex flex-col gap-4", className)}>
-      <h2 className="font-semibold text-lg">{name}</h2>
-      <BossHintContainer regionHints={hints} />
-      <FlyingIngCacheHints regionHints={hints} />
-      <TranslatorHints regionHints={hints} />
+    <div className={cn("flex flex-col", className)}>
+      <h2 className="font-bold px-2 bg-zinc-900">{name.toUpperCase()}</h2>
+      <div className="flex flex-col gap-2">
+        <BossHintContainer regionHints={hints} />
+        <FlyingIngCacheHints regionHints={hints} />
+        <TranslatorHints regionHints={hints} />
+      </div>
     </div>
   )
 }
