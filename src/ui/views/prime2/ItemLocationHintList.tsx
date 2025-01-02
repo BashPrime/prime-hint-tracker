@@ -34,7 +34,7 @@ export default function Prime2ItemLocationHintList(props: Props) {
       </h2>
       <div className={cn("flex flex-col gap-2")}>
         {hints.map((hint, idx) => (
-          <Hint key={`hint-${idx}`}>
+          <Hint label={hint.label ?? ''} key={`hint-${idx}`}>
             <Prime2ItemLocationHint hint={hint} />
           </Hint>
         ))}
