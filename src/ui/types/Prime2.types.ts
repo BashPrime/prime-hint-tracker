@@ -81,7 +81,7 @@ export type Prime2RelatedUpgradesHint = z.infer<
 >;
 
 export const FlyingIngCacheHintSchema = z.object({
-  name: z.string().nullable().default(null),
+  name: z.string().default(''),
   value: z.string().nullable().default(null)
 })
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>

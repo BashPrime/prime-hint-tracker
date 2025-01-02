@@ -10,12 +10,12 @@ type Props = {
   className?: string
 }
 
-export default function Region(props: Props) {
+export default function Region({name, hints, className}: Props) {
   return (
-    <div className={props.className}>
-      <h2 className="font-semibold text-lg">{props.name}</h2>
-      <BossHintContainer regionHints={props.hints} />
-      <FlyingIngCacheHints />
+    <div className={className}>
+      <h2 className="font-semibold text-lg">{name}</h2>
+      <BossHintContainer regionHints={hints} />
+      <FlyingIngCacheHints regionHints={hints} />
       <TranslatorHints />
     </div>
   )
