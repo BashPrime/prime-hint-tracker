@@ -99,7 +99,6 @@ export const AutoComplete = ({
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
-        <p>selected: {JSON.stringify(selected)}</p>
         <CommandInput
           ref={inputRef}
           value={inputValue}
