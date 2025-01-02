@@ -16,7 +16,7 @@ export default function Region({name, hints, className}: Props) {
       <h2 className="font-semibold text-lg">{name}</h2>
       <BossHintContainer regionHints={hints} />
       <FlyingIngCacheHints regionHints={hints} />
-      <TranslatorHints />
+      <TranslatorHints regionHints={hints} />
     </div>
   )
 }

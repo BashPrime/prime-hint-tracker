@@ -87,12 +87,12 @@ export const FlyingIngCacheHintSchema = z.object({
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>
 
 export const TranslatorHintSchema = z.object({
-  label: z.string().nullable().default(null),
+  name: z.string().default(''),
   firstValue: z.string().nullable().default(null),
   secondValue: z.string().nullable().default(null),
   proximityType: z.enum(["in", "exactly", "up to"]).default("in"),
   numRooms: z.number().default(0),
-}).default({})
+})
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>
 
 export const RegionHintsSchema = z.object({

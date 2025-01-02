@@ -18,7 +18,10 @@ export function BossHintContainer({ regionHints }: Props) {
         <div className="w-24" data-name="boss-img">
           <img src="https://picsum.photos/200" title={hints.bossName} alt={hints.bossName} />
         </div>
-        <AutoComplete placeholder={`${hints.bossName} Item...`} emptyMessage="No item found." options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)} className="bg-zinc-900/50 font-semibold" />
+        <div data-name="boss-item">
+          <p className="text-xs">{hints.bossName}</p>
+          <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)} className="bg-zinc-900/50 font-semibold" />
+        </div>
       </div>
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col gap-2" data-name="boss-keys">
