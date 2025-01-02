@@ -104,7 +104,7 @@ export const AutoComplete = ({
           className="text-sm h-8"
         />
       </div>
-      <div className="relative mt-1">
+      <div className="relative">
         <div
           className={cn(
             "animate-in fade-in-0 zoom-in-95 absolute top-0 z-10 w-full rounded-xl bg-zinc-700 outline-none",

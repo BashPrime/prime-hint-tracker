@@ -30,7 +30,9 @@ export default function HintList(props: Props) {
     <>
       {hints.map((hint, idx) => (
         <Hint label={hint.label ?? ''} key={`hint-${idx}`}>
-          <AutoComplete placeholder={props.placeholder} emptyMessage={props.emptyMessage} options={props.options} />
+          <div className={cn("bg-zinc-800/50 px-2")}>
+            <AutoComplete placeholder={props.placeholder} emptyMessage={props.emptyMessage} options={props.options} />
+          </div>
         </Hint>
       ))}
       {props.allowNew && (
@@ -38,8 +40,8 @@ export default function HintList(props: Props) {
           onClick={createNewHint}
           variant="ghost"
           className={cn(
-            "w-4/5 place-self-center bg-zinc-900",
-            !hints.length && "my-1"
+            "w-4/5 place-self-center bg-zinc-700",
+            !hints.length && "mt-2"
           )}
         >
           + Add new hint
