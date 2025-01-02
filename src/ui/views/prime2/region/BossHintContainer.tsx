@@ -2,7 +2,7 @@ import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_FLYING_CACHE_REGION_OPTIONS } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtomValue } from "jotai";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>
@@ -11,7 +11,7 @@ type Props = {
 
 export function BossHintContainer({ regionHints, headerColor }: Props) {
   // !JOTAI
-  const [hints, setHints] = useAtom(regionHints)
+  const hints = useAtomValue(regionHints)
 
   return (
     <div className="flex flex-row gap-2 border border-red-600" data-name="boss-container">
@@ -33,7 +33,7 @@ export function BossHintContainer({ regionHints, headerColor }: Props) {
       </div>
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col gap-2" data-name="boss-keys">
-          {hints.bossKeys.map((keyHint, idx) => (
+          {hints.bossKeys.map((_, idx) => (
             <div>
               <p className="uppercase font-light text-xs text-red-300">Key {idx + 1}</p>
               <AutoComplete placeholder="Region..." emptyMessage="No region found." options={createOptions([...PRIME_2_FLYING_CACHE_REGION_OPTIONS], true)} />

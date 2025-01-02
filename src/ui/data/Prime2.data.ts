@@ -1,7 +1,3 @@
-import {
-  Prime2ItemHint,
-  Prime2ItemLocationHint,
-} from "@/types/Prime2.types";
 import { Hint } from "../types/Hint.types";
 
 export const PRIME_2_MAJORS_VALUES = [

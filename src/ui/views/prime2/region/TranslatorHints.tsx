@@ -2,7 +2,7 @@ import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtomValue } from "jotai";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>
@@ -11,7 +11,7 @@ type Props = {
 
 export default function TranslatorHints({ regionHints, headerColor }: Props) {
   // !JOTAI
-  const [hints, setHints] = useAtom(regionHints)
+  const hints = useAtomValue(regionHints)
   const itemOptions = createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)
   const locationOptions = createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)
 
