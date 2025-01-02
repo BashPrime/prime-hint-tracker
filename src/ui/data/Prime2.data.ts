@@ -1,6 +1,7 @@
 import {
   Prime2ItemHint,
   Prime2ItemLocationHint,
+  RegionHints,
 } from "@/types/Prime2.types";
 import { Hint } from "../types/Hint.types";
 
@@ -77,6 +78,15 @@ export const PRIME_2_ALL_ITEMS_VALUES = [
   ...PRIME_2_EXPANSIONS_VALUES,
   ...PRIME_2_TEMPLE_KEYS_VALUES,
 ] as const;
+
+// export const AGON_HINTS: RegionHints = {
+//   bossItem: null,
+//   bossKeys: [
+//     null, null, null
+//   ],
+//   flyingCacheHints: [null, null],
+//   translatorHints
+// }
 
 export const PRIME_2_VIOLET_HINTS: Prime2ItemLocationHint[] = [
   { label: "Main Energy Controller", item: null, location: null, proximityType: "in", numRooms: null },

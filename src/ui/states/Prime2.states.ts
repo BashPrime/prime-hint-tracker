@@ -7,7 +7,7 @@ import {
   PRIME_2_VIOLET_HINTS,
 } from "@/data/Prime2.data";
 import { Hint } from "@/types/Hint.types";
-import { Prime2ItemHint, Prime2ItemLocationHint } from "@/types/Prime2.types";
+import { Prime2ItemHint, Prime2ItemLocationHint, RegionHints, TranslatorHint } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
 
 export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
@@ -30,3 +30,44 @@ export const prime2KeybearerHintsState = atomWithReset<Prime2ItemHint[]>([
 export const prime2StkHintsState = atomWithReset<Hint[]>([
   ...PRIME_2_SKY_TEMPLE_KEY_HINTS,
 ]);
+export const templeGroundsHintsState = atomWithReset<RegionHints>({
+  bossName: 'U-Mos Reward',
+  bossItem: null,
+  bossKeys: [],
+  flyingCacheHints: [
+    { name: 'Accursed Lake', value: null },
+    { name: 'Defiled Shrine', value: null },
+    { name: 'Ing Reliquary', value: null },
+  ],
+  translatorHints: Array(5).fill({})
+})
+export const agonHintsState = atomWithReset<RegionHints>({
+  bossName: 'Amorbis',
+  bossItem: null,
+  bossKeys: Array(3).fill(null),
+  flyingCacheHints: [
+    { name: 'Battleground', value: null },
+    { name: 'Dark Oasis', value: null },
+  ],
+  translatorHints: Array(5).fill({})
+})
+export const torvusHintsState = atomWithReset<RegionHints>({
+  bossName: 'Chykka',
+  bossItem: null,
+  bossKeys: Array(3).fill(null),
+  flyingCacheHints: [
+    { name: 'Poisoned Bog', value: null },
+    { name: 'Dungeon', value: null },
+  ],
+  translatorHints: Array(6).fill({})
+})
+export const sanctuaryHintsState = atomWithReset<RegionHints>({
+  bossName: 'Quadraxis',
+  bossItem: null,
+  bossKeys: Array(3).fill(null),
+  flyingCacheHints: [
+    { name: 'Hive Dynamo Works', value: null },
+    { name: 'Hive Entrance', value: null },
+  ],
+  translatorHints: Array(6).fill({})
+})
