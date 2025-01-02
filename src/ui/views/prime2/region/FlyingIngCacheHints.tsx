@@ -13,9 +13,9 @@ export default function FlyingIngCacheHints({ regionHints }: Props) {
   const hints = useAtomValue(regionHints)
   return (
     <div className="grid grid-cols-2 bg-zinc-800 px-2 pt-1" data-name="flying-ing-cache-hints">
-      {hints.flyingCacheHints.map((cache) => (
-        <div>
-          <p className="uppercase font-bold text-xs text-purple-400">{cache.name}</p>
+      {hints.flyingCacheHints.map((cache, idx) => (
+        <div key={`${hints.variant}-cache-${idx}`}>
+          <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">{cache.name}</p>
           <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
         </div>
       ))}

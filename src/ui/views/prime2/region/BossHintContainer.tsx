@@ -63,8 +63,8 @@ export function BossHintContainer({ regionHints }: Props) {
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col w-2/5" data-name="boss-keys">
           {hints.bossKeys.map((_, idx) => (
-            <div>
-              <p className="uppercase font-bold text-[13px] text-orange-500">
+            <div key={`${hints.variant}-key-${idx+1}`}>
+              <p className="uppercase font-bold text-[13px] text-red-500">
                 Key {idx + 1}
               </p>
               <AutoComplete
