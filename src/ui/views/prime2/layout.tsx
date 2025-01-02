@@ -14,10 +14,11 @@ import HintListWrapper from "../HintListWrapper";
 import HintList from "../HintList";
 import { PRIME_2_LOCATIONS_WITH_ITEMS, PRIME_2_RELATED_UPGRADES_HINTS } from "@/data/Prime2.data";
 import { Prime2ItemHintSchema, Prime2LocationHintSchema } from "@/types/Prime2.types";
+import Prime2GuardianHintPanel from "./GuardianHintPanel";
 
 export default function Prime2Layout() {
   return (
-    <div className={cn("grid grid-cols-5 gap-x-2 h-full bg-slate-900")}>
+    <div className={cn("grid grid-cols-6 gap-x-2 h-full bg-slate-900")}>
       <HintListWrapper name="Items" className={cn("flex-auto")}>
         <Prime2ItemLocationHintList
           hints={prime2ItemLocationHintsState}
