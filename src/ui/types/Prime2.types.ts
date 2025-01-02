@@ -97,6 +97,7 @@ export const TranslatorHintSchema = z.object({
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>
 
 export const RegionHintsSchema = z.object({
+  variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
   bossName: z.string(),
   bossItem: Prime2ItemSchema.nullable(),
   bossKeys: z.array(Prime2RegionSchema),
