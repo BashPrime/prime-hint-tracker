@@ -1,32 +1,12 @@
 import {
-  PRIME_2_AMBER_HINTS,
-  PRIME_2_COBALT_HINTS,
-  PRIME_2_EMERALD_HINTS,
-  PRIME_2_KEYBEARER_HINTS,
   PRIME_2_SKY_TEMPLE_KEY_HINTS,
-  PRIME_2_VIOLET_HINTS,
 } from "@/data/Prime2.data";
 import { Hint } from "@/types/Hint.types";
-import { Prime2ItemHint, Prime2ItemLocationHint, RegionHints, TranslatorHint } from "@/types/Prime2.types";
+import { Prime2ItemLocationHint, RegionHints } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
 
 export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
 export const prime2ItemLocationHintsState = atomWithReset<Prime2ItemLocationHint[]>([]);
-export const prime2VioletHintsState = atomWithReset<Prime2ItemLocationHint[]>([
-  ...PRIME_2_VIOLET_HINTS,
-]);
-export const prime2AmberHintsState = atomWithReset<Prime2ItemLocationHint[]>([
-  ...PRIME_2_AMBER_HINTS,
-]);
-export const prime2EmeraldHintsState = atomWithReset<Prime2ItemLocationHint[]>([
-  ...PRIME_2_EMERALD_HINTS,
-]);
-export const prime2CobaltHintsState = atomWithReset<Prime2ItemLocationHint[]>([
-  ...PRIME_2_COBALT_HINTS,
-]);
-export const prime2KeybearerHintsState = atomWithReset<Prime2ItemHint[]>([
-  ...PRIME_2_KEYBEARER_HINTS,
-]);
 export const prime2StkHintsState = atomWithReset<Hint[]>([
   ...PRIME_2_SKY_TEMPLE_KEY_HINTS,
 ]);
@@ -45,7 +25,7 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     { name: "Fortress Transport Access", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Meeting Grounds", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Path of Eyes", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
-  ]
+  ],
 })
 export const agonHintsState = atomWithReset<RegionHints>({
   bossName: 'Amorbis',
@@ -61,7 +41,7 @@ export const agonHintsState = atomWithReset<RegionHints>({
     { name: "Portal Terminal", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Mining Station A", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Mining Station B", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
-  ]
+  ],
 })
 export const torvusHintsState = atomWithReset<RegionHints>({
   bossName: 'Chykka',
@@ -78,7 +58,7 @@ export const torvusHintsState = atomWithReset<RegionHints>({
     { name: "Catacombs", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Gathering Hall", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Training Chamber", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
-  ]
+  ],
 })
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
   bossName: 'Quadraxis',
@@ -95,5 +75,5 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
     { name: "Main Gyro Chamber", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Main Research", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
     { name: "Watch Station", firstValue: null, secondValue: null, proximityType: "in", numRooms: 0 },
-  ]
+  ],
 })

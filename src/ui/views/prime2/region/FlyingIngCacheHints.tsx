@@ -12,9 +12,12 @@ export default function FlyingIngCacheHints({ regionHints }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(regionHints)
   return (
-    <div className="flex flex-col gap-2 border border-orange-600" data-name="flying-ing-cache-hints">
+    <div className="grid grid-cols-2 border border-orange-600" data-name="flying-ing-cache-hints">
       {hints.flyingCacheHints.map((cache) => (
-        <AutoComplete placeholder={cache.name ?? ''} emptyMessage="No item found." options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
+        <div>
+          <p className="uppercase font-light text-xs text-red-300">{cache.name}</p>
+          <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
+        </div>
       ))}
     </div>
   )

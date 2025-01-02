@@ -7,9 +7,5 @@ export function cn(...inputs: ClassValue[]) {
 
 export function createOptions(arr: string[], sort?: boolean) {
   const base = sort ? arr.sort() : arr
-
-  return [
-    { label: '', value: '' },
-    ...base.map((option) => ({ label: option, value: option }))
-  ]
+  return base.map((option) => ({ label: option, value: option }))
 }
