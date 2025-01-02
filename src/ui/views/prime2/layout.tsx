@@ -51,7 +51,7 @@ export default function Prime2Layout() {
         <HintList
           hints={prime2KeybearerHintsState}
           hintType={Prime2ItemHintSchema}
-          options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS])}
+          options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)}
           placeholder="Item..."
           emptyMessage="No items found."
         />
@@ -60,7 +60,7 @@ export default function Prime2Layout() {
         <HintList
           hints={prime2StkHintsState}
           hintType={Prime2LocationHintSchema}
-          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS])}
+          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
           placeholder="Location..."
           emptyMessage="No locations found."
         />
