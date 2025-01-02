@@ -9,6 +9,7 @@ import {
   PRIME_2_RELATED_UPGRADES_HINTS,
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_ALL_REGIONS,
+  PROXIMITY_OPTIONS,
 } from "../data/Prime2.data";
 import { ProximityTypeSchema } from "./Hint.types";
 
@@ -90,7 +91,7 @@ export const TranslatorHintSchema = z.object({
   name: z.string().default(''),
   firstValue: z.string().nullable().default(null),
   secondValue: z.string().nullable().default(null),
-  proximityType: z.enum(["in", "exactly", "up to"]).default("in"),
+  proximityType: z.enum([...PROXIMITY_OPTIONS]).default("in"),
   numRooms: z.number().default(0),
 })
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>

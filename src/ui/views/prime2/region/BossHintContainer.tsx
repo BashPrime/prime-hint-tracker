@@ -1,6 +1,6 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_FLYING_CACHE_REGION_OPTIONS } from "@/data/Prime2.data";
-import { cn, createOptions } from "@/lib/utils";
+import { createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtomValue } from "jotai";
 

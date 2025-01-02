@@ -103,7 +103,7 @@ export const AutoComplete = ({
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           disabled={disabled}
-          className={cn("text-sm h-8", className)}
+          className={cn("text-sm h-8 block", className)}
         />
       </div>
       <div className="relative">

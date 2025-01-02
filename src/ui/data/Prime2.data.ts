@@ -486,3 +486,9 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Transit Tunnel South",
   "Underground Tunnel",
 ] as const;
+
+export const PROXIMITY_OPTIONS = [
+  "in",
+  "up to",
+  "exactly",
+] as const
