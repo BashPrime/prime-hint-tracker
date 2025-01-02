@@ -15,7 +15,7 @@ export default function FlyingIngCacheHints({ regionHints }: Props) {
     <div className="grid grid-cols-2 bg-zinc-800 px-2 pt-1" data-name="flying-ing-cache-hints">
       {hints.flyingCacheHints.map((cache) => (
         <div>
-          <p className="uppercase font-bold text-xs text-red-200">{cache.name}</p>
+          <p className="uppercase font-bold text-xs text-purple-400">{cache.name}</p>
           <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
         </div>
       ))}

@@ -18,7 +18,7 @@ export default function TranslatorHints({ regionHints }: Props) {
     <div className="grid grid-cols-2 gap-2 bg-zinc-800 px-2 pt-1" data-name="translator-hints">
       {hints.translatorHints.map((translatorHint, idx) => (
         <div key={`trans-hint-${idx}`}>
-          <p className="uppercase font-bold text-xs border-b border-zinc-600/50 pb-2">
+          <p className="uppercase font-bold text-xs text-sky-500">
             {translatorHint.name}
           </p>
           <div>
