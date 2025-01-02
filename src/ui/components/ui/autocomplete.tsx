@@ -73,8 +73,12 @@ export const AutoComplete = ({
 
   const handleBlur = useCallback(() => {
     setOpen(false)
-    // setInputValue(selected?.label)
-  }, [])
+
+    // reset selected state if input is empty
+    if (!inputValue) {
+      setSelected({ label: "", value: "" } as Option)
+    }
+  }, [inputValue])
 
   const handleSelectOption = useCallback(
     (selectedOption: Option) => {
@@ -95,6 +99,7 @@ export const AutoComplete = ({
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
+        <p>selected: {JSON.stringify(selected)}</p>
         <CommandInput
           ref={inputRef}
           value={inputValue}
