@@ -1,5 +1,5 @@
 import HintPanel from "../HintPanel";
-import { cn } from "../../lib/utils";
+import { cn, createOptions } from "../../lib/utils";
 import {
   prime2VioletHintsState,
   prime2AmberHintsState,
@@ -10,10 +10,25 @@ import {
   prime2StkHintsState,
 } from "@/states/Prime2.states";
 import Prime2ItemLocationHintList from "./ItemLocationHintList";
+import Prime2ItemHintList from "./ItemHintList";
+import HintListWrapper from "../HintListWrapper";
+import HintList from "../HintList";
+import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_RELATED_UPGRADES_HINTS } from "@/data/Prime2.data";
+import { Prime2ItemHintSchema, Prime2ItemLocationHintSchema, Prime2LocationHintSchema } from "@/types/Prime2.types";
 
 export default function Prime2Layout() {
   return (
     <div className={cn("grid grid-cols-5 gap-x-2 h-full bg-slate-900")}>
+      <HintListWrapper name="Items" className={cn("flex-auto")}>
+        <HintList
+          hints={prime2ItemLocationHintsState}
+          hintType={Prime2ItemLocationHintSchema}
+          options={createOptions([...PRIME_2_ALL_ITEMS_VALUES])}
+          placeholder="Item..."
+          emptyMessage="No items found."
+          allowNew
+        />
+      </HintListWrapper>
       <Prime2ItemLocationHintList
         name="Items"
         hints={prime2ItemLocationHintsState}
@@ -44,11 +59,15 @@ export default function Prime2Layout() {
           className={cn("border-l-2 border-sky-600 h-full")}
         />
       </div>
-      <HintPanel
-        name="Keybearer Hints"
-        hints={prime2KeybearerHintsState}
-        className={cn("flex-auto border-l-2 border-rose-600")}
-      />
+      <HintListWrapper name="Keybearer Hints" className={cn("flex-auto border-l-2 border-rose-600")}>
+        <HintList
+          hints={prime2KeybearerHintsState}
+          hintType={Prime2ItemHintSchema}
+          options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS])}
+          placeholder="Item..."
+          emptyMessage="No items found."
+        />
+      </HintListWrapper>
       <HintPanel
         name="Sky Temple Keys"
         hints={prime2StkHintsState}

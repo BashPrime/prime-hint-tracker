@@ -14,7 +14,7 @@ export default function Hint(props: Props) {
   return (
     <div
       className={cn(
-        'p-2',
+        'px-2 pt-2',
         checked ? 'bg-green-900' : 'bg-zinc-700'
       )}
     >
@@ -22,7 +22,6 @@ export default function Hint(props: Props) {
         <Checkbox checked={checked} onClick={() => setChecked(!checked)} />
         {props.label && <p className={cn('font-semibold text-sm')}>{props.label}</p>}
       </div>
-
       {props.children}
     </div>
   )

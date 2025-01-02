@@ -1,5 +1,7 @@
 import {
+  Prime2ItemHint,
   Prime2ItemLocationHint,
+  Prime2LocationHint,
 } from "@/types/Prime2.types";
 import { Hint } from "../types/Hint.types";
 
@@ -110,16 +112,16 @@ export const PRIME_2_COBALT_HINTS: Prime2ItemLocationHint[] = [
   { label: "Watch Station", item: null, location: null, proximityType: "in", numRooms: null },
 ] as const;
 
-export const PRIME_2_KEYBEARER_HINTS: Hint[] = [
-  { label: "Accursed Lake", value: "", fixedLabel: true },
-  { label: "Ing Reliquary", value: "", fixedLabel: true },
-  { label: "Defiled Shrine", value: "", fixedLabel: true },
-  { label: "Battleground", value: "", fixedLabel: true },
-  { label: "Dark Oasis", value: "", fixedLabel: true },
-  { label: "Poisoned Bog", value: "", fixedLabel: true },
-  { label: "Dungeon", value: "", fixedLabel: true },
-  { label: "Hive Dynamo Works", value: "", fixedLabel: true },
-  { label: "Hive Entrance", value: "", fixedLabel: true },
+export const PRIME_2_KEYBEARER_HINTS: Prime2ItemHint[] = [
+  { label: "Accursed Lake", item: null },
+  { label: "Ing Reliquary", item: null},
+  { label: "Defiled Shrine", item: null },
+  { label: "Battleground", item: null },
+  { label: "Dark Oasis", item: null },
+  { label: "Poisoned Bog", item: null },
+  { label: "Dungeon", item: null },
+  { label: "Hive Dynamo Works", item: null },
+  { label: "Hive Entrance", item: null },
 ] as const;
 
 export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] =

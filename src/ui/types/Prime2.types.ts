@@ -49,6 +49,18 @@ export type Prime2ItemLocationHint = z.infer<
   typeof Prime2ItemLocationHintSchema
 >;
 
+export const Prime2ItemHintSchema = z.object({
+  label: z.string().nullable().default(null),
+  item: Prime2ItemSchema.nullable().default(null)
+});
+export type Prime2ItemHint = z.infer<typeof Prime2ItemHintSchema>
+
+export const Prime2LocationHintSchema = z.object({
+  label: z.string().nullable().default(null),
+  location: Prime2LocationSchema.nullable().default(null)
+});
+export type Prime2LocationHint = z.infer<typeof Prime2LocationHintSchema>
+
 export const MajorGuardianHintsSchema = z.object({
   amorbis: Prime2ItemSchema.nullable().default(null),
   chykka: Prime2ItemSchema.nullable().default(null),

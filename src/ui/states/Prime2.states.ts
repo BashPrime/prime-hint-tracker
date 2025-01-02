@@ -7,7 +7,7 @@ import {
   PRIME_2_VIOLET_HINTS,
 } from "@/data/Prime2.data";
 import { Hint } from "@/types/Hint.types";
-import { Prime2ItemLocationHint } from "@/types/Prime2.types";
+import { Prime2ItemHint, Prime2ItemLocationHint } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
 
 export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
@@ -24,7 +24,7 @@ export const prime2EmeraldHintsState = atomWithReset<Prime2ItemLocationHint[]>([
 export const prime2CobaltHintsState = atomWithReset<Prime2ItemLocationHint[]>([
   ...PRIME_2_COBALT_HINTS,
 ]);
-export const prime2KeybearerHintsState = atomWithReset<Hint[]>([
+export const prime2KeybearerHintsState = atomWithReset<Prime2ItemHint[]>([
   ...PRIME_2_KEYBEARER_HINTS,
 ]);
 export const prime2StkHintsState = atomWithReset<Hint[]>([
