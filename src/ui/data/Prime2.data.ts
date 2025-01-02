@@ -68,6 +68,7 @@ export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Life Support system",
   "HUD system",
   "Movement system",
+  "Key",
 ] as const;
 
 export const PRIME_2_ALL_ITEMS_VALUES = [
