@@ -18,7 +18,7 @@ import Prime2GuardianHintPanel from "./GuardianHintPanel";
 
 export default function Prime2Layout() {
   return (
-    <div className={cn("grid grid-cols-6 gap-x-2 h-full bg-slate-900")}>
+    <div className={cn("grid grid-cols-5 gap-x-2 h-full bg-slate-900")}>
       <HintListWrapper name="Items" className={cn("flex-auto")}>
         <Prime2ItemLocationHintList
           hints={prime2ItemLocationHintsState}
