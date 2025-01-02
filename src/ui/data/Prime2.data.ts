@@ -486,10 +486,3 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Transit Tunnel South",
   "Underground Tunnel",
 ] as const;
-
-export const REGION_VARIANT = {
-  temple: "violet-200",
-  agon: "amber-200",
-  torvus: "emerald-200",
-  sanctuary: "sky-200",
-}

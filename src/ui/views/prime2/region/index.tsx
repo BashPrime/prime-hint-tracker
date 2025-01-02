@@ -15,9 +15,9 @@ export default function Region({ name, hints, className }: Props) {
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       <h2 className="font-semibold text-lg">{name}</h2>
-      <BossHintContainer regionHints={hints} variant={name.toLowerCase()} />
+      <BossHintContainer regionHints={hints} />
       <FlyingIngCacheHints regionHints={hints} />
-      <TranslatorHints regionHints={hints} variant={name.toLowerCase()} />
+      <TranslatorHints regionHints={hints} />
     </div>
   )
 }
