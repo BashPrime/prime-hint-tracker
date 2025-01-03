@@ -14,7 +14,7 @@ import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
-  className?: string
+  className?: string;
 };
 
 export function BossHintContainer({ regionHints, className }: Props) {
@@ -42,7 +42,10 @@ export function BossHintContainer({ regionHints, className }: Props) {
 
   return (
     <div
-      className={cn("flex flex-row gap-2 p-2 bg-zinc-800 flex-none", className)}
+      className={cn(
+        "flex sm:flex-col md:flex-row gap-2 p-2 bg-zinc-800 flex-none",
+        className
+      )}
       data-name="boss-container"
     >
       <div className="flex flex-col gap-2 w-3/5" data-name="boss-img-item">
@@ -62,9 +65,9 @@ export function BossHintContainer({ regionHints, className }: Props) {
         </div>
       </div>
       {hints.bossKeys.length > 0 && (
-        <div className="flex flex-col w-2/5" data-name="boss-keys">
+        <div className="flex flex-col" data-name="boss-keys">
           {hints.bossKeys.map((_, idx) => (
-            <div key={`${hints.variant}-key-${idx+1}`}>
+            <div key={`${hints.variant}-key-${idx + 1}`}>
               <p className="uppercase font-bold text-[13px] text-red-500">
                 Key {idx + 1}
               </p>
