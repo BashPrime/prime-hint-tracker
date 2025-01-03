@@ -28,7 +28,7 @@ export default function TranslatorHints({ regionHints, className }: Props) {
 
   switch (hints.variant) {
     case "temple":
-      headerColor = "text-violet-400";
+      headerColor = "text-purple-400";
       break;
     case "agon":
       headerColor = "text-amber-400";
