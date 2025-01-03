@@ -19,7 +19,10 @@ export default function TranslatorHints({ regionHints, className }: Props) {
   const hints = useAtomValue(regionHints);
 
   // !LOCAL
-  const itemOptions = createOptions([...PRIME_2_ALL_ITEMS_VALUES, "Joke Hint"], true);
+  const itemOptions = createOptions(
+    [...PRIME_2_ALL_ITEMS_VALUES, "Joke Hint"],
+    true
+  );
   const locationOptions = createOptions(
     [...PRIME_2_ALL_LOCATIONS, ...PRIME_2_REGION_OPTIONS],
     true
@@ -66,13 +69,21 @@ export default function TranslatorHints({ regionHints, className }: Props) {
               placeholder="Item..."
               emptyMessage="No item found."
               options={itemOptions}
+              tabIndex={1}
               className="text-sm h-6"
             />
-            <Input type="text" placeholder="in..." className="text-sm h-6" data-name="proximity" />
+            <Input
+              type="text"
+              placeholder="in..."
+              className="text-sm h-6"
+              data-name="proximity"
+              tabIndex={-1}
+            />
             <AutoComplete
               placeholder="Location or Item..."
               emptyMessage="No location found."
               options={secondValueOptions}
+              tabIndex={1}
               className="text-sm h-6"
             />
           </div>

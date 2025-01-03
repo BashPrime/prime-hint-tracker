@@ -60,6 +60,7 @@ export function BossHintContainer({ regionHints, className }: Props) {
             placeholder="Item..."
             emptyMessage="No item found."
             options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
+            tabIndex={1}
             className="h-6"
           />
         </div>
@@ -78,6 +79,7 @@ export function BossHintContainer({ regionHints, className }: Props) {
                   [...PRIME_2_REGION_OPTIONS, "Either"],
                   true
                 )}
+                tabIndex={1}
                 className="text-[13px]"
               />
             </div>
