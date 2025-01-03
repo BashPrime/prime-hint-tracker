@@ -11,9 +11,10 @@ import { PrimitiveAtom, useAtomValue } from "jotai";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
+  className?: string;
 };
 
-export default function TranslatorHints({ regionHints }: Props) {
+export default function TranslatorHints({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
 
@@ -45,7 +46,7 @@ export default function TranslatorHints({ regionHints }: Props) {
 
   return (
     <div
-      className="grid grid-cols-2 gap-2 bg-zinc-800 px-2 pt-1"
+      className={cn("grid sm:grid-cols-none md:grid-cols-2 gap-2 bg-zinc-800 px-2 pt-1", className)}
       data-name="translator-hints"
     >
       {hints.translatorHints.map((translatorHint, idx) => (

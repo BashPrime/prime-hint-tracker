@@ -3,7 +3,7 @@ import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_FLYING_CACHE_REGION_OPTIONS,
 } from "@/data/Prime2.data";
-import { createOptions } from "@/lib/utils";
+import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtomValue } from "jotai";
 
@@ -14,9 +14,10 @@ import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
+  className?: string
 };
 
-export function BossHintContainer({ regionHints }: Props) {
+export function BossHintContainer({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
 
@@ -41,7 +42,7 @@ export function BossHintContainer({ regionHints }: Props) {
 
   return (
     <div
-      className="flex flex-row gap-2 p-2 bg-zinc-800"
+      className={cn("flex flex-row gap-2 p-2 bg-zinc-800 flex-none", className)}
       data-name="boss-container"
     >
       <div className="flex flex-col gap-2 w-3/5" data-name="boss-img-item">
