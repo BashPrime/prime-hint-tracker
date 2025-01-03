@@ -6,6 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function createOptions(arr: string[], sort?: boolean) {
-  const base = sort ? arr.sort() : arr
+  let base = sort ? arr.sort() : arr
+
+  // Remove duplicate entries
+  base = base.filter((item, idx, array) => array.indexOf(item) === idx)
   return base.map((option) => ({ label: option, value: option }))
 }

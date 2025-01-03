@@ -1,5 +1,5 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import { PRIME_2_RELATED_UPGRADES_HINTS } from "@/data/Prime2.data";
+import { PRIME_2_ALL_ITEMS_VALUES, PRIME_2_RELATED_UPGRADES_HINTS } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtomValue } from "jotai";
@@ -17,7 +17,7 @@ export default function FlyingIngCacheHints({ regionHints, className }: Props) {
       {hints.flyingCacheHints.map((cache, idx) => (
         <div key={`${hints.variant}-cache-${idx}`}>
           <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">{cache.name}</p>
-          <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
+          <AutoComplete placeholder="Item..." emptyMessage="No item found." options={createOptions([...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS], true)} />
         </div>
       ))}
     </div>
