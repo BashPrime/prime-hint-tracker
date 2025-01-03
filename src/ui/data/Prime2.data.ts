@@ -1,6 +1,7 @@
 import { Hint } from "../types/Hint.types";
 
 export const PRIME_2_MAJORS_VALUES = [
+  "Missile Launcher",
   "Super Missile",
   "Seeker Launcher",
   "Dark Beam",
@@ -22,6 +23,10 @@ export const PRIME_2_MAJORS_VALUES = [
   "Amber Translator",
   "Emerald Translator",
   "Cobalt Translator",
+  "Cannon Ball",
+  "Massive Damage",
+  "Unlimited Beam Ammo",
+  "Unlimited Missile Ammo",
 ] as const;
 
 export const PRIME_2_PROGRESSIVE_MAJORS_VALUES = [
@@ -33,6 +38,8 @@ export const PRIME_2_EXPANSIONS_VALUES = [
   "Energy Tank",
   "Missile Expansion",
   "Beam Ammo Expansion",
+  "Light Ammo Expansion",
+  "Dark Ammo Expansion",
   "Power Bomb Expansion",
 ] as const;
 
@@ -57,6 +64,17 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
   "Sky Temple Key 9",
 ] as const;
 
+export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
+  "Visor",
+  "Suit",
+  "Beam",
+  "Morph Ball system",
+  "Movement system",
+  "Missile system",
+  "Charge Combo",
+  "Translator",
+]
+
 export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Missile-related",
   "Morph Ball-related",
@@ -72,6 +90,7 @@ export const PRIME_2_ALL_ITEMS_VALUES = [
   ...PRIME_2_PROGRESSIVE_MAJORS_VALUES,
   ...PRIME_2_EXPANSIONS_VALUES,
   ...PRIME_2_TEMPLE_KEYS_VALUES,
+  ...PRIME_2_MAJORS_CATEGORIES_HINTS,
 ] as const;
 
 export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] =
@@ -92,7 +111,7 @@ export const PRIME_2_ALL_REGIONS = [
   "Ing Hive",
 ] as const;
 
-export const PRIME_2_FLYING_CACHE_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS, "Either"].filter((region) => region !== "Sky Temple")
+export const PRIME_2_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter((region) => region !== "Sky Temple")
 
 export const PRIME_2_ALL_LOCATIONS = [
   "Landing Site",
