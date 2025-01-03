@@ -1,4 +1,3 @@
-import { PRIME_2_SKY_TEMPLE_KEY_HINTS } from "@/data/Prime2.data";
 import { Hint } from "@/types/Hint.types";
 import { Prime2ItemLocationHint, RegionHints } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";

@@ -14,7 +14,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
   return (
     <div className={className} data-name="stkHints">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Sky Temple Keys</h2>
-      <div className="flex-[0_0_initial] grid grid-rows-5 grid-flow-col">
+      <div className="flex-[0_0_initial] grid grid-rows-5 grid-flow-col bg-zinc-800">
         {...hints.map((hint, idx) => (
           <div className="m-1" key={`stk-${idx + 1}`}>
             <p className="uppercase font-bold text-xs text-lime-400 tracking-wide">

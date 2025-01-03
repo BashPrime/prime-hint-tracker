@@ -15,9 +15,12 @@ export default function UnhintedItems({ className }: Props) {
   // !JOTAI
   const hints = useAtomValue(skyTempleKeyHintsState);
   return (
-    <div className={cn("flex flex-col flex-1", className)} data-name="unhinted-items">
+    <div
+      className={cn("flex flex-col flex-1", className)}
+      data-name="unhinted-items"
+    >
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Unhinted Items</h2>
-      <div className="flex-[1_0_0] overflow-y-auto">
+      <div className="flex-[1_0_0] overflow-y-auto bg-zinc-800">
         {...hints.map((_, idx) => (
           <div className="m-1" key={`stk-${idx + 1}`}>
             <AutoComplete

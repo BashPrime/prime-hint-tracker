@@ -11,7 +11,6 @@ import {
   PRIME_2_ALL_REGIONS,
   PROXIMITY_OPTIONS,
 } from "../data/Prime2.data";
-import { ProximityTypeSchema } from "./Hint.types";
 
 export const Prime2MajorItemSchema = z.enum(PRIME_2_MAJORS_VALUES);
 export type Prime2MajorItem = z.infer<typeof Prime2MajorItemSchema>;
