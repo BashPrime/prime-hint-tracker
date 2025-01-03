@@ -1,6 +1,7 @@
 {
   "name": "prime-hint-tracker",
   "private": true,
+  "author": "BashPrime",
   "version": "0.1.0",
   "type": "module",
   "main": "dist-electron/main.js",
