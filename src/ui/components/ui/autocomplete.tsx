@@ -22,6 +22,7 @@ type AutoCompleteProps = {
   isLoading?: boolean
   disabled?: boolean
   placeholder?: string
+  className?: string
 }
 
 export const AutoComplete = ({
@@ -32,6 +33,7 @@ export const AutoComplete = ({
   onValueChange,
   disabled,
   isLoading = false,
+  className,
 }: AutoCompleteProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -71,8 +73,12 @@ export const AutoComplete = ({
 
   const handleBlur = useCallback(() => {
     setOpen(false)
-    setInputValue(selected?.label)
-  }, [selected])
+
+    // reset selected state if input is empty
+    if (!inputValue) {
+      setSelected({ label: "", value: "" } as Option)
+    }
+  }, [inputValue])
 
   const handleSelectOption = useCallback(
     (selectedOption: Option) => {
@@ -101,7 +107,7 @@ export const AutoComplete = ({
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           disabled={disabled}
-          className="text-sm h-8"
+          className={cn("text-sm h-8 block", className)}
         />
       </div>
       <div className="relative">

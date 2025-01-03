@@ -1,7 +1,3 @@
-import {
-  Prime2ItemHint,
-  Prime2ItemLocationHint,
-} from "@/types/Prime2.types";
 import { Hint } from "../types/Hint.types";
 
 export const PRIME_2_MAJORS_VALUES = [
@@ -78,58 +74,12 @@ export const PRIME_2_ALL_ITEMS_VALUES = [
   ...PRIME_2_TEMPLE_KEYS_VALUES,
 ] as const;
 
-export const PRIME_2_VIOLET_HINTS: Prime2ItemLocationHint[] = [
-  { label: "Main Energy Controller", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Transport to Agon Wastes", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Fortress Transport Access", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Meeting Grounds", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Path of Eyes", item: null, location: null, proximityType: "in", numRooms: null },
-] as const;
-
-export const PRIME_2_AMBER_HINTS: Prime2ItemLocationHint[] = [
-  { label: "Agon Energy Controller", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Mining Plaza", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Portal Terminal", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Mining Station A", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Mining Station B", item: null, location: null, proximityType: "in", numRooms: null },
-] as const;
-
-export const PRIME_2_EMERALD_HINTS: Prime2ItemLocationHint[] = [
-  { label: "Torvus Energy Controller", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Path of Roots", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Underground Tunnel", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Catacombs", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Gathering Hall", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Training Chamber", item: null, location: null, proximityType: "in", numRooms: null },
-] as const;
-
-export const PRIME_2_COBALT_HINTS: Prime2ItemLocationHint[] = [
-  { label: "Sanctuary Energy Controller", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Sanctuary Entrance", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Hall of Combat Mastery", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Main Gyro Chamber", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Main Research", item: null, location: null, proximityType: "in", numRooms: null },
-  { label: "Watch Station", item: null, location: null, proximityType: "in", numRooms: null },
-] as const;
-
-export const PRIME_2_KEYBEARER_HINTS: Prime2ItemHint[] = [
-  { label: "Accursed Lake", item: null },
-  { label: "Ing Reliquary", item: null },
-  { label: "Defiled Shrine", item: null },
-  { label: "Battleground", item: null },
-  { label: "Dark Oasis", item: null },
-  { label: "Poisoned Bog", item: null },
-  { label: "Dungeon", item: null },
-  { label: "Hive Dynamo Works", item: null },
-  { label: "Hive Entrance", item: null },
-] as const;
-
 export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] =
   PRIME_2_TEMPLE_KEYS_VALUES.filter((key) =>
     key.toLowerCase().includes("sky")
   ).map((key) => ({ label: key as string, value: "", fixedLabel: true }));
 
-export const PRIME_2_REGIONS = [
+export const PRIME_2_ALL_REGIONS = [
   "Temple Grounds",
   "Sky Temple Grounds",
   "Great Temple",
@@ -141,6 +91,8 @@ export const PRIME_2_REGIONS = [
   "Sanctuary Fortress",
   "Ing Hive",
 ] as const;
+
+export const PRIME_2_FLYING_CACHE_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS, "Either"].filter((region) => region !== "Sky Temple")
 
 export const PRIME_2_ALL_LOCATIONS = [
   "Landing Site",
@@ -534,3 +486,9 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Transit Tunnel South",
   "Underground Tunnel",
 ] as const;
+
+export const PROXIMITY_OPTIONS = [
+  "in",
+  "up to",
+  "exactly",
+] as const
