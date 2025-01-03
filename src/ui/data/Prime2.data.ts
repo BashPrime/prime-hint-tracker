@@ -92,7 +92,7 @@ export const PRIME_2_ALL_REGIONS = [
   "Ing Hive",
 ] as const;
 
-export const PRIME_2_FLYING_CACHE_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter((region) => region !== "Sky Temple")
+export const PRIME_2_FLYING_CACHE_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS, "Either"].filter((region) => region !== "Sky Temple")
 
 export const PRIME_2_ALL_LOCATIONS = [
   "Landing Site",
