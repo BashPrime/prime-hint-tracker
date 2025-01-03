@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_ALL_LOCATIONS,
-  PRIME_2_FLYING_CACHE_REGION_OPTIONS,
+  PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
@@ -19,9 +19,9 @@ export default function TranslatorHints({ regionHints, className }: Props) {
   const hints = useAtomValue(regionHints);
 
   // !LOCAL
-  const itemOptions = createOptions([...PRIME_2_ALL_ITEMS_VALUES], true);
+  const itemOptions = createOptions([...PRIME_2_ALL_ITEMS_VALUES, "Joke Hint"], true);
   const locationOptions = createOptions(
-    [...PRIME_2_ALL_LOCATIONS, ...PRIME_2_FLYING_CACHE_REGION_OPTIONS],
+    [...PRIME_2_ALL_LOCATIONS, ...PRIME_2_REGION_OPTIONS],
     true
   );
   const secondValueOptions = [...itemOptions, ...locationOptions];
