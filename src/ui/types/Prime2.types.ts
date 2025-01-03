@@ -44,11 +44,8 @@ export type Prime2LocationWithItem = z.infer<
 >;
 
 export const Prime2ItemLocationHintSchema = z.object({
-  label: z.string().nullable().default(null),
   item: Prime2ItemSchema.nullable().default(null),
   location: Prime2LocationWithItemSchema.nullable().default(null),
-  proximityType: ProximityTypeSchema.default("in"),
-  numRooms: z.number().nullable().default(null),
 });
 export type Prime2ItemLocationHint = z.infer<
   typeof Prime2ItemLocationHintSchema

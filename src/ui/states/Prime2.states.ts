@@ -7,9 +7,6 @@ export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
 export const prime2ItemLocationHintsState = atomWithReset<
   Prime2ItemLocationHint[]
 >([]);
-export const prime2StkHintsState = atomWithReset<Hint[]>([
-  ...PRIME_2_SKY_TEMPLE_KEY_HINTS,
-]);
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
   bossName: "U-Mos Reward",
@@ -213,3 +210,41 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
     },
   ],
 });
+
+export const progressionItemsState = atomWithReset<Prime2ItemLocationHint[]>([
+  { item: "Missile Launcher", location: null },
+  { item: "Seeker Launcher", location: null },
+  { item: "Super Missile", location: null },
+  { item: "Dark Beam", location: null },
+  { item: "Light Beam", location: null },
+  { item: "Annihilator Beam", location: null },
+  { item: "Space Jump Boots", location: null },
+  { item: "Gravity Boost", location: null },
+  { item: "Grapple Beam", location: null },
+  { item: "Screw Attack", location: null },
+  { item: "Morph Ball", location: null },
+  { item: "Morph Ball Bomb", location: null },
+  { item: "Boost Ball", location: null },
+  { item: "Spider Ball", location: null },
+  { item: "Power Bomb", location: null },
+  { item: "Dark Suit", location: null },
+  { item: "Light Suit", location: null },
+  { item: "Dark Visor", location: null },
+  { item: "Echo Visor", location: null },
+  { item: "Violet Translator", location: null },
+  { item: "Amber Translator", location: null },
+  { item: "Emerald Translator", location: null },
+  { item: "Cobalt Translator", location: null },
+])
+
+export const skyTempleKeyHintsState = atomWithReset<Prime2ItemLocationHint[]>([
+  { item: "Key 1", location: null },
+  { item: "Key 2", location: null },
+  { item: "Key 3", location: null },
+  { item: "Key 4", location: null },
+  { item: "Key 5", location: null },
+  { item: "Key 6", location: null },
+  { item: "Key 7", location: null },
+  { item: "Key 8", location: null },
+  { item: "Key 9", location: null },
+]);
