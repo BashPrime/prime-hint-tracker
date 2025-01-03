@@ -3,7 +3,7 @@ import { selectedGameState } from "../states/App.states";
 import Prime2Layout from "./prime2/layout";
 
 export default function LayoutSelector() {
-  // ! STATE
+  // !JOTAI
   const selectedGame = useAtomValue(selectedGameState)
 
   switch (selectedGame) {

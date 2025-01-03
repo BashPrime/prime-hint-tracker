@@ -49,7 +49,7 @@ export default function TranslatorHints({ regionHints, className }: Props) {
   return (
     <div
       className={cn(
-        "grid sm:grid-cols-none md:grid-cols-2 gap-2 bg-zinc-800 px-2 pt-1",
+        "grid sm:grid-cols-none md:grid-rows-3 md:grid-flow-col gap-2 bg-zinc-800 px-2 pt-1",
         className
       )}
       data-name="translator-hints"

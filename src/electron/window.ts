@@ -8,6 +8,8 @@ export function create() {
   mainWindow = new BrowserWindow({
     width: START_WIDTH,
     height: START_HEIGHT,
+    minWidth: 300,
+    minHeight: 300,
   });
   
   Menu.setApplicationMenu(menu);
