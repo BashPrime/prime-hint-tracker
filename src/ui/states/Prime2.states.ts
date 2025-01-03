@@ -229,7 +229,9 @@ export const progressionItemsState = atomWithReset<Prime2ItemLocationHint[]>([
   { item: "Amber Translator", location: null },
   { item: "Emerald Translator", location: null },
   { item: "Cobalt Translator", location: null },
-])
+]);
+
+export const unhintedItemsState = atomWithReset<Prime2ItemLocationHint[]>([]);
 
 export const skyTempleKeyHintsState = atomWithReset<Prime2ItemLocationHint[]>([
   { item: "Key 1", location: null },
