@@ -38,7 +38,8 @@ export type Prime2Region = z.infer<typeof Prime2RegionSchema>
 
 export const Prime2LocationWithItemSchema = z
   .enum(PRIME_2_LOCATIONS_WITH_ITEMS)
-  .nullable();
+  .nullable()
+  .default(null);
 export type Prime2LocationWithItem = z.infer<
   typeof Prime2LocationWithItemSchema
 >;

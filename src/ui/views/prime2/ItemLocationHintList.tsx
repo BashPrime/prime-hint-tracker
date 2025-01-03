@@ -22,13 +22,13 @@ export default function ItemLocationHintList({ name, atom, className }: Props) {
         className
       )}>
         {hints.map((hint, idx) => (
-          <div className="flex flex-row justify-between px-1" key={`progression-item-${idx}`}>
-            <p className="md:text-sm">{hint.item}</p>
+          <div className="md:flex md:flex-row md:justify-between px-1" key={`progression-item-${idx}`}>
+            <p className="font-semibold md:text-sm">{hint.item}</p>
             <AutoComplete
               placeholder="?????"
               emptyMessage="No location found."
               options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS, "Starting"], true)}
-              className="md:text-sm h-6 text-right"
+              className="md:text-sm h-6 md:text-right"
             />
           </div>
         ))}

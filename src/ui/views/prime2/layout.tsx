@@ -6,11 +6,14 @@ import ItemLocationHintList from "./ItemLocationHintList";
 export default function Prime2Layout() {
   return (
     <div className={cn("grid sm:grid-cols-2 md:grid-cols-5 h-full bg-[#1f1f1f]")}>
-      <div className="flex flex-col">
+      <div className="sm:hidden md:flex flex-col">
         <ItemLocationHintList name="Progression" atom={progressionItemsState} className="md:flex-[1_0_0] md:overflow-y-auto" />
-        <div className="md:flex-[0_0_initial]">
+        <div className="sm:block md:flex-[0_0_initial]">
           <ItemLocationHintList name="Sky Temple Keys" atom={skyTempleKeyHintsState} />
         </div>
+      </div>
+      <div className="inline md:hidden">
+        <ItemLocationHintList name="Sky Temple Keys" atom={skyTempleKeyHintsState} />
       </div>
       <Region name="Temple Grounds" hints={templeGroundsHintsState} className="border-l-2 border-violet-600" />
       <Region name="Agon Wastes" hints={agonHintsState} className="border-l-2 border-amber-600" />
