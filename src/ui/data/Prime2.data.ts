@@ -1,5 +1,3 @@
-import { Hint } from "../types/Hint.types";
-
 export const PRIME_2_MAJORS_VALUES = [
   "Missile Launcher",
   "Super Missile",
@@ -92,11 +90,6 @@ export const PRIME_2_ALL_ITEMS_VALUES = [
   ...PRIME_2_TEMPLE_KEYS_VALUES,
   ...PRIME_2_MAJORS_CATEGORIES_HINTS,
 ] as const;
-
-export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] =
-  PRIME_2_TEMPLE_KEYS_VALUES.filter((key) =>
-    key.toLowerCase().includes("sky")
-  ).map((key) => ({ label: key as string, value: "", fixedLabel: true }));
 
 export const PRIME_2_ALL_REGIONS = [
   "Temple Grounds",

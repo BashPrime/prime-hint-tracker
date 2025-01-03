@@ -1,11 +1,6 @@
-import { Hint } from "@/types/Hint.types";
 import { Prime2ItemLocationHint, RegionHints } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
 
-export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
-export const prime2ItemLocationHintsState = atomWithReset<
-  Prime2ItemLocationHint[]
->([]);
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
   bossName: "U-Mos Reward",
