@@ -13,7 +13,7 @@ export default function FlyingIngCacheHints({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints)
   return (
-    <div className={cn("sm:grid sm:grid-cols-none md:grid-cols-3 bg-zinc-800 px-2 pt-1", className)} data-name="flying-ing-cache-hints">
+    <div className={cn("sm:grid sm:grid-cols-none md:grid-cols-2 bg-zinc-800 px-2 pt-1", className)} data-name="flying-ing-cache-hints">
       {hints.flyingCacheHints.map((cache, idx) => (
         <div key={`${hints.variant}-cache-${idx}`}>
           <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">{cache.name}</p>
