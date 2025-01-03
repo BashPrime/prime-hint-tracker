@@ -7,7 +7,7 @@ const template: MenuItemConstructorOptions[] = [
     label: "File",
     submenu: [
       { label: "Reset Size", click: () => resetSize() },
-      { label: "Reset Tracker" },
+      { label: "Reset Tracker", enabled: false },
       { role: isMac ? "close" : "quit" },
     ],
   },
