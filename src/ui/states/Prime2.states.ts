@@ -1,4 +1,10 @@
-import { Prime2ItemLocationHint, RegionHints } from "@/types/Prime2.types";
+import {
+  Prime2ItemLocationHint,
+  Prime2ItemLocationHintSchema,
+  RegionHints,
+  UnhintedItem,
+} from "@/types/Prime2.types";
+import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
@@ -231,7 +237,11 @@ export const progressionItemsState = atomWithReset<Prime2ItemLocationHint[]>([
   { item: "Cobalt Translator", location: null },
 ]);
 
-export const unhintedItemsState = atomWithReset<Prime2ItemLocationHint[]>([]);
+export const unhintedItemsState2 = atomWithReset<UnhintedItem[]>([
+  { id: 0, hint: atom(Prime2ItemLocationHintSchema.parse({})) },
+]);
+
+export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
 
 export const skyTempleKeyHintsState = atomWithReset<Prime2ItemLocationHint[]>([
   { item: "Key 1", location: null },

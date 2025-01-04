@@ -25,6 +25,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
               emptyMessage="No location found."
               options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
               tabIndex={1}
+              className="text-xs"
             />
           </div>
         ))}

@@ -11,6 +11,7 @@ import {
   PRIME_2_ALL_REGIONS,
   PROXIMITY_OPTIONS,
 } from "../data/Prime2.data";
+import { PrimitiveAtom } from "jotai";
 
 export const Prime2MajorItemSchema = z.enum(PRIME_2_MAJORS_VALUES);
 export type Prime2MajorItem = z.infer<typeof Prime2MajorItemSchema>;
@@ -44,8 +45,8 @@ export type Prime2LocationWithItem = z.infer<
 >;
 
 export const Prime2ItemLocationHintSchema = z.object({
-  item: Prime2ItemSchema.nullable().default(null),
-  location: Prime2LocationWithItemSchema.nullable().default(null),
+  item: z.string().nullable().default(null),
+  location: z.string().nullable().default(null),
 });
 export type Prime2ItemLocationHint = z.infer<
   typeof Prime2ItemLocationHintSchema
@@ -102,3 +103,8 @@ export const RegionHintsSchema = z.object({
   translatorHints: z.array(TranslatorHintSchema),
 })
 export type RegionHints = z.infer<typeof RegionHintsSchema>
+
+export type UnhintedItem = {
+  id: number
+  hint: PrimitiveAtom<Prime2ItemLocationHint>
+}
