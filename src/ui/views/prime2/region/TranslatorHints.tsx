@@ -7,7 +7,7 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
@@ -17,6 +17,15 @@ type Props = {
 export default function TranslatorHints({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
+  const translatorHints = hints.translatorHints.map((hint) => ({
+    name: hint.name,
+    firstValue: useAtomValue(hint.firstValue),
+    setFirstValue: useSetAtom(hint.firstValue),
+    secondValue: useAtomValue(hint.secondValue),
+    setSecondValue: useSetAtom(hint.secondValue),
+    proximity: useAtomValue(hint.proximity),
+    setProximity: useSetAtom(hint.proximity),
+  }))
 
   // !LOCAL
   const itemOptions = createOptions(
@@ -54,7 +63,7 @@ export default function TranslatorHints({ regionHints, className }: Props) {
       )}
       data-name="translator-hints"
     >
-      {hints.translatorHints.map((translatorHint, idx) => (
+      {translatorHints.map((hint, idx) => (
         <div key={`trans-hint-${idx}`}>
           <p
             className={cn(
@@ -62,19 +71,24 @@ export default function TranslatorHints({ regionHints, className }: Props) {
               headerColor
             )}
           >
-            {translatorHint.name}
+            {hint.name}
           </p>
           <div className="flex flex-col">
             <AutoComplete
               placeholder="Item..."
               emptyMessage="No item found."
+              value={{ label: hint.firstValue, value: hint.firstValue }}
+              onValueChange={(o) => hint.setFirstValue(o.value)}
               options={itemOptions}
               tabIndex={1}
               className="text-sm h-6"
+              data-name="first-value"
             />
             <Input
               type="text"
               placeholder="in..."
+              value={hint.proximity}
+              onChange={(e) => hint.setProximity(e.target.value)}
               className="text-sm h-6"
               data-name="proximity"
               tabIndex={-1}
@@ -82,9 +96,12 @@ export default function TranslatorHints({ regionHints, className }: Props) {
             <AutoComplete
               placeholder="Location or Item..."
               emptyMessage="No location found."
+              value={{ label: hint.secondValue, value: hint.secondValue }}
+              onValueChange={(o) => hint.setSecondValue(o.value)}
               options={secondValueOptions}
               tabIndex={1}
               className="text-sm h-6"
+              data-name="second-value"
             />
           </div>
         </div>

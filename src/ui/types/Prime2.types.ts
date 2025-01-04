@@ -88,10 +88,9 @@ export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
 export const TranslatorHintSchema = z.object({
   name: z.string().default(""),
-  firstValue: z.string().nullable().default(null),
-  secondValue: z.string().nullable().default(null),
-  proximityType: z.enum([...PROXIMITY_OPTIONS]).default("in"),
-  numRooms: z.number().default(0),
+  firstValue: z.custom<PrimitiveAtom<string>>(),
+  secondValue: z.custom<PrimitiveAtom<string>>(),
+  proximity: z.custom<PrimitiveAtom<string>>(),
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
