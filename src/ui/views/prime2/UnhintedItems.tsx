@@ -13,6 +13,7 @@ import {
   UnhintedItemSchema,
 } from "@/types/Prime2.types";
 import { atom, useAtom, PrimitiveAtom } from "jotai";
+import { Plus, X } from "lucide-react";
 import { v4 as uuidV4 } from "uuid";
 
 type HintInputProps = {
@@ -30,33 +31,37 @@ export function Hint({
   const [hint, setHint] = useAtom(hintAtom);
 
   return (
-    <div className={className}>
-      <AutoComplete
-        placeholder="Item..."
-        emptyMessage="No item found."
-        value={{ label: hint.item ?? "", value: hint.item ?? "" }}
-        onValueChange={(o) => setHint((prev) => ({ ...prev, item: o.value }))}
-        options={createOptions([...PRIME_2_MAJORS_VALUES], true)}
-        tabIndex={1}
-        className="uppercase font-bold tracking-wide placeholder:normal-case h-6"
-      />
-      <AutoComplete
-        placeholder="Location..."
-        emptyMessage="No location found."
-        value={{ label: hint.location ?? "", value: hint.location ?? "" }}
-        onValueChange={(o) =>
-          setHint((prev) => ({ ...prev, location: o.value }))
-        }
-        options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
-        tabIndex={1}
-        className="text-xs h-6"
-      />
-      <Button
+    <div className={cn("flex flex-row", className)}>
+      <div className="flex flex-col flex-1">
+        <AutoComplete
+          placeholder="Item..."
+          emptyMessage="No item found."
+          value={{ label: hint.item ?? "", value: hint.item ?? "" }}
+          onValueChange={(o) => setHint((prev) => ({ ...prev, item: o.value }))}
+          options={createOptions([...PRIME_2_MAJORS_VALUES], true)}
+          tabIndex={1}
+          className="uppercase font-bold tracking-wide placeholder:normal-case h-6"
+        />
+        <AutoComplete
+          placeholder="Location..."
+          emptyMessage="No location found."
+          value={{ label: hint.location ?? "", value: hint.location ?? "" }}
+          onValueChange={(o) =>
+            setHint((prev) => ({ ...prev, location: o.value }))
+          }
+          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
+          tabIndex={1}
+          className="h-6"
+        />
+      </div>
+      <X
         onClick={onDeleteHint}
-        className={cn("hover:brightness-110 active:brightness-75")}
-      >
-        X
-      </Button>
+        tabIndex={-1}
+        className={cn(
+          "w-8 text-red-500 cursor-pointer content-end",
+          "hover:brightness-125 active:brightness-75"
+        )}
+      />
     </div>
   );
 }
@@ -100,12 +105,12 @@ export default function UnhintedItems({ className }: Props) {
         <Button
           onClick={addNewHint}
           className={cn(
-            "w-2/5 place-self-center outline-none focus:outline-none",
+            "text-xs place-self-center outline-none focus:outline-none",
             "hover:brightness-110 active:brightness-75",
             !hints.length && "mt-2"
           )}
         >
-          + Add
+          <Plus /> Add new hint...
         </Button>
       </div>
     </div>
