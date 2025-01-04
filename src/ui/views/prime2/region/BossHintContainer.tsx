@@ -94,7 +94,7 @@ export function BossHintContainer({ regionHints, className }: Props) {
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col" data-name="boss-keys">
           {hints.bossKeys.map((key, idx) => (
-            <BossKeyHint name={`Key ${idx + 1}`} bossKeyHint={key} />
+            <BossKeyHint name={`Key ${idx + 1}`} key={`boss-key-${idx+1}`} bossKeyHint={key} />
           ))}
         </div>
       )}
