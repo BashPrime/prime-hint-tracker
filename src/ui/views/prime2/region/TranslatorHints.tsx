@@ -24,15 +24,20 @@ function TranslatorHint({ hint, headerColor }: TranslatorHintProps) {
   const [proximity, setProximity] = useAtom(hint.proximity);
 
   // !LOCAL
+  const JOKE_HINT_STR = "Joke Hint";
   const itemOptions = createOptions(
-    [...PRIME_2_ALL_ITEMS_VALUES, "Joke Hint"],
+    [...PRIME_2_ALL_ITEMS_VALUES, JOKE_HINT_STR],
     true
   );
-  const locationOptions = createOptions(
-    [...PRIME_2_ALL_LOCATIONS, ...PRIME_2_REGION_OPTIONS],
+  const secondValueOptions = createOptions(
+    [
+      ...PRIME_2_ALL_ITEMS_VALUES,
+      ...PRIME_2_ALL_LOCATIONS,
+      ...PRIME_2_REGION_OPTIONS,
+    ],
     true
   );
-  const secondValueOptions = [...itemOptions, ...locationOptions];
+  const isJokeHint = firstValue === JOKE_HINT_STR;
 
   return (
     <div>
@@ -49,28 +54,35 @@ function TranslatorHint({ hint, headerColor }: TranslatorHintProps) {
           onValueChange={(o) => setFirstValue(o.value)}
           options={itemOptions}
           tabIndex={1}
-          className="text-sm h-6"
+          className={cn(
+            "text-sm h-6",
+            isJokeHint && "font-bold text-green-400"
+          )}
           data-name="first-value"
         />
-        <Input
-          type="text"
-          placeholder="in..."
-          value={proximity}
-          onChange={(e) => setProximity(e.target.value)}
-          className="text-sm h-6"
-          data-name="proximity"
-          tabIndex={-1}
-        />
-        <AutoComplete
-          placeholder="Location or Item..."
-          emptyMessage="No location found."
-          value={{ label: secondValue, value: secondValue }}
-          onValueChange={(o) => setSecondValue(o.value)}
-          options={secondValueOptions}
-          tabIndex={1}
-          className="text-sm h-6"
-          data-name="second-value"
-        />
+        {!isJokeHint && (
+          <>
+            <Input
+              type="text"
+              placeholder="in..."
+              value={proximity}
+              onChange={(e) => setProximity(e.target.value)}
+              className="text-sm h-6"
+              data-name="proximity"
+              tabIndex={-1}
+            />
+            <AutoComplete
+              placeholder="Location or Item..."
+              emptyMessage="No location found."
+              value={{ label: secondValue, value: secondValue }}
+              onValueChange={(o) => setSecondValue(o.value)}
+              options={secondValueOptions}
+              tabIndex={1}
+              className="text-sm h-6"
+              data-name="second-value"
+            />
+          </>
+        )}
       </div>
     </div>
   );
