@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
-  PRIME_2_MAJORS_VALUES,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { unhintedItemsState } from "@/states/Prime2.states";

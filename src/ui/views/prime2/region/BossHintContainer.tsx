@@ -12,6 +12,29 @@ import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
 
+type BossKeyHintProps = {
+  name: string;
+  bossKeyHint: PrimitiveAtom<string>;
+};
+
+function BossKeyHint({ name, bossKeyHint }: BossKeyHintProps) {
+  const [hint, setHint] = useAtom(bossKeyHint);
+  return (
+    <div>
+      <p className="uppercase font-bold text-[13px] text-red-500">{name}</p>
+      <AutoComplete
+        placeholder="Region..."
+        emptyMessage="No region found."
+        value={{ label: hint, value: hint }}
+        onValueChange={(o) => setHint(o.value)}
+        options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
+        tabIndex={1}
+        className="text-[13px]"
+      />
+    </div>
+  );
+}
+
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
   className?: string;
@@ -20,8 +43,7 @@ type Props = {
 export function BossHintContainer({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
-  const [bossItem, setBossItem] = useAtom(hints.bossItem)
-  const bossKeys = hints.bossKeys.map((atom) => useAtom(atom))
+  const [bossItem, setBossItem] = useAtom(hints.bossItem);
 
   // !LOCAL
   let imgSrc: string;
@@ -71,24 +93,8 @@ export function BossHintContainer({ regionHints, className }: Props) {
       </div>
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col" data-name="boss-keys">
-          {bossKeys.map(([key, setKey], idx) => (
-            <div key={`${hints.variant}-key-${idx+1}`}>
-              <p className="uppercase font-bold text-[13px] text-red-500">
-                Key {idx+1}
-              </p>
-              <AutoComplete
-                placeholder="Region..."
-                emptyMessage="No region found."
-                value={{ label: key, value: key }}
-                onValueChange={(o) => setKey(o.value)}
-                options={createOptions(
-                  [...PRIME_2_REGION_OPTIONS, "Either"],
-                  true
-                )}
-                tabIndex={1}
-                className="text-[13px]"
-              />
-            </div>
+          {hints.bossKeys.map((key, idx) => (
+            <BossKeyHint name={`Key ${idx + 1}`} bossKeyHint={key} />
           ))}
         </div>
       )}

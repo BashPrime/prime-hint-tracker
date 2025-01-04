@@ -4,8 +4,36 @@ import {
   PRIME_2_RELATED_UPGRADES_HINTS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
+import { FlyingIngCacheHint, RegionHints } from "@/types/Prime2.types";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+
+type HintProps = {
+  cacheHint: FlyingIngCacheHint
+}
+
+function Hint({cacheHint}: HintProps) {
+  // !JOTAI
+  const [hint, setHint] = useAtom(cacheHint.value)
+
+  return (
+    <div>
+      <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
+        {cacheHint.name}
+      </p>
+      <AutoComplete
+        placeholder="Item..."
+        emptyMessage="No item found."
+        value={{ label: hint, value: hint }}
+        onValueChange={(o) => setHint(o.value)}
+        options={createOptions(
+          [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
+          true
+        )}
+        tabIndex={1}
+      />
+    </div>
+  );
+}
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
@@ -15,11 +43,6 @@ type Props = {
 export default function FlyingIngCacheHints({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
-  const flyingIngCacheHints = hints.flyingCacheHints.map((hint) => ({
-    name: hint.name,
-    hint: useAtomValue(hint.value),
-    setHint: useSetAtom(hint.value)
-  }));
 
   return (
     <div
@@ -29,23 +52,8 @@ export default function FlyingIngCacheHints({ regionHints, className }: Props) {
       )}
       data-name="flying-ing-cache-hints"
     >
-      {flyingIngCacheHints.map((hint, idx) => (
-        <div key={`${hints.variant}-cache-${idx}`}>
-          <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
-            {hint.name}
-          </p>
-          <AutoComplete
-            placeholder="Item..."
-            emptyMessage="No item found."
-            value={{ label: hint.hint, value: hint.hint }}
-            onValueChange={(o) => hint.setHint(o.value)}
-            options={createOptions(
-              [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
-              true
-            )}
-            tabIndex={1}
-          />
-        </div>
+      {hints.flyingCacheHints.map((hint, idx) => (
+        <Hint cacheHint={hint} key={`${hints.variant}-cache-${idx}`}/>
       ))}
     </div>
   );

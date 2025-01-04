@@ -1,6 +1,5 @@
 import {
   Prime2ItemLocationHint,
-  Prime2ItemLocationHintSchema,
   RegionHints,
   UnhintedItem,
 } from "@/types/Prime2.types";
