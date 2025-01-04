@@ -17,7 +17,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
       <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-flow-col bg-zinc-800">
         {...hints.map((hint, idx) => (
           <div className="m-1" key={`stk-${idx + 1}`}>
-            <p className="uppercase font-bold text-xs text-lime-400 tracking-wide">
+            <p className="uppercase font-bold text-sm text-lime-400 tracking-wide">
               {hint?.item}
             </p>
             <AutoComplete
