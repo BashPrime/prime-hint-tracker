@@ -40,7 +40,7 @@ export function Hint({
           onValueChange={(o) => setHint((prev) => ({ ...prev, item: o.value }))}
           options={createOptions([...PRIME_2_MAJORS_VALUES], true)}
           tabIndex={1}
-          className="uppercase font-bold tracking-wide placeholder:normal-case h-6"
+          className="font-bold h-6"
         />
         <AutoComplete
           placeholder="Location..."
