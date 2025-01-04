@@ -71,6 +71,7 @@ export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
   "Missile system",
   "Charge Combo",
   "Translator",
+  "Key",
 ]
 
 export const PRIME_2_RELATED_UPGRADES_HINTS = [

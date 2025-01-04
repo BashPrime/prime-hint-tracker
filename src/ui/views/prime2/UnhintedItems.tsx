@@ -1,6 +1,7 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
 import {
+  PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
   PRIME_2_MAJORS_VALUES,
 } from "@/data/Prime2.data";
@@ -38,7 +39,7 @@ export function Hint({
           emptyMessage="No item found."
           value={{ label: hint.item ?? "", value: hint.item ?? "" }}
           onValueChange={(o) => setHint((prev) => ({ ...prev, item: o.value }))}
-          options={createOptions([...PRIME_2_MAJORS_VALUES], true)}
+          options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
           className="font-bold h-6"
         />
