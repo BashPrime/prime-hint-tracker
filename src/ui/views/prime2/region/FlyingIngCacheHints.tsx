@@ -5,7 +5,7 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtomValue, useSetAtom } from "jotai";
 
 type Props = {
   regionHints: PrimitiveAtom<RegionHints>;
@@ -15,6 +15,12 @@ type Props = {
 export default function FlyingIngCacheHints({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
+  const flyingIngCacheHints = hints.flyingCacheHints.map((hint) => ({
+    name: hint.name,
+    hint: useAtomValue(hint.value),
+    setHint: useSetAtom(hint.value)
+  }));
+
   return (
     <div
       className={cn(
@@ -23,14 +29,16 @@ export default function FlyingIngCacheHints({ regionHints, className }: Props) {
       )}
       data-name="flying-ing-cache-hints"
     >
-      {hints.flyingCacheHints.map((cache, idx) => (
+      {flyingIngCacheHints.map((hint, idx) => (
         <div key={`${hints.variant}-cache-${idx}`}>
           <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
-            {cache.name}
+            {hint.name}
           </p>
           <AutoComplete
             placeholder="Item..."
             emptyMessage="No item found."
+            value={{ label: hint.hint, value: hint.hint }}
+            onValueChange={(o) => hint.setHint(o.value)}
             options={createOptions(
               [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
               true

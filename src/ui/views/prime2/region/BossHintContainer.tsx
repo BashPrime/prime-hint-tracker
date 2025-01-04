@@ -5,7 +5,7 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 
 import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
@@ -20,6 +20,8 @@ type Props = {
 export function BossHintContainer({ regionHints, className }: Props) {
   // !JOTAI
   const hints = useAtomValue(regionHints);
+  const [bossItem, setBossItem] = useAtom(hints.bossItem)
+  const bossKeys = hints.bossKeys.map((atom) => useAtom(atom))
 
   // !LOCAL
   let imgSrc: string;
@@ -59,6 +61,8 @@ export function BossHintContainer({ regionHints, className }: Props) {
           <AutoComplete
             placeholder="Item..."
             emptyMessage="No item found."
+            value={{ label: bossItem, value: bossItem }}
+            onValueChange={(o) => setBossItem(o.value)}
             options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
             tabIndex={1}
             className="h-6"
@@ -67,14 +71,16 @@ export function BossHintContainer({ regionHints, className }: Props) {
       </div>
       {hints.bossKeys.length > 0 && (
         <div className="flex flex-col" data-name="boss-keys">
-          {hints.bossKeys.map((_, idx) => (
-            <div key={`${hints.variant}-key-${idx + 1}`}>
+          {bossKeys.map(([key, setKey], idx) => (
+            <div key={`${hints.variant}-key-${idx+1}`}>
               <p className="uppercase font-bold text-[13px] text-red-500">
-                Key {idx + 1}
+                Key {idx+1}
               </p>
               <AutoComplete
                 placeholder="Region..."
                 emptyMessage="No region found."
+                value={{ label: key, value: key }}
+                onValueChange={(o) => setKey(o.value)}
                 options={createOptions(
                   [...PRIME_2_REGION_OPTIONS, "Either"],
                   true

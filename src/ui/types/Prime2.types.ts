@@ -82,7 +82,7 @@ export type Prime2RelatedUpgradesHint = z.infer<
 
 export const FlyingIngCacheHintSchema = z.object({
   name: z.string().default(""),
-  value: z.string().nullable().default(null),
+  value: z.custom<PrimitiveAtom<string>>(),
 });
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
@@ -98,8 +98,8 @@ export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 export const RegionHintsSchema = z.object({
   variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
   bossName: z.string(),
-  bossItem: Prime2ItemSchema.nullable(),
-  bossKeys: z.array(Prime2RegionSchema),
+  bossItem: z.custom<PrimitiveAtom<string>>(),
+  bossKeys: z.array(z.custom<PrimitiveAtom<string>>()),
   flyingCacheHints: z.array(FlyingIngCacheHintSchema),
   translatorHints: z.array(TranslatorHintSchema),
 });

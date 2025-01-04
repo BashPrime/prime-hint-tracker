@@ -10,12 +10,12 @@ import { atomWithReset } from "jotai/utils";
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
   bossName: "U-Mos Reward",
-  bossItem: null,
+  bossItem: atom<string>(""),
   bossKeys: [],
   flyingCacheHints: [
-    { name: "Accursed Lake", value: null },
-    { name: "Defiled Shrine", value: null },
-    { name: "Ing Reliquary", value: null },
+    { name: "Accursed Lake", value: atom<string>("") },
+    { name: "Defiled Shrine", value: atom<string>("") },
+    { name: "Ing Reliquary", value: atom<string>("") },
   ],
   translatorHints: [
     {
@@ -58,11 +58,11 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
 export const agonHintsState = atomWithReset<RegionHints>({
   variant: "agon",
   bossName: "Amorbis",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
+  bossItem: atom<string>(""),
+  bossKeys: Array(3).fill(atom<string>("")),
   flyingCacheHints: [
-    { name: "Battleground", value: null },
-    { name: "Dark Oasis", value: null },
+    { name: "Battleground", value: atom<string>("") },
+    { name: "Dark Oasis", value: atom<string>("") },
   ],
   translatorHints: [
     {
@@ -105,11 +105,11 @@ export const agonHintsState = atomWithReset<RegionHints>({
 export const torvusHintsState = atomWithReset<RegionHints>({
   variant: "torvus",
   bossName: "Chykka",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
+  bossItem: atom<string>(""),
+  bossKeys: Array(3).fill(atom<string>("")),
   flyingCacheHints: [
-    { name: "Poisoned Bog", value: null },
-    { name: "Dungeon", value: null },
+    { name: "Poisoned Bog", value: atom<string>("") },
+    { name: "Dungeon", value: atom<string>("") },
   ],
   translatorHints: [
     {
@@ -159,11 +159,11 @@ export const torvusHintsState = atomWithReset<RegionHints>({
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
   variant: "sanctuary",
   bossName: "Quadraxis",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
+  bossItem: atom<string>(""),
+  bossKeys: Array(3).fill(atom<string>("")),
   flyingCacheHints: [
-    { name: "Hive Dynamo Works", value: null },
-    { name: "Hive Entrance", value: null },
+    { name: "Hive Dynamo Works", value: atom<string>("") },
+    { name: "Hive Entrance", value: atom<string>("") },
   ],
   translatorHints: [
     {
