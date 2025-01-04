@@ -12,12 +12,14 @@ import SkyTempleKeyHints from "./SkyTempleKeyHints";
 export default function Prime2Layout() {
   return (
     <div
-      className={cn("grid sm:grid-cols-2 md:grid-cols-5 bg-[#1f1f1f] h-full")}
+      className={cn(
+        "grid sm:grid-cols-2 md:grid-cols-[0.75fr_repeat(4,_1fr)] bg-[#1f1f1f] h-full"
+      )}
       data-name="prime2-layout"
     >
       <div className="flex flex-col" data-name="core-hints">
-        <UnhintedItems className="border-l-2 border-red-600" />
         <SkyTempleKeyHints className="border-l-2 border-lime-600" />
+        <UnhintedItems className="border-l-2 border-red-600" />
       </div>
       <Region
         name="Temple Grounds"
