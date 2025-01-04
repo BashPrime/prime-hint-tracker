@@ -10,9 +10,10 @@ import {
   Prime2ItemLocationHint,
   Prime2ItemLocationHintSchema,
   UnhintedItem,
+  UnhintedItemSchema,
 } from "@/types/Prime2.types";
-import { PrimitiveAtom } from "jotai";
-import { atom, useAtom } from "jotai";
+import { atom, useAtom, PrimitiveAtom } from "jotai";
+import { v4 as uuidV4 } from "uuid";
 
 type HintInputProps = {
   hintAtom: PrimitiveAtom<Prime2ItemLocationHint>;
@@ -69,18 +70,15 @@ export default function UnhintedItems({ className }: Props) {
   const [hints, setHints] = useAtom(unhintedItemsState);
 
   function addNewHint() {
-    const newHint = {
-      id: hints.length,
+    const newHint = UnhintedItemSchema.parse({
+      id: uuidV4(),
       hint: atom(Prime2ItemLocationHintSchema.parse({})),
-    };
-    console.log('created new hint with id ', newHint.id)
+    });
     setHints((prev) => [...prev, newHint]);
-    console.log(hints);
   }
 
   function deleteHint(hintToDelete: UnhintedItem) {
     const filtered = hints.filter((hint) => hint.id !== hintToDelete.id);
-    console.log(filtered, hints)
     setHints(filtered);
   }
 
@@ -91,12 +89,12 @@ export default function UnhintedItems({ className }: Props) {
     >
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Unhinted Items</h2>
       <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto">
-        {...hints.map((item, idx) => (
+        {...hints.map((item) => (
           <Hint
             hintAtom={item.hint}
             onDelete={() => deleteHint(item)}
             className="m-1 bg-zinc-800"
-            key={`unhinted-elem-${idx}`}
+            key={`unhinted-${item.id}`}
           />
         ))}
         <Button

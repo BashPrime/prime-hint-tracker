@@ -237,10 +237,6 @@ export const progressionItemsState = atomWithReset<Prime2ItemLocationHint[]>([
   { item: "Cobalt Translator", location: null },
 ]);
 
-export const unhintedItemsState2 = atomWithReset<UnhintedItem[]>([
-  { id: 0, hint: atom(Prime2ItemLocationHintSchema.parse({})) },
-]);
-
 export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
 
 export const skyTempleKeyHintsState = atomWithReset<Prime2ItemLocationHint[]>([

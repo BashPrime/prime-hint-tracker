@@ -11,7 +11,8 @@ import {
   PRIME_2_ALL_REGIONS,
   PROXIMITY_OPTIONS,
 } from "../data/Prime2.data";
-import { PrimitiveAtom } from "jotai";
+import { PrimitiveAtom, atom } from "jotai";
+import { v4 as uuidV4 } from "uuid";
 
 export const Prime2MajorItemSchema = z.enum(PRIME_2_MAJORS_VALUES);
 export type Prime2MajorItem = z.infer<typeof Prime2MajorItemSchema>;
@@ -34,7 +35,7 @@ export const Prime2LocationSchema = z.enum(PRIME_2_ALL_LOCATIONS).nullable();
 export type Prime2Location = z.infer<typeof Prime2LocationSchema>;
 
 export const Prime2RegionSchema = z.enum(PRIME_2_ALL_REGIONS).nullable();
-export type Prime2Region = z.infer<typeof Prime2RegionSchema>
+export type Prime2Region = z.infer<typeof Prime2RegionSchema>;
 
 export const Prime2LocationWithItemSchema = z
   .enum(PRIME_2_LOCATIONS_WITH_ITEMS)
@@ -54,15 +55,15 @@ export type Prime2ItemLocationHint = z.infer<
 
 export const Prime2ItemHintSchema = z.object({
   label: z.string().nullable().default(null),
-  item: Prime2ItemSchema.nullable().default(null)
+  item: Prime2ItemSchema.nullable().default(null),
 });
-export type Prime2ItemHint = z.infer<typeof Prime2ItemHintSchema>
+export type Prime2ItemHint = z.infer<typeof Prime2ItemHintSchema>;
 
 export const Prime2LocationHintSchema = z.object({
   label: z.string().nullable().default(null),
-  location: Prime2LocationSchema.nullable().default(null)
+  location: Prime2LocationSchema.nullable().default(null),
 });
-export type Prime2LocationHint = z.infer<typeof Prime2LocationHintSchema>
+export type Prime2LocationHint = z.infer<typeof Prime2LocationHintSchema>;
 
 export const MajorGuardianHintsSchema = z.object({
   amorbis: Prime2ItemSchema.nullable().default(null),
@@ -80,19 +81,19 @@ export type Prime2RelatedUpgradesHint = z.infer<
 >;
 
 export const FlyingIngCacheHintSchema = z.object({
-  name: z.string().default(''),
-  value: z.string().nullable().default(null)
-})
-export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>
+  name: z.string().default(""),
+  value: z.string().nullable().default(null),
+});
+export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
 export const TranslatorHintSchema = z.object({
-  name: z.string().default(''),
+  name: z.string().default(""),
   firstValue: z.string().nullable().default(null),
   secondValue: z.string().nullable().default(null),
   proximityType: z.enum([...PROXIMITY_OPTIONS]).default("in"),
   numRooms: z.number().default(0),
-})
-export type TranslatorHint = z.infer<typeof TranslatorHintSchema>
+});
+export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
 export const RegionHintsSchema = z.object({
   variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
@@ -101,10 +102,12 @@ export const RegionHintsSchema = z.object({
   bossKeys: z.array(Prime2RegionSchema),
   flyingCacheHints: z.array(FlyingIngCacheHintSchema),
   translatorHints: z.array(TranslatorHintSchema),
-})
-export type RegionHints = z.infer<typeof RegionHintsSchema>
+});
+export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
-export type UnhintedItem = {
-  id: number
-  hint: PrimitiveAtom<Prime2ItemLocationHint>
-}
+export const UnhintedItemSchema = z.object({
+  id: z.string(),
+  hint: z.custom<PrimitiveAtom<Prime2ItemLocationHint>>(),
+});
+
+export type UnhintedItem = z.infer<typeof UnhintedItemSchema>;
