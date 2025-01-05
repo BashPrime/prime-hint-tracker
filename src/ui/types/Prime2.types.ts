@@ -78,24 +78,32 @@ export type Prime2RelatedUpgradesHint = z.infer<
   typeof Prime2RelatedUpgradesHintSchema
 >;
 
+export const BossKeyHintSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  location: z.string(),
+});
+export type BossKeyHint = z.infer<typeof BossKeyHintSchema>
+
 export const BossHintsSchema = z.object({
   name: z.string(),
-  item: z.custom<PrimitiveAtom<string>>(),
-  keys: z.array(z.custom<PrimitiveAtom<string>>()),
+  item: z.string(),
+  keys: z.array(BossKeyHintSchema),
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
 
 export const FlyingIngCacheHintSchema = z.object({
-  name: z.string().default(""),
-  value: z.custom<PrimitiveAtom<string>>(),
+  id: z.number(),
+  name: z.string(),
+  value: z.string(),
 });
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
 export const TranslatorHintSchema = z.object({
   name: z.string().default(""),
-  firstValue: z.custom<PrimitiveAtom<string>>(),
-  secondValue: z.custom<PrimitiveAtom<string>>(),
-  proximity: z.custom<PrimitiveAtom<string>>(),
+  firstValue: z.string(),
+  secondValue: z.string(),
+  proximity: z.string(),
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 

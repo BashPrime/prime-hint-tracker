@@ -4,31 +4,28 @@ import {
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { BossHints, RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom, useAtomValue, useSetAtom } from "jotai";
+import { BossHints, BossKeyHint } from "@/types/Prime2.types";
+import { PrimitiveAtom, useAtom } from "jotai";
 
 import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
-import { focusAtom } from "jotai-optics";
-import { splitAtom } from "jotai/utils";
 
-type BossKeyHintProps = {
-  name: string;
-  atom: PrimitiveAtom<string>;
+type HintProps = {
+  keyHint: BossKeyHint;
+  onKeyChange: (key: BossKeyHint) => void;
 };
 
-function BossKeyHint({ name, atom }: BossKeyHintProps) {
-  const [hint, setHint] = useAtom(atom);
+function Hint({ keyHint: key, onKeyChange }: HintProps) {
   return (
     <div>
-      <p className="uppercase font-bold text-[13px] text-red-500">{name}</p>
+      <p className="uppercase font-bold text-[13px] text-red-500">{key.name}</p>
       <AutoComplete
         placeholder="Region..."
         emptyMessage="No region found."
-        value={{ label: hint, value: hint }}
-        onValueChange={(o) => setHint(o.value)}
+        value={{ label: key.location, value: key.location }}
+        onValueChange={(o) => onKeyChange({ ...key, location: o.label })}
         options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
         tabIndex={1}
         className="text-[13px]"
@@ -45,14 +42,7 @@ type Props = {
 
 export function BossHintContainer({ atom, variant, className }: Props) {
   // !JOTAI
-  const bossHints = useAtomValue(atom);
-  const setItem = useSetAtom(
-    focusAtom(atom, (optic) => optic.prop("item"))
-  );
-  const keyAtomAtoms = splitAtom(
-    focusAtom(atom, (optic) => optic.prop("keys"))
-  );
-  const keysAtoms = useAtomValue(keyAtomAtoms)
+  const [bossHints, setBossHints] = useAtom(atom);
 
   // !LOCAL
   let imgSrc: string;
@@ -71,6 +61,17 @@ export function BossHintContainer({ atom, variant, className }: Props) {
       break;
     default:
       imgSrc = "https://picsum.photos/200";
+  }
+
+  // !FUNCTION
+  function updateBossKey(key: BossKeyHint) {
+    setBossHints((prev) => {
+      const newKeys = [...prev.keys];
+      const index = newKeys.findIndex((elem) => elem.id === key.id);
+      newKeys[index] = key;
+
+      return { ...prev, keys: newKeys };
+    });
   }
 
   return (
@@ -93,20 +94,22 @@ export function BossHintContainer({ atom, variant, className }: Props) {
             placeholder="Item..."
             emptyMessage="No item found."
             value={{ label: bossHints.item, value: bossHints.item }}
-            onValueChange={(o) => setItem(o.value)}
+            onValueChange={(o) =>
+              setBossHints((prev) => ({ ...prev, item: o.label }))
+            }
             options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
             tabIndex={1}
             className="h-6"
           />
         </div>
       </div>
-      {keysAtoms.length > 0 && (
+      {bossHints.keys.length > 0 && (
         <div className="flex flex-col" data-name="boss-keys">
-          {keysAtoms.map((keyAtom, idx) => (
-            <BossKeyHint
-              name={`Key ${idx + 1}`}
+          {bossHints.keys.map((keyHint, idx) => (
+            <Hint
+              keyHint={keyHint}
+              onKeyChange={(key) => updateBossKey(key)}
               key={`boss-key-${idx + 1}`}
-              atom={keyAtom}
             />
           ))}
         </div>
