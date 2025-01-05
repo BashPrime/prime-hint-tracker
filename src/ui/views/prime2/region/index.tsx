@@ -24,7 +24,7 @@ export default function Region({ name, atom, className }: Props) {
       <div className="flex flex-col gap-2 h-full flex-1">
         <BossHintContainer atom={bossHintsAtom} variant={variant} className="flex-initial" />
         <FlyingIngCacheHints atom={flyingIngCacheHintsAtom} variant={variant} className="flex-initial" />
-        {/* <TranslatorHints atom={translatorHintsAtom} className="flex-1" /> */}
+        <TranslatorHints atom={translatorHintsAtom} variant={variant} className="flex-1" />
       </div>
     </div>
   );

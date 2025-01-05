@@ -7,21 +7,23 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import {
-  RegionHints,
-  TranslatorHint as TranslatorHintType,
+  TranslatorHint,
 } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { splitAtom } from "jotai/utils";
 
 type TranslatorHintProps = {
-  hint: TranslatorHintType;
+  atom: PrimitiveAtom<TranslatorHint>;
   headerColor?: string;
 };
 
-function TranslatorHint({ hint, headerColor }: TranslatorHintProps) {
+function Hint({ atom, headerColor }: TranslatorHintProps) {
   // !JOTAI
-  const [firstValue, setFirstValue] = useAtom(hint.firstValue);
-  const [secondValue, setSecondValue] = useAtom(hint.secondValue);
-  const [proximity, setProximity] = useAtom(hint.proximity);
+  const hint = useAtomValue(atom);
+  const [firstValue, setFirstValue] = useAtom(focusAtom(atom, (optic) => optic.prop("firstValue")));
+  const [secondValue, setSecondValue] = useAtom(focusAtom(atom, (optic) => optic.prop("secondValue")));
+  const [proximity, setProximity] = useAtom(focusAtom(atom, (optic) => optic.prop("proximity")));
 
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
@@ -89,18 +91,20 @@ function TranslatorHint({ hint, headerColor }: TranslatorHintProps) {
 }
 
 type Props = {
-  regionHints: PrimitiveAtom<RegionHints>;
+  atom: PrimitiveAtom<TranslatorHint[]>;
+  variant: string;
   className?: string;
 };
 
-export default function TranslatorHints({ regionHints, className }: Props) {
+export default function TranslatorHints({ atom, variant, className }: Props) {
   // !JOTAI
-  const hints = useAtomValue(regionHints);
+  const hintAtomAtoms = splitAtom(atom);
+  const hintAtoms = useAtomValue(hintAtomAtoms);
 
   // !LOCAL
   let headerColor: string | undefined;
 
-  switch (hints.variant) {
+  switch (variant) {
     case "temple":
       headerColor = "text-purple-400";
       break;
@@ -124,11 +128,11 @@ export default function TranslatorHints({ regionHints, className }: Props) {
       )}
       data-name="translator-hints"
     >
-      {hints.translatorHints.map((hint, idx) => (
-        <TranslatorHint
-          hint={hint}
+      {hintAtoms.map((hintAtom, idx) => (
+        <Hint
+          atom={hintAtom}
           headerColor={headerColor}
-          key={`${hints.variant}-hint-${idx}`}
+          key={`${variant}-hint-${idx}`}
         />
       ))}
     </div>
