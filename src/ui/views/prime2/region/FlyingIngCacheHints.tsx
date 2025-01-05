@@ -6,25 +6,26 @@ import {
 import { cn, createOptions } from "@/lib/utils";
 import { FlyingIngCacheHint, RegionHints } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+import { splitAtom } from "jotai/utils";
 
 type HintProps = {
-  cacheHint: FlyingIngCacheHint
-}
+  atom: PrimitiveAtom<FlyingIngCacheHint>;
+};
 
-function Hint({cacheHint}: HintProps) {
+function Hint({ atom }: HintProps) {
   // !JOTAI
-  const [hint, setHint] = useAtom(cacheHint.value)
+  const [hint, setHint] = useAtom(atom);
 
   return (
     <div>
       <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
-        {cacheHint.name}
+        {hint.name}
       </p>
       <AutoComplete
         placeholder="Item..."
         emptyMessage="No item found."
-        value={{ label: hint, value: hint }}
-        onValueChange={(o) => setHint(o.value)}
+        value={{ label: hint.value, value: hint.value }}
+        onValueChange={(o) => setHint((prev) => ({ ...prev, value: o.label }))}
         options={createOptions(
           [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
           true
@@ -36,13 +37,19 @@ function Hint({cacheHint}: HintProps) {
 }
 
 type Props = {
-  regionHints: PrimitiveAtom<RegionHints>;
+  atom: PrimitiveAtom<FlyingIngCacheHint[]>;
+  variant: string;
   className?: string;
 };
 
-export default function FlyingIngCacheHints({ regionHints, className }: Props) {
+export default function FlyingIngCacheHints({
+  atom,
+  variant,
+  className,
+}: Props) {
   // !JOTAI
-  const hints = useAtomValue(regionHints);
+  const keyAtomAtoms = splitAtom(atom);
+  const keyAtoms = useAtomValue(keyAtomAtoms);
 
   return (
     <div
@@ -52,8 +59,8 @@ export default function FlyingIngCacheHints({ regionHints, className }: Props) {
       )}
       data-name="flying-ing-cache-hints"
     >
-      {hints.flyingCacheHints.map((hint, idx) => (
-        <Hint cacheHint={hint} key={`${hints.variant}-cache-${idx}`}/>
+      {keyAtoms.map((keyAtom, idx) => (
+        <Hint atom={keyAtom} key={`${variant}-cache-${idx}`} />
       ))}
     </div>
   );

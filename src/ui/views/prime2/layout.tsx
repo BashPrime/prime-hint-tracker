@@ -23,22 +23,22 @@ export default function Prime2Layout() {
       </div>
       <Region
         name="Temple Grounds"
-        hints={templeGroundsHintsState}
+        atom={templeGroundsHintsState}
         className="border-l-2 border-violet-600"
       />
       <Region
         name="Agon Wastes"
-        hints={agonHintsState}
+        atom={agonHintsState}
         className="border-l-2 border-amber-600"
       />
       <Region
         name="Torvus Bog"
-        hints={torvusHintsState}
+        atom={torvusHintsState}
         className="border-l-2 border-emerald-600"
       />
       <Region
         name="Sanctuary Fortress"
-        hints={sanctuaryHintsState}
+        atom={sanctuaryHintsState}
         className="border-l-2 border-sky-600"
       />
     </div>
