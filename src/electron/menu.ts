@@ -1,5 +1,10 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
-import { resetSize } from "./window.js";
+import { get, resetSize } from "./window.js";
+
+function resetTracker() {
+  const window = get();
+  window.webContents.send("reset-tracker");
+}
 
 const isMac = process.platform === "darwin";
 const template: MenuItemConstructorOptions[] = [
@@ -7,7 +12,7 @@ const template: MenuItemConstructorOptions[] = [
     label: "File",
     submenu: [
       { label: "Reset Size", click: () => resetSize() },
-      { label: "Reset Tracker", enabled: false },
+      { label: "Reset Tracker", click: () => resetTracker() },
       { role: isMac ? "close" : "quit" },
     ],
   },
