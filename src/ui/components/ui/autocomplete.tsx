@@ -45,7 +45,10 @@ export const AutoComplete = ({
 
   // If value prop changes, update the state
   useEffect(() => {
-    setInputValue(value?.label || "")
+    if (value) {
+      setInputValue(value.label)
+      setSelected(value)
+    }
   }, [value])
 
   const handleKeyDown = useCallback(
