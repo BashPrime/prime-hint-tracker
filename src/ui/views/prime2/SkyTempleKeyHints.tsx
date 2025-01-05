@@ -14,7 +14,7 @@ function Hint({ keyHint, onKeyChange }: HintProps) {
   return (
     <div className="m-1">
       <p className="uppercase font-bold text-sm text-lime-400 tracking-wide">
-        {keyHint.name}, {keyHint.location}
+        {keyHint.name}
       </p>
       <AutoComplete
         placeholder="Location..."
