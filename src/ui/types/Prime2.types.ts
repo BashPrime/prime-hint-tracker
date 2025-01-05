@@ -108,3 +108,9 @@ export const UnhintedItemSchema = z.object({
 });
 
 export type UnhintedItem = z.infer<typeof UnhintedItemSchema>;
+
+export const SkyTempleKeyHintSchema = z.object({
+  name: z.string(),
+  location: z.string(),
+});
+export type SkyTempleKeyHint = z.infer<typeof SkyTempleKeyHintSchema>;

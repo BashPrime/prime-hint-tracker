@@ -1,6 +1,7 @@
 import {
   Prime2ItemLocationHint,
   RegionHints,
+  SkyTempleKeyHint,
   UnhintedItem,
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
@@ -216,14 +217,14 @@ export const progressionItemsState = atomWithReset<Prime2ItemLocationHint[]>([
 
 export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
 
-export const skyTempleKeyHintsState = atomWithReset<Prime2ItemLocationHint[]>([
-  { item: "Key 1", location: null },
-  { item: "Key 2", location: null },
-  { item: "Key 3", location: null },
-  { item: "Key 4", location: null },
-  { item: "Key 5", location: null },
-  { item: "Key 6", location: null },
-  { item: "Key 7", location: null },
-  { item: "Key 8", location: null },
-  { item: "Key 9", location: null },
+export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
+  { name: "Key 1", location: "" },
+  { name: "Key 2", location: "" },
+  { name: "Key 3", location: "" },
+  { name: "Key 4", location: "" },
+  { name: "Key 5", location: "" },
+  { name: "Key 6", location: "" },
+  { name: "Key 7", location: "" },
+  { name: "Key 8", location: "" },
+  { name: "Key 9", location: "" },
 ]);
