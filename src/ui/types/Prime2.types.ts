@@ -100,6 +100,7 @@ export const FlyingIngCacheHintSchema = z.object({
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
 export const TranslatorHintSchema = z.object({
+  id: z.number(),
   name: z.string().default(""),
   firstValue: z.string(),
   secondValue: z.string(),

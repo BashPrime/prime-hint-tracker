@@ -6,25 +6,16 @@ import {
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import {
-  TranslatorHint,
-} from "@/types/Prime2.types";
+import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
-import { focusAtom } from "jotai-optics";
-import { splitAtom } from "jotai/utils";
 
 type TranslatorHintProps = {
-  atom: PrimitiveAtom<TranslatorHint>;
+  hint: TranslatorHint;
+  onHintChange: (hint: TranslatorHint) => void;
   headerColor?: string;
 };
 
-function Hint({ atom, headerColor }: TranslatorHintProps) {
-  // !JOTAI
-  const hint = useAtomValue(atom);
-  const [firstValue, setFirstValue] = useAtom(focusAtom(atom, (optic) => optic.prop("firstValue")));
-  const [secondValue, setSecondValue] = useAtom(focusAtom(atom, (optic) => optic.prop("secondValue")));
-  const [proximity, setProximity] = useAtom(focusAtom(atom, (optic) => optic.prop("proximity")));
-
+function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
   const itemOptions = createOptions(
@@ -39,7 +30,7 @@ function Hint({ atom, headerColor }: TranslatorHintProps) {
     ],
     true
   );
-  const isJokeHint = firstValue === JOKE_HINT_STR;
+  const isJokeHint = hint.firstValue === JOKE_HINT_STR;
 
   return (
     <div>
@@ -52,8 +43,8 @@ function Hint({ atom, headerColor }: TranslatorHintProps) {
         <AutoComplete
           placeholder="Item..."
           emptyMessage="No item found."
-          value={{ label: firstValue, value: firstValue }}
-          onValueChange={(o) => setFirstValue(o.value)}
+          value={{ label: hint.firstValue, value: hint.firstValue }}
+          onValueChange={(o) => onHintChange({ ...hint, firstValue: o.label })}
           options={itemOptions}
           tabIndex={1}
           className={cn(
@@ -67,8 +58,10 @@ function Hint({ atom, headerColor }: TranslatorHintProps) {
             <Input
               type="text"
               placeholder="in..."
-              value={proximity}
-              onChange={(e) => setProximity(e.target.value)}
+              value={hint.proximity}
+              onChange={(e) =>
+                onHintChange({ ...hint, proximity: e.target.value })
+              }
               className="text-sm h-6"
               data-name="proximity"
               tabIndex={-1}
@@ -76,8 +69,10 @@ function Hint({ atom, headerColor }: TranslatorHintProps) {
             <AutoComplete
               placeholder="Location or Item..."
               emptyMessage="No location found."
-              value={{ label: secondValue, value: secondValue }}
-              onValueChange={(o) => setSecondValue(o.value)}
+              value={{ label: hint.secondValue, value: hint.secondValue }}
+              onValueChange={(o) =>
+                onHintChange({ ...hint, secondValue: o.label })
+              }
               options={secondValueOptions}
               tabIndex={1}
               className="text-sm h-6"
@@ -98,8 +93,7 @@ type Props = {
 
 export default function TranslatorHints({ atom, variant, className }: Props) {
   // !JOTAI
-  const hintAtomAtoms = splitAtom(atom);
-  const hintAtoms = useAtomValue(hintAtomAtoms);
+  const [hints, setHints] = useAtom(atom);
 
   // !LOCAL
   let headerColor: string | undefined;
@@ -120,6 +114,17 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
     default:
   }
 
+  // !FUNCTION
+  function updateHint(hint: TranslatorHint) {
+    setHints((prev) => {
+      const newHints = [...prev];
+      const index = newHints.findIndex((elem) => elem.id === hint.id);
+      newHints[index] = hint;
+
+      return newHints;
+    });
+  }
+
   return (
     <div
       className={cn(
@@ -128,11 +133,12 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
       )}
       data-name="translator-hints"
     >
-      {hintAtoms.map((hintAtom, idx) => (
+      {hints.map((hint) => (
         <Hint
-          atom={hintAtom}
+          hint={hint}
+          onHintChange={(hint) => updateHint(hint)}
           headerColor={headerColor}
-          key={`${variant}-hint-${idx}`}
+          key={`${variant}-hint-${hint.id}`}
         />
       ))}
     </div>
