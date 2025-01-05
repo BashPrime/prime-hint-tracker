@@ -1,10 +1,11 @@
-import { PrimitiveAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { BossHintContainer } from "./BossHintContainer";
 import FlyingIngCacheHints from "./FlyingIngCacheHints";
 import TranslatorHints from "./TranslatorHints";
 import { RegionHints } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
 
 type Props = {
   name: string;
@@ -13,7 +14,7 @@ type Props = {
 };
 
 export default function Region({ name, atom, className }: Props) {
-  const variant = useAtomValue(focusAtom(atom, (optic) => optic.prop("variant")));
+  const { variant } = useAtomValue(atom)
   const bossHintsAtom = focusAtom(atom, (optic) => optic.prop("bossHints"));
   const flyingIngCacheHintsAtom = focusAtom(atom, (optic) => optic.prop("flyingCacheHints"));
   const translatorHintsAtom = focusAtom(atom, (optic) => optic.prop("translatorHints"));
