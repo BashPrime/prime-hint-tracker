@@ -80,22 +80,22 @@ export type Prime2RelatedUpgradesHint = z.infer<
 
 export const BossHintsSchema = z.object({
   name: z.string(),
-  item: z.string(),
-  keys: z.array(z.string()),
+  item: z.custom<PrimitiveAtom<string>>(),
+  keys: z.array(z.custom<PrimitiveAtom<string>>()),
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
 
 export const FlyingIngCacheHintSchema = z.object({
   name: z.string().default(""),
-  value: z.string(),
+  value: z.custom<PrimitiveAtom<string>>(),
 });
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
 
 export const TranslatorHintSchema = z.object({
   name: z.string().default(""),
-  firstValue: z.string(),
-  secondValue: z.string(),
-  proximity: z.string(),
+  firstValue: z.custom<PrimitiveAtom<string>>(),
+  secondValue: z.custom<PrimitiveAtom<string>>(),
+  proximity: z.custom<PrimitiveAtom<string>>(),
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
@@ -115,6 +115,7 @@ export const UnhintedItemSchema = z.object({
 export type UnhintedItem = z.infer<typeof UnhintedItemSchema>;
 
 export const SkyTempleKeyHintSchema = z.object({
+  id: z.number(),
   name: z.string(),
   location: z.string(),
 });
