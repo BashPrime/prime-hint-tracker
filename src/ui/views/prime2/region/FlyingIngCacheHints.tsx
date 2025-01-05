@@ -4,18 +4,15 @@ import {
   PRIME_2_RELATED_UPGRADES_HINTS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { FlyingIngCacheHint, RegionHints } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
-import { splitAtom } from "jotai/utils";
+import { FlyingIngCacheHint } from "@/types/Prime2.types";
+import { PrimitiveAtom, useAtom } from "jotai";
 
 type HintProps = {
-  atom: PrimitiveAtom<FlyingIngCacheHint>;
+  hint: FlyingIngCacheHint;
+  onHintChange: (hint: FlyingIngCacheHint) => void
 };
 
-function Hint({ atom }: HintProps) {
-  // !JOTAI
-  const [hint, setHint] = useAtom(atom);
-
+function Hint({ hint, onHintChange }: HintProps) {
   return (
     <div>
       <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
@@ -25,7 +22,7 @@ function Hint({ atom }: HintProps) {
         placeholder="Item..."
         emptyMessage="No item found."
         value={{ label: hint.value, value: hint.value }}
-        onValueChange={(o) => setHint((prev) => ({ ...prev, value: o.label }))}
+        onValueChange={(o) => onHintChange({ ...hint, value: o.label })}
         options={createOptions(
           [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
           true
@@ -48,8 +45,18 @@ export default function FlyingIngCacheHints({
   className,
 }: Props) {
   // !JOTAI
-  const keyAtomAtoms = splitAtom(atom);
-  const keyAtoms = useAtomValue(keyAtomAtoms);
+  const [hints, setHints] = useAtom(atom)
+
+  // !FUNCTION
+  function updateCacheHint(hint: FlyingIngCacheHint) {
+    setHints((prev) => {
+      const newHints = [...prev];
+      const index = newHints.findIndex((elem) => elem.id === hint.id);
+      newHints[index] = hint;
+
+      return newHints;
+    });
+  }
 
   return (
     <div
@@ -59,8 +66,8 @@ export default function FlyingIngCacheHints({
       )}
       data-name="flying-ing-cache-hints"
     >
-      {keyAtoms.map((keyAtom, idx) => (
-        <Hint atom={keyAtom} key={`${variant}-cache-${idx}`} />
+      {hints.map((keyHint, idx) => (
+        <Hint hint={keyHint} onHintChange={(hint) => updateCacheHint(hint)} key={`${variant}-cache-${idx}`} />
       ))}
     </div>
   );
