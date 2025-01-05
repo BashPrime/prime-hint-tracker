@@ -5,7 +5,7 @@ import {
   CommandInput,
 } from "@/components/ui/command"
 import { Command as CommandPrimitive } from "cmdk"
-import { useState, useRef, useCallback, type KeyboardEvent } from "react"
+import { useState, useRef, useCallback, type KeyboardEvent, useEffect } from "react"
 
 import { Skeleton } from "@/components/ui/skeleton"
 
@@ -43,6 +43,11 @@ export const AutoComplete = ({
   const [selected, setSelected] = useState<Option>(value as Option)
   const [inputValue, setInputValue] = useState<string>(value?.label || "")
 
+  // If value prop changes, update the state
+  useEffect(() => {
+    setInputValue(value?.label || "")
+  }, [value])
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       const input = inputRef.current
@@ -78,7 +83,9 @@ export const AutoComplete = ({
 
     // reset selected state if input is empty
     if (!inputValue) {
-      setSelected({ label: "", value: "" } as Option)
+      const emptyOption = { label: "", value: "" } as Option
+      setSelected(emptyOption)
+      onValueChange?.(emptyOption)
     }
   }, [inputValue])
 
