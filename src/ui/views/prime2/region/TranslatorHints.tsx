@@ -7,15 +7,24 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { TranslatorHint } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtom } from "jotai";
+import { useState } from "react";
+
+type HintUpdate = {
+  firstValue?: string;
+  secondValue?: string;
+  proximity?: string;
+};
 
 type TranslatorHintProps = {
   hint: TranslatorHint;
-  onHintChange: (hint: TranslatorHint) => void;
+  onHintUpdate: (update: HintUpdate) => void;
   headerColor?: string;
 };
 
-function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
+function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
+  // !STATE
+  const [proximity, setProximity] = useState<string>("");
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
@@ -49,7 +58,7 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
           placeholder="Item..."
           emptyMessage="No item found."
           value={{ label: hint.firstValue, value: hint.firstValue }}
-          onInputChange={(value) => onHintChange({ ...hint, firstValue: value })}
+          onInputChange={(value) => onHintUpdate({ firstValue: value })}
           options={itemOptions}
           tabIndex={1}
           className={cn(
@@ -63,10 +72,9 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
             <Input
               type="text"
               placeholder={proximityPlaceholder}
-              value={hint.proximity}
-              onChange={(e) =>
-                onHintChange({ ...hint, proximity: e.target.value })
-              }
+              // value={hint.proximity}
+              onChange={(e) => setProximity(e.target.value)}
+              onBlur={() => onHintUpdate({ proximity })}
               className="text-sm h-6"
               data-name="proximity"
               tabIndex={-1}
@@ -75,9 +83,7 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
               placeholder="Location or Item..."
               emptyMessage="No location found."
               value={{ label: hint.secondValue, value: hint.secondValue }}
-              onInputChange={(value) =>
-                onHintChange({ ...hint, secondValue: value })
-              }
+              onInputChange={(value) => onHintUpdate({ secondValue: value })}
               options={secondValueOptions}
               tabIndex={1}
               className="text-sm h-6"
@@ -120,13 +126,19 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
   }
 
   // !FUNCTION
-  function updateHint(hint: TranslatorHint) {
+  function updateHint(id: number, update: HintUpdate) {
     setHints((prev) => {
       const newHints = [...prev];
-      const index = newHints.findIndex((elem) => elem.id === hint.id);
-      newHints[index] = hint;
+      return newHints.map((hint) => {
+        if (hint.id === id) {
+          return {
+            ...hint,
+            ...update,
+          };
+        }
 
-      return newHints;
+        return { ...hint };
+      });
     });
   }
 
@@ -141,7 +153,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
       {hints.map((hint) => (
         <Hint
           hint={hint}
-          onHintChange={(hint) => updateHint(hint)}
+          onHintUpdate={(update) => updateHint(hint.id, update)}
           headerColor={headerColor}
           key={`${variant}-hint-${hint.id}`}
         />
