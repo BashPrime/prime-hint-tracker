@@ -1,2 +1,2 @@
-export const START_WIDTH = 1300;
-export const START_HEIGHT = 780; // 65px offset
+export const START_WIDTH = 1325;
+export const START_HEIGHT = 810; // 65px offset
