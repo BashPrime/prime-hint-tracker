@@ -6,13 +6,8 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import { unhintedItemsState } from "@/states/Prime2.states";
-import {
-  Prime2ItemLocationHint,
-  Prime2ItemLocationHintSchema,
-  UnhintedItem,
-  UnhintedItemSchema,
-} from "@/types/Prime2.types";
-import { atom, useAtom, PrimitiveAtom } from "jotai";
+import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
+import { useAtom } from "jotai";
 import { Plus, X } from "lucide-react";
 import { v4 as uuidV4 } from "uuid";
 

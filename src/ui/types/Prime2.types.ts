@@ -10,7 +10,6 @@ import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_ALL_REGIONS,
 } from "../data/Prime2.data";
-import { PrimitiveAtom } from "jotai";
 
 export const Prime2MajorItemSchema = z.enum(PRIME_2_MAJORS_VALUES);
 export type Prime2MajorItem = z.infer<typeof Prime2MajorItemSchema>;
