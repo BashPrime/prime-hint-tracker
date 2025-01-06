@@ -1,6 +1,7 @@
 import {
   RegionHints,
   SkyTempleKeyHint,
+  SkyTempleKeyHintSchema,
   UnhintedItem,
 } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
@@ -13,9 +14,24 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     keys: [],
   },
   flyingCacheHints: [
-    { id: 1, lightWorldLocation: "Industrial Site", darkWorldLocation: "Accursed Lake", value: "" },
-    { id: 2, lightWorldLocation: "Landing Site", darkWorldLocation: "Defiled Shrine", value: "" },
-    { id: 3, lightWorldLocation: "Storage Cavern A", darkWorldLocation: "Ing Reliquary", value: "" },
+    {
+      id: 1,
+      lightWorldLocation: "Industrial Site",
+      darkWorldLocation: "Accursed Lake",
+      value: "",
+    },
+    {
+      id: 2,
+      lightWorldLocation: "Landing Site",
+      darkWorldLocation: "Defiled Shrine",
+      value: "",
+    },
+    {
+      id: 3,
+      lightWorldLocation: "Storage Cavern A",
+      darkWorldLocation: "Ing Reliquary",
+      value: "",
+    },
   ],
   translatorHints: [
     {
@@ -67,8 +83,18 @@ export const agonHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, lightWorldLocation: "Central Mining Station", darkWorldLocation: "Battleground", value: "" },
-    { id: 2, lightWorldLocation: "Main Reactor", darkWorldLocation: "Dark Oasis", value: "" },
+    {
+      id: 1,
+      lightWorldLocation: "Central Mining Station",
+      darkWorldLocation: "Battleground",
+      value: "",
+    },
+    {
+      id: 2,
+      lightWorldLocation: "Main Reactor",
+      darkWorldLocation: "Dark Oasis",
+      value: "",
+    },
   ],
   translatorHints: [
     {
@@ -120,8 +146,18 @@ export const torvusHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, lightWorldLocation: "Torvus Lagoon", darkWorldLocation: "Poisoned Bog", value: "" },
-    { id: 2, lightWorldLocation: "Catacombs", darkWorldLocation: "Dungeon", value: "" },
+    {
+      id: 1,
+      lightWorldLocation: "Torvus Lagoon",
+      darkWorldLocation: "Poisoned Bog",
+      value: "",
+    },
+    {
+      id: 2,
+      lightWorldLocation: "Catacombs",
+      darkWorldLocation: "Dungeon",
+      value: "",
+    },
   ],
   translatorHints: [
     {
@@ -180,8 +216,18 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, lightWorldLocation: "Dynamo Works", darkWorldLocation: "Hive Dynamo Works", value: "" },
-    { id: 2, lightWorldLocation: "Sanctuary Entrance", darkWorldLocation: "Hive Entrance", value: "" },
+    {
+      id: 1,
+      lightWorldLocation: "Dynamo Works",
+      darkWorldLocation: "Hive Dynamo Works",
+      value: "",
+    },
+    {
+      id: 2,
+      lightWorldLocation: "Sanctuary Entrance",
+      darkWorldLocation: "Hive Entrance",
+      value: "",
+    },
   ],
   translatorHints: [
     {
@@ -232,13 +278,13 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
 export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
 
 export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
-  { id: 1, name: "Key 1", location: "" },
-  { id: 2, name: "Key 2", location: "" },
-  { id: 3, name: "Key 3", location: "" },
-  { id: 4, name: "Key 4", location: "" },
-  { id: 5, name: "Key 5", location: "" },
-  { id: 6, name: "Key 6", location: "" },
-  { id: 7, name: "Key 7", location: "" },
-  { id: 8, name: "Key 8", location: "" },
-  { id: 9, name: "Key 9", location: "" },
+  SkyTempleKeyHintSchema.parse({ id: 1, name: "Key 1" }),
+  SkyTempleKeyHintSchema.parse({ id: 2, name: "Key 2" }),
+  SkyTempleKeyHintSchema.parse({ id: 3, name: "Key 3" }),
+  SkyTempleKeyHintSchema.parse({ id: 4, name: "Key 4" }),
+  SkyTempleKeyHintSchema.parse({ id: 5, name: "Key 5" }),
+  SkyTempleKeyHintSchema.parse({ id: 6, name: "Key 6" }),
+  SkyTempleKeyHintSchema.parse({ id: 7, name: "Key 7" }),
+  SkyTempleKeyHintSchema.parse({ id: 8, name: "Key 8" }),
+  SkyTempleKeyHintSchema.parse({ id: 9, name: "Key 9" }),
 ]);

@@ -1,30 +1,66 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
-import { createOptions } from "@/lib/utils";
+import { cn, createOptions } from "@/lib/utils";
 import { skyTempleKeyHintsState } from "@/states/Prime2.states";
 import { SkyTempleKeyHint } from "@/types/Prime2.types";
 import { useAtom } from "jotai";
+import { Check } from "lucide-react";
+import { MouseEvent, useCallback } from "react";
 
-type HintProps = {
-  keyHint: SkyTempleKeyHint;
-  onKeyChange: (key: SkyTempleKeyHint) => void;
+type UpdateValue = {
+  location?: string;
+  checked?: boolean;
 };
 
-function Hint({ keyHint, onKeyChange }: HintProps) {
+type HintProps = {
+  hint: SkyTempleKeyHint;
+  onUpdate: (update: UpdateValue) => void;
+};
+
+function Hint({ hint, onUpdate }: HintProps) {
+  // !FUNCTION
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        onUpdate({ checked: !hint.checked });
+      }
+    },
+    [onUpdate]
+  );
   return (
-    <div className="m-1">
-      <p className="uppercase font-bold text-sm text-lime-400 tracking-wide">
-        {keyHint.name}
-      </p>
-      <AutoComplete
-        placeholder="Location"
-        emptyMessage="No location found."
-        value={{ label: keyHint.location, value: keyHint.location }}
-        onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
-        options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
-        tabIndex={1}
-        className="text-[13px]"
-      />
+    <div
+      className={cn("p-1 border border-zinc-900 bg-zinc-800", hint.checked && "bg-green-900")}
+      onMouseDown={handleMouseDown}
+    >
+      <div className="flex flex-row gap-1">
+        <Check
+          className={cn(
+            "flex-none w-3 h-3 text-green-300 mt-1",
+            !hint.checked && "opacity-0"
+          )}
+        />
+        <div>
+          <p
+            className={cn(
+              "uppercase font-bold text-sm text-lime-400 tracking-wide",
+              hint.checked && "text-green-400"
+            )}
+          >
+            {hint.name}
+          </p>
+          <AutoComplete
+            placeholder="Location"
+            emptyMessage="No location found."
+            value={{ label: hint.location, value: hint.location }}
+            onInputChange={(value) => onUpdate({ location: value })}
+            options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
+            tabIndex={1}
+            className="text-[13px]"
+          />
+        </div>
+      </div>
     </div>
   );
 }
@@ -38,24 +74,31 @@ export default function SkyTempleKeyHints({ className }: Props) {
   const [keys, setKeys] = useAtom(skyTempleKeyHintsState);
 
   // !FUNCTION
-  function setKey(key: SkyTempleKeyHint) {
+  function updateKey(id: number, update: UpdateValue) {
     setKeys((prev) => {
       const newKeys = [...prev];
-      const keyIndex = newKeys.findIndex((elem) => elem.id === key.id);
-      newKeys[keyIndex] = key;
 
-      return newKeys;
+      return newKeys.map((key) => {
+        if (key.id === id) {
+          return {
+            ...key,
+            ...update,
+          };
+        }
+
+        return { ...key };
+      });
     });
   }
 
   return (
     <div className={className} data-name="stkHints">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Sky Temple Keys</h2>
-      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col bg-zinc-800">
+      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col">
         {keys.map((key, idx) => (
           <Hint
-            keyHint={key}
-            onKeyChange={(key) => setKey(key)}
+            hint={key}
+            onUpdate={(update) => updateKey(key.id, update)}
             key={`stk-${idx + 1}`}
           />
         ))}

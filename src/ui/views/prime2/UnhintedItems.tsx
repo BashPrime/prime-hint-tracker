@@ -49,10 +49,13 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
         hint.checked && "bg-green-900"
       )}
     >
-      {hint.checked && (
-        <Check fontWeight="bold" className="w-3 h-3 fixed shadow-2xl z-10" />
-      )}
-      <div className={cn("flex flex-col flex-1 ml-4")}>
+      <Check
+        className={cn(
+          "w-3 h-3 text-green-300 mt-1",
+          !hint.checked && "opacity-0"
+        )}
+      />
+      <div className={cn("flex flex-col flex-1")}>
         <AutoComplete
           placeholder="Item"
           emptyMessage="No item found."
