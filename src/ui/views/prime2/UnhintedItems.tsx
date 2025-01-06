@@ -50,9 +50,9 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
       )}
     >
       {hint.checked && (
-        <Check fontWeight="bold" className="w-4 h-4 fixed shadow-2xl z-10" />
+        <Check fontWeight="bold" className="w-3 h-3 fixed shadow-2xl z-10" />
       )}
-      <div className={cn("flex flex-col flex-1 ml-5")}>
+      <div className={cn("flex flex-col flex-1 ml-4")}>
         <AutoComplete
           placeholder="Item"
           emptyMessage="No item found."
@@ -82,7 +82,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
         className={cn(
           "w-5 h-5 text-red-500 cursor-pointer",
           "hover:brightness-125 active:brightness-75",
-          hint.checked && "text-unset"
+          hint.checked && "text-red-400"
         )}
       />
     </div>
