@@ -8,7 +8,7 @@ export default function App() {
   
   useEffect(() => {
     window.electronApi.onResetTracker(() => resetTracker());
-  }, []);
+  }, [resetTracker]);
 
   return (
     <>

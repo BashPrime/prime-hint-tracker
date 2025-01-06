@@ -99,7 +99,7 @@ export const AutoComplete = ({
       setSelected(emptyOption);
       onValueChange?.(emptyOption);
     }
-  }, [inputValue]);
+  }, [inputValue, onInputChange, onValueChange]);
 
   const handleSelectOption = useCallback(
     (selectedOption: Option) => {
@@ -115,7 +115,7 @@ export const AutoComplete = ({
         inputRef?.current?.blur();
       }, 0);
     },
-    [onValueChange]
+    [onValueChange, onInputChange]
   );
 
   return (
