@@ -73,7 +73,7 @@ export const AutoComplete = ({
     if (openOnCreate) {
       setOpen(true);
     }
-  }, []);
+  }, [openOnCreate]);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
