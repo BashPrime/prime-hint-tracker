@@ -29,7 +29,7 @@ function Hint({ hint, onHintChange }: HintProps) {
         )}
         tabIndex={1}
       />
-      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-500 tracking-wide">{hint.darkWorldLocation}</span></p>
+      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">{hint.darkWorldLocation}</span></p>
     </div>
   );
 }
