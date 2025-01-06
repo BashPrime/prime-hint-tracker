@@ -66,9 +66,9 @@ function Hint({ hint, onUpdate }: HintProps) {
         )}
         tabIndex={1}
       />
-      <p className="text-sm text-zinc-400">
+      <p className="text-xs text-zinc-400 font-bold uppercase tracking-wide">
         {"in "}
-        <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">
+        <span className="text-violet-400">
           {hint.darkWorldLocation}
         </span>
       </p>
