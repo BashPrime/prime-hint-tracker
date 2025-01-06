@@ -1,5 +1,6 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
@@ -8,7 +9,8 @@ import { cn, createOptions } from "@/lib/utils";
 import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
 import { useAtom } from "jotai";
-import { Plus, X } from "lucide-react";
+import { Check, Plus, X } from "lucide-react";
+import { useCallback, type MouseEvent } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 type UpdateHintValue = {
@@ -26,9 +28,31 @@ type HintInputProps = {
 };
 
 export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
+  // !FUNCTION
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        onUpdate({ checked: !hint.checked });
+      }
+    },
+    [onUpdate]
+  );
+
   return (
-    <div className={cn("flex flex-row justify-between", className)}>
-      <div className="flex flex-col flex-1">
+    <div
+      onMouseDown={handleMouseDown}
+      className={cn(
+        "flex flex-row justify-between gap-2 px-1",
+        className,
+        hint.checked && "bg-green-900"
+      )}
+    >
+      {hint.checked && (
+        <Check fontWeight="bold" className="w-4 h-4 fixed shadow-2xl z-10" />
+      )}
+      <div className={cn("flex flex-col flex-1 ml-5")}>
         <AutoComplete
           placeholder="Item"
           emptyMessage="No item found."
@@ -37,7 +61,10 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
           options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
           openOnCreate
-          className="font-bold text-red-400 my-0"
+          className={cn(
+            "font-bold text-red-400 my-0",
+            hint.checked && "text-green-400"
+          )}
         />
         <AutoComplete
           placeholder="Location"
@@ -53,8 +80,9 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
         onClick={onDelete}
         tabIndex={-1}
         className={cn(
-          "w-6 h-6 text-red-500 cursor-pointer",
-          "hover:brightness-125 active:brightness-75"
+          "w-5 h-5 text-red-500 cursor-pointer",
+          "hover:brightness-125 active:brightness-75",
+          hint.checked && "text-unset"
         )}
       />
     </div>
