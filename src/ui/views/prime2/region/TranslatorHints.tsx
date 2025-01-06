@@ -34,7 +34,12 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
   ];
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
   const itemOptions = createOptions(
-    [...PRIME_2_ALL_ITEMS_VALUES, ...BOSS_KEY_HINTS, JOKE_HINT_STR],
+    [
+      ...PRIME_2_ALL_ITEMS_VALUES,
+      ...BOSS_KEY_HINTS,
+      JOKE_HINT_STR,
+      "Major Upgrade",
+    ],
     true
   );
   const secondValueOptions = createOptions(
