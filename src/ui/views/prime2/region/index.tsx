@@ -1,11 +1,10 @@
-import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+import { PrimitiveAtom, useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { BossHintContainer } from "./BossHintContainer";
 import FlyingIngCacheHints from "./FlyingIngCacheHints";
 import TranslatorHints from "./TranslatorHints";
 import { RegionHints } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
 
 type Props = {
   name: string;
