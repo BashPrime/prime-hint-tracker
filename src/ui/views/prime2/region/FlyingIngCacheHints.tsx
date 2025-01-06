@@ -15,8 +15,8 @@ type HintProps = {
 function Hint({ hint, onHintChange }: HintProps) {
   return (
     <div>
-      <p className="uppercase font-bold text-xs text-orange-500 tracking-wide">
-        {hint.name}
+      <p className="uppercase font-bold text-xs text-orange-400 tracking-wide">
+        {hint.lightWorldLocation}
       </p>
       <AutoComplete
         placeholder="Item..."
@@ -29,6 +29,7 @@ function Hint({ hint, onHintChange }: HintProps) {
         )}
         tabIndex={1}
       />
+      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">{hint.darkWorldLocation}</span></p>
     </div>
   );
 }
@@ -61,7 +62,7 @@ export default function FlyingIngCacheHints({
   return (
     <div
       className={cn(
-        "sm:grid sm:grid-cols-none md:grid-cols-2 bg-zinc-800 px-2 pt-1",
+        "sm:grid sm:grid-cols-none md:grid-cols-2 bg-zinc-800 p-2 gap-3",
         className
       )}
       data-name="flying-ing-cache-hints"

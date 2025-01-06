@@ -13,9 +13,9 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     keys: [],
   },
   flyingCacheHints: [
-    { id: 1, name: "Accursed Lake", value: "" },
-    { id: 2, name: "Defiled Shrine", value: "" },
-    { id: 3, name: "Ing Reliquary", value: "" },
+    { id: 1, lightWorldLocation: "Industrial Site", darkWorldLocation: "Accursed Lake", value: "" },
+    { id: 2, lightWorldLocation: "Landing Site", darkWorldLocation: "Defiled Shrine", value: "" },
+    { id: 3, lightWorldLocation: "Storage Cavern A", darkWorldLocation: "Ing Reliquary", value: "" },
   ],
   translatorHints: [
     {
@@ -67,8 +67,8 @@ export const agonHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, name: "Battleground", value: "" },
-    { id: 2, name: "Dark Oasis", value: "" },
+    { id: 1, lightWorldLocation: "Central Mining Station", darkWorldLocation: "Battleground", value: "" },
+    { id: 2, lightWorldLocation: "Main Reactor", darkWorldLocation: "Dark Oasis", value: "" },
   ],
   translatorHints: [
     {
@@ -120,8 +120,8 @@ export const torvusHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, name: "Poisoned Bog", value: "" },
-    { id: 2, name: "Dungeon", value: "" },
+    { id: 1, lightWorldLocation: "Torvus Lagoon", darkWorldLocation: "Poisoned Bog", value: "" },
+    { id: 2, lightWorldLocation: "Catacombs", darkWorldLocation: "Dungeon", value: "" },
   ],
   translatorHints: [
     {
@@ -180,8 +180,8 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
     ],
   },
   flyingCacheHints: [
-    { id: 1, name: "Hive Dynamo Works", value: "" },
-    { id: 2, name: "Hive Entrance", value: "" },
+    { id: 1, lightWorldLocation: "Dynamo Works", darkWorldLocation: "Hive Dynamo Works", value: "" },
+    { id: 2, lightWorldLocation: "Sanctuary Entrance", darkWorldLocation: "Hive Entrance", value: "" },
   ],
   translatorHints: [
     {

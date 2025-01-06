@@ -94,7 +94,8 @@ export type BossHints = z.infer<typeof BossHintsSchema>;
 
 export const FlyingIngCacheHintSchema = z.object({
   id: z.number(),
-  name: z.string(),
+  lightWorldLocation: z.string(),
+  darkWorldLocation: z.string(),
   value: z.string(),
 });
 export type FlyingIngCacheHint = z.infer<typeof FlyingIngCacheHintSchema>;
