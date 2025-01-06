@@ -18,7 +18,8 @@ export const KeybearerHintSchema = z.object({
   id: z.number(),
   lightWorldLocation: z.string(),
   darkWorldLocation: z.string(),
-  value: z.string(),
+  value: z.string().default(""),
+  checked: z.boolean().default(false),
 });
 export type KeybearerHint = z.infer<typeof KeybearerHintSchema>;
 
@@ -34,7 +35,7 @@ export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 export const RegionHintsSchema = z.object({
   variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
   bossHints: BossHintsSchema,
-  flyingCacheHints: z.array(KeybearerHintSchema),
+  keybearerHints: z.array(KeybearerHintSchema),
   translatorHints: z.array(TranslatorHintSchema),
 });
 export type RegionHints = z.infer<typeof RegionHintsSchema>;

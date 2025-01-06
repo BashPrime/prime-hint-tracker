@@ -1,6 +1,5 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_LOCATIONS_WITH_ITEMS,

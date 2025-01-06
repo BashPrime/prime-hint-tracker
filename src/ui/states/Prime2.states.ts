@@ -1,4 +1,5 @@
 import {
+  KeybearerHintSchema,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
@@ -13,25 +14,22 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     item: "",
     keys: [],
   },
-  flyingCacheHints: [
-    {
+  keybearerHints: [
+    KeybearerHintSchema.parse({
       id: 1,
       lightWorldLocation: "Industrial Site",
       darkWorldLocation: "Accursed Lake",
-      value: "",
-    },
-    {
+    }),
+    KeybearerHintSchema.parse({
       id: 2,
       lightWorldLocation: "Landing Site",
       darkWorldLocation: "Defiled Shrine",
-      value: "",
-    },
-    {
+    }),
+    KeybearerHintSchema.parse({
       id: 3,
       lightWorldLocation: "Storage Cavern A",
       darkWorldLocation: "Ing Reliquary",
-      value: "",
-    },
+    }),
   ],
   translatorHints: [
     {
@@ -82,19 +80,17 @@ export const agonHintsState = atomWithReset<RegionHints>({
       { id: 3, name: "Key 3", location: "" },
     ],
   },
-  flyingCacheHints: [
-    {
+  keybearerHints: [
+    KeybearerHintSchema.parse({
       id: 1,
       lightWorldLocation: "Central Mining Station",
       darkWorldLocation: "Battleground",
-      value: "",
-    },
-    {
+    }),
+    KeybearerHintSchema.parse({
       id: 2,
       lightWorldLocation: "Main Reactor",
       darkWorldLocation: "Dark Oasis",
-      value: "",
-    },
+    }),
   ],
   translatorHints: [
     {
@@ -145,19 +141,17 @@ export const torvusHintsState = atomWithReset<RegionHints>({
       { id: 3, name: "Key 3", location: "" },
     ],
   },
-  flyingCacheHints: [
-    {
+  keybearerHints: [
+    KeybearerHintSchema.parse({
       id: 1,
       lightWorldLocation: "Torvus Lagoon",
       darkWorldLocation: "Poisoned Bog",
-      value: "",
-    },
-    {
+    }),
+    KeybearerHintSchema.parse({
       id: 2,
       lightWorldLocation: "Catacombs",
       darkWorldLocation: "Dungeon",
-      value: "",
-    },
+    }),
   ],
   translatorHints: [
     {
@@ -215,19 +209,17 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
       { id: 3, name: "Key 3", location: "" },
     ],
   },
-  flyingCacheHints: [
-    {
+  keybearerHints: [
+    KeybearerHintSchema.parse({
       id: 1,
       lightWorldLocation: "Dynamo Works",
       darkWorldLocation: "Hive Dynamo Works",
-      value: "",
-    },
-    {
+    }),
+    KeybearerHintSchema.parse({
       id: 2,
       lightWorldLocation: "Sanctuary Entrance",
       darkWorldLocation: "Hive Entrance",
-      value: "",
-    },
+    }),
   ],
   translatorHints: [
     {

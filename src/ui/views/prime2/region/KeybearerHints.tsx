@@ -6,30 +6,72 @@ import {
 import { cn, createOptions } from "@/lib/utils";
 import { KeybearerHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
+import { Check } from "lucide-react";
+import { MouseEvent, useCallback } from "react";
+
+type UpdateValue = {
+  value?: string;
+  checked?: boolean;
+};
 
 type HintProps = {
   hint: KeybearerHint;
-  onHintChange: (hint: KeybearerHint) => void
+  onUpdate: (update: UpdateValue) => void;
 };
 
-function Hint({ hint, onHintChange }: HintProps) {
+function Hint({ hint, onUpdate }: HintProps) {
+  // !FUNCTION
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        onUpdate({ checked: !hint.checked });
+      }
+    },
+    [onUpdate]
+  );
   return (
-    <div>
-      <p className="uppercase font-bold text-xs text-[#4fa0ff] tracking-wide">
-        {hint.lightWorldLocation}
-      </p>
+    <div
+      onMouseDown={handleMouseDown}
+      className={cn(
+        "bg-zinc-800 border border-zinc-900 p-2",
+        hint.checked && "bg-green-900"
+      )}
+    >
+      <div className="flex flex-row justify-between gap-1">
+        <p
+          className={cn(
+            "uppercase font-bold text-xs text-[#4fa0ff] tracking-wide",
+            hint.checked && "text-green-400"
+          )}
+        >
+          {hint.lightWorldLocation}
+        </p>
+        <Check
+          className={cn(
+            "flex-none w-3 h-3 text-green-300",
+            !hint.checked && "opacity-0"
+          )}
+        />
+      </div>
       <AutoComplete
         placeholder="Item"
         emptyMessage="No item found."
         value={{ label: hint.value, value: hint.value }}
-        onInputChange={(value) => onHintChange({ ...hint, value })}
+        onInputChange={(value) => onUpdate({ value })}
         options={createOptions(
           [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
           true
         )}
         tabIndex={1}
       />
-      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">{hint.darkWorldLocation}</span></p>
+      <p className="text-sm text-zinc-400">
+        {"in "}
+        <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">
+          {hint.darkWorldLocation}
+        </span>
+      </p>
     </div>
   );
 }
@@ -40,35 +82,38 @@ type Props = {
   className?: string;
 };
 
-export default function KeybearerHints({
-  atom,
-  variant,
-  className,
-}: Props) {
+export default function KeybearerHints({ atom, variant, className }: Props) {
   // !JOTAI
-  const [hints, setHints] = useAtom(atom)
+  const [hints, setHints] = useAtom(atom);
 
   // !FUNCTION
-  function updateCacheHint(hint: KeybearerHint) {
+  function updateHint(id: number, update: UpdateValue) {
     setHints((prev) => {
       const newHints = [...prev];
-      const index = newHints.findIndex((elem) => elem.id === hint.id);
-      newHints[index] = hint;
+      return newHints.map((hint) => {
+        if (hint.id === id) {
+          return {
+            ...hint,
+            ...update,
+          };
+        }
 
-      return newHints;
+        return { ...hint };
+      });
     });
   }
 
   return (
     <div
-      className={cn(
-        "sm:grid sm:grid-cols-none md:grid-cols-2 bg-zinc-800 p-2 gap-3",
-        className
-      )}
+      className={cn("sm:grid sm:grid-cols-none md:grid-cols-2", className)}
       data-name="flying-ing-cache-hints"
     >
-      {hints.map((keyHint, idx) => (
-        <Hint hint={keyHint} onHintChange={(hint) => updateCacheHint(hint)} key={`${variant}-cache-${idx}`} />
+      {hints.map((hint, idx) => (
+        <Hint
+          hint={hint}
+          onUpdate={(update) => updateHint(hint.id, update)}
+          key={`${variant}-cache-${idx}`}
+        />
       ))}
     </div>
   );

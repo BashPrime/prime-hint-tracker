@@ -15,7 +15,7 @@ type Props = {
 export default function Region({ name, atom, className }: Props) {
   const { variant } = useAtomValue(atom)
   const bossHintsAtom = focusAtom(atom, (optic) => optic.prop("bossHints"));
-  const keybearerHintsAtom = focusAtom(atom, (optic) => optic.prop("flyingCacheHints"));
+  const keybearerHintsAtom = focusAtom(atom, (optic) => optic.prop("keybearerHints"));
   const translatorHintsAtom = focusAtom(atom, (optic) => optic.prop("translatorHints"));
 
   return (
