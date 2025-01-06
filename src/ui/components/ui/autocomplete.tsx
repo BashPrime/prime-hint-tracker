@@ -59,6 +59,13 @@ export const AutoComplete = ({
     }
   }, [value]);
 
+  // We need to focus the input ref when the autocomplete opens.
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
       const input = inputRef.current;
@@ -91,7 +98,7 @@ export const AutoComplete = ({
 
   const handleBlur = useCallback(() => {
     setOpen(false);
-    onInputChange?.(inputValue)
+    onInputChange?.(inputValue);
 
     // reset selected state if input is empty
     if (!inputValue) {
@@ -121,6 +128,21 @@ export const AutoComplete = ({
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
+        <div className="flex items-center">
+          <p
+            onClick={() => setOpen(true)}
+            onFocus={() => setOpen(true)}
+            tabIndex={tabIndex}
+            className={cn(
+              "inline-block w-full rounded-md bg-transparent text-sm outline-none align-middle my-1",
+              !inputValue && "text-muted-foreground",
+              !isOpen || "hidden",
+              className
+            )}
+          >
+            {inputValue ? inputValue : placeholder}
+          </p>
+        </div>
         <CommandInput
           ref={inputRef}
           value={inputValue}
@@ -130,7 +152,7 @@ export const AutoComplete = ({
           placeholder={placeholder}
           disabled={disabled}
           tabIndex={tabIndex}
-          className={cn("text-sm h-8 block", className)}
+          className={cn("text-sm h-8 block", isOpen || "hidden", className)}
         />
       </div>
       <div className="relative">

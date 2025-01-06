@@ -22,13 +22,13 @@ function Hint({ keyHint: key, onKeyChange }: HintProps) {
     <div>
       <p className="uppercase font-bold text-[13px] text-red-500">{key.name}</p>
       <AutoComplete
-        placeholder="Region..."
+        placeholder="Region"
         emptyMessage="No region found."
         value={{ label: key.location, value: key.location }}
         onInputChange={(value) => onKeyChange({ ...key, location: value })}
         options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
         tabIndex={1}
-        className="text-[13px]"
+        // className="text-[13px]"
       />
     </div>
   );
@@ -91,7 +91,7 @@ export function BossHints({ atom, variant, className }: Props) {
             {bossHints.name}
           </p>
           <AutoComplete
-            placeholder="Item..."
+            placeholder="Item"
             emptyMessage="No item found."
             value={{ label: bossHints.item, value: bossHints.item }}
             onInputChange={(value) =>

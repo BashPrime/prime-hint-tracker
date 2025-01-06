@@ -31,19 +31,19 @@ export function Hint({
   const [hint, setHint] = useAtom(hintAtom);
 
   return (
-    <div className={cn("flex flex-row", className)}>
+    <div className={cn("flex flex-row justify-between", className)}>
       <div className="flex flex-col flex-1">
         <AutoComplete
-          placeholder="Item..."
+          placeholder="Item"
           emptyMessage="No item found."
           value={{ label: hint.item ?? "", value: hint.item ?? "" }}
           onInputChange={(value) => setHint((prev) => ({ ...prev, item: value }))}
           options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
-          className="font-bold text-red-400 h-6"
+          className="font-bold text-red-400 my-0"
         />
         <AutoComplete
-          placeholder="Location..."
+          placeholder="Location"
           emptyMessage="No location found."
           value={{ label: hint.location ?? "", value: hint.location ?? "" }}
           onInputChange={(value) =>
@@ -51,14 +51,14 @@ export function Hint({
           }
           options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}
-          className="h-6"
+          className="text-[13px]"
         />
       </div>
       <X
         onClick={onDeleteHint}
         tabIndex={-1}
         className={cn(
-          "w-8 text-red-500 cursor-pointer content-end",
+          "w-8 text-red-500 cursor-pointer",
           "hover:brightness-125 active:brightness-75"
         )}
       />

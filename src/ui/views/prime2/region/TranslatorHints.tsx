@@ -62,7 +62,7 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
       </p>
       <div className="flex flex-col">
         <AutoComplete
-          placeholder="Item..."
+          placeholder="Item"
           emptyMessage="No item found."
           value={{ label: hint.firstValue, value: hint.firstValue }}
           onInputChange={(value) => onHintUpdate({ firstValue: value })}
@@ -87,7 +87,7 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
               tabIndex={-1}
             />
             <AutoComplete
-              placeholder="Location or Item..."
+              placeholder="Location or Item"
               emptyMessage="No location found."
               value={{ label: hint.secondValue, value: hint.secondValue }}
               onInputChange={(value) => onHintUpdate({ secondValue: value })}

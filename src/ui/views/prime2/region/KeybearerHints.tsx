@@ -15,11 +15,11 @@ type HintProps = {
 function Hint({ hint, onHintChange }: HintProps) {
   return (
     <div>
-      <p className="uppercase font-bold text-xs text-orange-400 tracking-wide">
+      <p className="uppercase font-bold text-xs text-[#4fa0ff] tracking-wide">
         {hint.lightWorldLocation}
       </p>
       <AutoComplete
-        placeholder="Item..."
+        placeholder="Item"
         emptyMessage="No item found."
         value={{ label: hint.value, value: hint.value }}
         onInputChange={(value) => onHintChange({ ...hint, value })}
@@ -29,7 +29,7 @@ function Hint({ hint, onHintChange }: HintProps) {
         )}
         tabIndex={1}
       />
-      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-400 tracking-wide">{hint.darkWorldLocation}</span></p>
+      <p className="text-sm text-zinc-400">in <span className="uppercase text-xs font-bold text-violet-500 tracking-wide">{hint.darkWorldLocation}</span></p>
     </div>
   );
 }

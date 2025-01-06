@@ -17,13 +17,13 @@ function Hint({ keyHint, onKeyChange }: HintProps) {
         {keyHint.name}
       </p>
       <AutoComplete
-        placeholder="Location..."
+        placeholder="Location"
         emptyMessage="No location found."
         value={{ label: keyHint.location, value: keyHint.location }}
         onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
         options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
         tabIndex={1}
-        className="text-xs"
+        className="text-[13px]"
       />
     </div>
   );
@@ -51,7 +51,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
   return (
     <div className={className} data-name="stkHints">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Sky Temple Keys</h2>
-      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-flow-col bg-zinc-800">
+      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col bg-zinc-800">
         {keys.map((key, idx) => (
           <Hint
             keyHint={key}
