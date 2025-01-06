@@ -4,7 +4,7 @@ import {
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { BossHints, BossKeyHint } from "@/types/Prime2.types";
+import { BossHints as BossHintsType, BossKeyHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 
 import umosImg from "@/assets/prime2/u-mos.jpg";
@@ -35,12 +35,12 @@ function Hint({ keyHint: key, onKeyChange }: HintProps) {
 }
 
 type Props = {
-  atom: PrimitiveAtom<BossHints>;
+  atom: PrimitiveAtom<BossHintsType>;
   variant: string;
   className?: string;
 };
 
-export function BossHintContainer({ atom, variant, className }: Props) {
+export function BossHints({ atom, variant, className }: Props) {
   // !JOTAI
   const [bossHints, setBossHints] = useAtom(atom);
 
@@ -80,7 +80,7 @@ export function BossHintContainer({ atom, variant, className }: Props) {
         "flex sm:flex-col md:flex-row gap-2 p-2 bg-zinc-800 flex-none",
         className
       )}
-      data-name="boss-container"
+      data-name="boss-hints-ontainer"
     >
       <div className="flex flex-col gap-2 w-3/5" data-name="boss-img-item">
         <div className="w-24" data-name="boss-img">

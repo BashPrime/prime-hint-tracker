@@ -4,12 +4,12 @@ import {
   PRIME_2_RELATED_UPGRADES_HINTS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { FlyingIngCacheHint } from "@/types/Prime2.types";
+import { KeybearerHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 
 type HintProps = {
-  hint: FlyingIngCacheHint;
-  onHintChange: (hint: FlyingIngCacheHint) => void
+  hint: KeybearerHint;
+  onHintChange: (hint: KeybearerHint) => void
 };
 
 function Hint({ hint, onHintChange }: HintProps) {
@@ -35,12 +35,12 @@ function Hint({ hint, onHintChange }: HintProps) {
 }
 
 type Props = {
-  atom: PrimitiveAtom<FlyingIngCacheHint[]>;
+  atom: PrimitiveAtom<KeybearerHint[]>;
   variant: string;
   className?: string;
 };
 
-export default function FlyingIngCacheHints({
+export default function KeybearerHints({
   atom,
   variant,
   className,
@@ -49,7 +49,7 @@ export default function FlyingIngCacheHints({
   const [hints, setHints] = useAtom(atom)
 
   // !FUNCTION
-  function updateCacheHint(hint: FlyingIngCacheHint) {
+  function updateCacheHint(hint: KeybearerHint) {
     setHints((prev) => {
       const newHints = [...prev];
       const index = newHints.findIndex((elem) => elem.id === hint.id);
