@@ -13,7 +13,7 @@ export default function Prime2Layout() {
   return (
     <div
       className={cn(
-        "grid sm:grid-cols-2 md:grid-cols-[0.75fr_repeat(4,_1fr)] bg-[#1f1f1f] h-full"
+        "grid sm:grid-cols-2 md:grid-cols-[0.75fr_repeat(4,_1fr)] bg-[#1f1f1f] md:h-full"
       )}
       data-name="prime2-layout"
     >
