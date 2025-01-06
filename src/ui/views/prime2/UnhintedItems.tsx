@@ -37,9 +37,12 @@ export function Hint({
           placeholder="Item"
           emptyMessage="No item found."
           value={{ label: hint.item ?? "", value: hint.item ?? "" }}
-          onInputChange={(value) => setHint((prev) => ({ ...prev, item: value }))}
+          onInputChange={(value) =>
+            setHint((prev) => ({ ...prev, item: value }))
+          }
           options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
+          openOnCreate
           className="font-bold text-red-400 my-0"
         />
         <AutoComplete
@@ -74,6 +77,7 @@ export default function UnhintedItems({ className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(unhintedItemsState);
 
+  // !FUNCTION
   function addNewHint() {
     const newHint = UnhintedItemSchema.parse({
       id: uuidV4(),

@@ -30,6 +30,7 @@ type AutoCompleteProps = {
   disabled?: boolean;
   placeholder?: string;
   tabIndex?: number;
+  openOnCreate?: boolean;
   className?: string;
 };
 
@@ -43,6 +44,7 @@ export const AutoComplete = ({
   disabled,
   isLoading = false,
   tabIndex = 0,
+  openOnCreate = false,
   className,
 }: AutoCompleteProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -65,6 +67,13 @@ export const AutoComplete = ({
       inputRef.current?.focus();
     }
   }, [isOpen]);
+
+  // If focusOnCreate is defined, try to focus on the input element on component creation
+  useEffect(() => {
+    if (openOnCreate) {
+      setOpen(true);
+    }
+  }, []);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
