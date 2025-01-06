@@ -11,6 +11,7 @@ import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
+import { useEffect, useState } from "react";
 
 type HintProps = {
   keyHint: BossKeyHint;
@@ -28,7 +29,6 @@ function Hint({ keyHint: key, onKeyChange }: HintProps) {
         onInputChange={(value) => onKeyChange({ ...key, location: value })}
         options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
         tabIndex={1}
-        // className="text-[13px]"
       />
     </div>
   );
@@ -41,12 +41,15 @@ type Props = {
 };
 
 export function BossHints({ atom, variant, className }: Props) {
-  // !JOTAI
+  // !JOTAI & STATE
   const [bossHints, setBossHints] = useAtom(atom);
+  const [random, setRandom] = useState<number>(-1);
 
   // !LOCAL
-  const DEAD_STR = "Dead"
-  const isBossDead = bossHints.item === DEAD_STR
+  const DEAD_STR = "Dead";
+  const isBossDead = bossHints.item === DEAD_STR;
+  const isChykkaDead = isBossDead && bossHints.name === "Chykka";
+  const displayChykkaEasterEgg = isChykkaDead && random === 0;
   let imgSrc: string;
   switch (variant) {
     case "temple":
@@ -76,6 +79,15 @@ export function BossHints({ atom, variant, className }: Props) {
     });
   }
 
+  // !HOOKS
+  useEffect(() => {
+    if (isChykkaDead) {
+      setRandom(Math.floor(Math.random() * 1024));
+    } else {
+      setRandom(-1);
+    }
+  }, [isChykkaDead, setRandom]);
+
   return (
     <div
       className={cn(
@@ -91,18 +103,29 @@ export function BossHints({ atom, variant, className }: Props) {
         <div data-name="boss-item">
           <p className="uppercase font-bold text-sm text-red-500">
             {bossHints.name}
+            {displayChykkaEasterEgg && "'s"}
           </p>
-          <AutoComplete
-            placeholder="Item"
-            emptyMessage="No item found."
-            value={{ label: bossHints.item, value: bossHints.item }}
-            onInputChange={(value) =>
-              setBossHints((prev) => ({ ...prev, item: value }))
-            }
-            options={createOptions([...PRIME_2_ALL_ITEMS_VALUES, DEAD_STR], true)}
-            tabIndex={1}
-            className={cn(isBossDead && "text-red-200 italic")}
-          />
+          <div
+            className={cn(
+              displayChykkaEasterEgg && "flex flex-row items-center gap-2"
+            )}
+          >
+            <AutoComplete
+              placeholder="Item"
+              emptyMessage="No item found."
+              value={{ label: bossHints.item, value: bossHints.item }}
+              onInputChange={(value) =>
+                setBossHints((prev) => ({ ...prev, item: value }))
+              }
+              options={createOptions(
+                [...PRIME_2_ALL_ITEMS_VALUES, DEAD_STR],
+                true
+              )}
+              tabIndex={1}
+              className={cn(isBossDead && "text-red-200 italic")}
+            />
+            {displayChykkaEasterEgg && <p className="text-xs">Nice!</p>}
+          </div>
         </div>
       </div>
       {bossHints.keys.length > 0 && (
