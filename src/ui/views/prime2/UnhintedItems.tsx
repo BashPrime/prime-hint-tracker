@@ -93,19 +93,19 @@ export default function UnhintedItems({ className }: Props) {
       data-name="unhinted-items"
     >
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Unhinted Items</h2>
-      <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto">
+      <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto gap-2">
         {...hints.map((item) => (
           <Hint
             hintAtom={item.hint}
             onDelete={() => deleteHint(item)}
-            className="m-1 bg-zinc-800"
+            className="px-1 bg-zinc-800"
             key={`unhinted-${item.id}`}
           />
         ))}
         <Button
           onClick={addNewHint}
           className={cn(
-            "text-xs place-self-center outline-none focus:outline-none",
+            "place-self-center outline-none focus:outline-none",
             "hover:brightness-110 active:brightness-75",
             !hints.length && "mt-2"
           )}
