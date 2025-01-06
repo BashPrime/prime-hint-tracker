@@ -58,7 +58,7 @@ export function Hint({
         onClick={onDeleteHint}
         tabIndex={-1}
         className={cn(
-          "w-8 text-red-500 cursor-pointer",
+          "w-6 h-6 text-red-500 cursor-pointer",
           "hover:brightness-125 active:brightness-75"
         )}
       />
@@ -98,7 +98,7 @@ export default function UnhintedItems({ className }: Props) {
           <Hint
             hintAtom={item.hint}
             onDelete={() => deleteHint(item)}
-            className="px-1 bg-zinc-800"
+            className="pl-1 bg-zinc-800"
             key={`unhinted-${item.id}`}
           />
         ))}
