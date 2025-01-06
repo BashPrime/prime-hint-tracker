@@ -16,30 +16,29 @@ import { atom, useAtom, PrimitiveAtom } from "jotai";
 import { Plus, X } from "lucide-react";
 import { v4 as uuidV4 } from "uuid";
 
+type UpdateHintValue = {
+  name?: string;
+  item?: string;
+  location?: string;
+  checked?: boolean;
+};
+
 type HintInputProps = {
-  hintAtom: PrimitiveAtom<Prime2ItemLocationHint>;
+  hint: UnhintedItem;
+  onUpdate: (update: UpdateHintValue) => void;
   onDelete: () => void;
   className?: string;
 };
 
-export function Hint({
-  hintAtom,
-  onDelete: onDeleteHint,
-  className,
-}: HintInputProps) {
-  // !JOTAI
-  const [hint, setHint] = useAtom(hintAtom);
-
+export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
   return (
     <div className={cn("flex flex-row justify-between", className)}>
       <div className="flex flex-col flex-1">
         <AutoComplete
           placeholder="Item"
           emptyMessage="No item found."
-          value={{ label: hint.item ?? "", value: hint.item ?? "" }}
-          onInputChange={(value) =>
-            setHint((prev) => ({ ...prev, item: value }))
-          }
+          value={{ label: hint.item, value: hint.item }}
+          onInputChange={(value) => onUpdate({ item: value })}
           options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
           openOnCreate
@@ -49,16 +48,14 @@ export function Hint({
           placeholder="Location"
           emptyMessage="No location found."
           value={{ label: hint.location ?? "", value: hint.location ?? "" }}
-          onInputChange={(value) =>
-            setHint((prev) => ({ ...prev, location: value }))
-          }
+          onInputChange={(value) => onUpdate({ location: value })}
           options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}
           className="text-[13px]"
         />
       </div>
       <X
-        onClick={onDeleteHint}
+        onClick={onDelete}
         tabIndex={-1}
         className={cn(
           "w-6 h-6 text-red-500 cursor-pointer",
@@ -81,9 +78,24 @@ export default function UnhintedItems({ className }: Props) {
   function addNewHint() {
     const newHint = UnhintedItemSchema.parse({
       id: uuidV4(),
-      hint: atom(Prime2ItemLocationHintSchema.parse({})),
     });
     setHints((prev) => [...prev, newHint]);
+  }
+
+  function updateHint(id: string, update: UpdateHintValue) {
+    setHints((prev) => {
+      const newHints = [...prev];
+      return newHints.map((hint) => {
+        if (hint.id === id) {
+          return {
+            ...hint,
+            ...update,
+          };
+        }
+
+        return { ...hint };
+      });
+    });
   }
 
   function deleteHint(hintToDelete: UnhintedItem) {
@@ -98,12 +110,13 @@ export default function UnhintedItems({ className }: Props) {
     >
       <h2 className="font-bold px-2 bg-zinc-900 uppercase">Unhinted Items</h2>
       <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto gap-2">
-        {...hints.map((item) => (
+        {...hints.map((hint) => (
           <Hint
-            hintAtom={item.hint}
-            onDelete={() => deleteHint(item)}
+            hint={hint}
+            onUpdate={(value) => updateHint(hint.id, value)}
+            onDelete={() => deleteHint(hint)}
             className="pl-1 bg-zinc-800"
-            key={`unhinted-${item.id}`}
+            key={`unhinted-${hint.id}`}
           />
         ))}
         <Button

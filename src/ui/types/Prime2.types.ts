@@ -83,7 +83,7 @@ export const BossKeyHintSchema = z.object({
   name: z.string(),
   location: z.string(),
 });
-export type BossKeyHint = z.infer<typeof BossKeyHintSchema>
+export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
 export const BossHintsSchema = z.object({
   name: z.string(),
@@ -119,7 +119,9 @@ export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
 export const UnhintedItemSchema = z.object({
   id: z.string(),
-  hint: z.custom<PrimitiveAtom<Prime2ItemLocationHint>>(),
+  item: z.string().default(""),
+  location: z.string().default(""),
+  checked: z.boolean().default(false),
 });
 
 export type UnhintedItem = z.infer<typeof UnhintedItemSchema>;
