@@ -43,8 +43,8 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
   const proximityPlaceholder = BOSSES.includes(hint.secondValue)
-    ? "on..."
-    : "in...";
+    ? "on"
+    : "in";
 
   // !HOOKS
   useEffect(() => {
