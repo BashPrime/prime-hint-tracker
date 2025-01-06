@@ -110,7 +110,7 @@ export default function UnhintedItems({ className }: Props) {
             !hints.length && "mt-2"
           )}
         >
-          <Plus /> Add new hint...
+          <Plus /> Add new...
         </Button>
       </div>
     </div>
