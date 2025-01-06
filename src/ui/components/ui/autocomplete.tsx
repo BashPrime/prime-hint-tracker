@@ -137,7 +137,7 @@ export const AutoComplete = ({
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
-        <div className="flex items-center">
+        <div className="flex items-center cursor-text">
           <p
             onClick={() => setOpen(true)}
             onFocus={() => setOpen(true)}
