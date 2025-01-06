@@ -18,6 +18,7 @@ type TranslatorHintProps = {
 function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
+  const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
   const itemOptions = createOptions(
     [...PRIME_2_ALL_ITEMS_VALUES, JOKE_HINT_STR],
     true
@@ -27,10 +28,12 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
       ...PRIME_2_ALL_ITEMS_VALUES,
       ...PRIME_2_ALL_LOCATIONS,
       ...PRIME_2_REGION_OPTIONS,
+      ...BOSSES,
     ],
     true
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
+  const proximityPlaceholder = BOSSES.includes(hint.secondValue) ? "on..." : "in..."
 
   return (
     <div>
@@ -57,7 +60,7 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
           <>
             <Input
               type="text"
-              placeholder="in..."
+              placeholder={proximityPlaceholder}
               value={hint.proximity}
               onChange={(e) =>
                 onHintChange({ ...hint, proximity: e.target.value })
