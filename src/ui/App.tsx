@@ -7,7 +7,6 @@ export default function App() {
   const resetTracker = useResetTracker();
   
   useEffect(() => {
-    // @ts-expect-error
     window.electronApi.onResetTracker(() => resetTracker());
   }, []);
 

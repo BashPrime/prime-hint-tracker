@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "types": ["../../types"],
         "strict": true,
         // tell typescript to generate esm syntax
         "target": "ESNext",
