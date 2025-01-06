@@ -72,7 +72,9 @@ export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
   "Charge Combo",
   "Translator",
   "Key",
-]
+  "Dark Temple Key",
+  "Sky Temple Key",
+];
 
 export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Missile-related",
@@ -105,7 +107,9 @@ export const PRIME_2_ALL_REGIONS = [
   "Ing Hive",
 ] as const;
 
-export const PRIME_2_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter((region) => region !== "Sky Temple")
+export const PRIME_2_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter(
+  (region) => region !== "Sky Temple"
+);
 
 export const PRIME_2_ALL_LOCATIONS = [
   "Landing Site",
@@ -500,8 +504,4 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Underground Tunnel",
 ] as const;
 
-export const PROXIMITY_OPTIONS = [
-  "in",
-  "up to",
-  "exactly",
-] as const
+export const PROXIMITY_OPTIONS = ["in", "up to", "exactly"] as const;
