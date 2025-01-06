@@ -33,7 +33,9 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
     true
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
-  const proximityPlaceholder = BOSSES.includes(hint.secondValue) ? "on..." : "in..."
+  const proximityPlaceholder = BOSSES.includes(hint.secondValue)
+    ? "on..."
+    : "in...";
 
   return (
     <div>
@@ -47,7 +49,7 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
           placeholder="Item..."
           emptyMessage="No item found."
           value={{ label: hint.firstValue, value: hint.firstValue }}
-          onValueChange={(o) => onHintChange({ ...hint, firstValue: o.label })}
+          onInputChange={(value) => onHintChange({ ...hint, firstValue: value })}
           options={itemOptions}
           tabIndex={1}
           className={cn(
@@ -73,8 +75,8 @@ function Hint({ hint, onHintChange, headerColor }: TranslatorHintProps) {
               placeholder="Location or Item..."
               emptyMessage="No location found."
               value={{ label: hint.secondValue, value: hint.secondValue }}
-              onValueChange={(o) =>
-                onHintChange({ ...hint, secondValue: o.label })
+              onInputChange={(value) =>
+                onHintChange({ ...hint, secondValue: value })
               }
               options={secondValueOptions}
               tabIndex={1}

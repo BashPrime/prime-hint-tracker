@@ -25,7 +25,7 @@ function Hint({ keyHint: key, onKeyChange }: HintProps) {
         placeholder="Region..."
         emptyMessage="No region found."
         value={{ label: key.location, value: key.location }}
-        onValueChange={(o) => onKeyChange({ ...key, location: o.label })}
+        onInputChange={(value) => onKeyChange({ ...key, location: value })}
         options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
         tabIndex={1}
         className="text-[13px]"
@@ -94,8 +94,8 @@ export function BossHintContainer({ atom, variant, className }: Props) {
             placeholder="Item..."
             emptyMessage="No item found."
             value={{ label: bossHints.item, value: bossHints.item }}
-            onValueChange={(o) =>
-              setBossHints((prev) => ({ ...prev, item: o.label }))
+            onInputChange={(value) =>
+              setBossHints((prev) => ({ ...prev, item: value }))
             }
             options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
             tabIndex={1}

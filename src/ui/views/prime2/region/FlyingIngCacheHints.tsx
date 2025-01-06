@@ -22,7 +22,7 @@ function Hint({ hint, onHintChange }: HintProps) {
         placeholder="Item..."
         emptyMessage="No item found."
         value={{ label: hint.value, value: hint.value }}
-        onValueChange={(o) => onHintChange({ ...hint, value: o.label })}
+        onInputChange={(value) => onHintChange({ ...hint, value })}
         options={createOptions(
           [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
           true

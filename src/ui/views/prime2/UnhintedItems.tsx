@@ -37,7 +37,7 @@ export function Hint({
           placeholder="Item..."
           emptyMessage="No item found."
           value={{ label: hint.item ?? "", value: hint.item ?? "" }}
-          onValueChange={(o) => setHint((prev) => ({ ...prev, item: o.value }))}
+          onInputChange={(value) => setHint((prev) => ({ ...prev, item: value }))}
           options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
           tabIndex={1}
           className="font-bold h-6"
@@ -46,8 +46,8 @@ export function Hint({
           placeholder="Location..."
           emptyMessage="No location found."
           value={{ label: hint.location ?? "", value: hint.location ?? "" }}
-          onValueChange={(o) =>
-            setHint((prev) => ({ ...prev, location: o.value }))
+          onInputChange={(value) =>
+            setHint((prev) => ({ ...prev, location: value }))
           }
           options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}

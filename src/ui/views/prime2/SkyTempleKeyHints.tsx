@@ -20,7 +20,7 @@ function Hint({ keyHint, onKeyChange }: HintProps) {
         placeholder="Location..."
         emptyMessage="No location found."
         value={{ label: keyHint.location, value: keyHint.location }}
-        onValueChange={(o) => onKeyChange({ ...keyHint, location: o.label })}
+        onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
         options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
         tabIndex={1}
         className="text-xs"
