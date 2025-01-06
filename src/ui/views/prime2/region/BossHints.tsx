@@ -45,6 +45,8 @@ export function BossHints({ atom, variant, className }: Props) {
   const [bossHints, setBossHints] = useAtom(atom);
 
   // !LOCAL
+  const DEAD_STR = "Dead"
+  const isBossDead = bossHints.item === DEAD_STR
   let imgSrc: string;
   switch (variant) {
     case "temple":
@@ -97,9 +99,9 @@ export function BossHints({ atom, variant, className }: Props) {
             onInputChange={(value) =>
               setBossHints((prev) => ({ ...prev, item: value }))
             }
-            options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
+            options={createOptions([...PRIME_2_ALL_ITEMS_VALUES, DEAD_STR], true)}
             tabIndex={1}
-            className="h-6"
+            className={cn(isBossDead && "text-red-200 italic")}
           />
         </div>
       </div>
