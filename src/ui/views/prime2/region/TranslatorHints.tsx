@@ -42,16 +42,14 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
     true
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
-  const proximityPlaceholder = !BOSSES.includes(hint.secondValue)
-    ? "in"
-    : "on";
+  const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
 
   // !HOOKS
   useEffect(() => {
     if (!hint.proximity) {
-      setProximity("")
+      setProximity("");
     }
-  }, [hint.proximity])
+  }, [hint.proximity]);
 
   return (
     <div>
@@ -68,10 +66,7 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
           onInputChange={(value) => onHintUpdate({ firstValue: value })}
           options={itemOptions}
           tabIndex={1}
-          className={cn(
-            "text-sm h-6",
-            isJokeHint && "font-bold text-green-400"
-          )}
+          className={cn(isJokeHint && "font-bold text-green-400")}
           data-name="first-value"
         />
         {!isJokeHint && (
@@ -82,9 +77,9 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
               value={proximity}
               onChange={(e) => setProximity(e.target.value)}
               onBlur={() => onHintUpdate({ proximity })}
-              className="text-sm h-6"
               data-name="proximity"
               tabIndex={-1}
+              className="-my-2"
             />
             <AutoComplete
               placeholder="Location or Item"
@@ -93,7 +88,6 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
               onInputChange={(value) => onHintUpdate({ secondValue: value })}
               options={secondValueOptions}
               tabIndex={1}
-              className="text-sm h-6"
               data-name="second-value"
             />
           </>
