@@ -27,9 +27,14 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
   const [proximity, setProximity] = useState<string>("");
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
+  const BOSS_KEY_HINTS = [
+    "Dark Agon Temple Keys",
+    "Dark Torvus Temple Keys",
+    "Ing Hive Temple Keys",
+  ];
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
   const itemOptions = createOptions(
-    [...PRIME_2_ALL_ITEMS_VALUES, JOKE_HINT_STR],
+    [...PRIME_2_ALL_ITEMS_VALUES, ...BOSS_KEY_HINTS, JOKE_HINT_STR],
     true
   );
   const secondValueOptions = createOptions(
@@ -42,6 +47,8 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
     true
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
+  const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
+  const hideSecondary = isJokeHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
 
   // !HOOKS
@@ -66,10 +73,13 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
           onInputChange={(value) => onHintUpdate({ firstValue: value })}
           options={itemOptions}
           tabIndex={1}
-          className={cn(isJokeHint && "font-bold text-green-400")}
+          className={cn(
+            isJokeHint && "font-bold text-green-400",
+            isBossKeyHint && "font-bold text-red-400"
+          )}
           data-name="first-value"
         />
-        {!isJokeHint && (
+        {!hideSecondary && (
           <>
             <Input
               type="text"
@@ -146,7 +156,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
   return (
     <div
       className={cn(
-        "grid sm:grid-cols-none md:grid-rows-3 md:grid-flow-col gap-2 bg-zinc-800 px-2 pt-1",
+        "grid sm:grid-cols-none md:grid-rows-3 md:grid-cols-2 md:grid-flow-col gap-2 bg-zinc-800 px-2 pt-1",
         className
       )}
       data-name="translator-hints"
