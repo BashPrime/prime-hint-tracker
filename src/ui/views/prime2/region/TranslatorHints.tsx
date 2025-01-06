@@ -8,7 +8,7 @@ import {
 import { cn, createOptions } from "@/lib/utils";
 import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type HintUpdate = {
   firstValue?: string;
@@ -46,6 +46,13 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
     ? "on..."
     : "in...";
 
+  // !HOOKS
+  useEffect(() => {
+    if (!hint.proximity) {
+      setProximity("")
+    }
+  }, [hint.proximity])
+
   return (
     <div>
       <p
@@ -72,7 +79,7 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
             <Input
               type="text"
               placeholder={proximityPlaceholder}
-              // value={hint.proximity}
+              value={proximity}
               onChange={(e) => setProximity(e.target.value)}
               onBlur={() => onHintUpdate({ proximity })}
               className="text-sm h-6"
