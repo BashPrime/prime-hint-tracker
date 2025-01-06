@@ -144,9 +144,9 @@ export const AutoComplete = ({
             tabIndex={tabIndex}
             className={cn(
               "block w-full rounded-md bg-transparent text-sm outline-none align-middle my-1",
+              className,
               !inputValue && "text-muted-foreground",
               !isOpen || "hidden",
-              className
             )}
           >
             {inputValue ? inputValue : placeholder}
