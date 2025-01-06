@@ -134,7 +134,7 @@ export const AutoComplete = ({
             onFocus={() => setOpen(true)}
             tabIndex={tabIndex}
             className={cn(
-              "inline-block w-full rounded-md bg-transparent text-sm outline-none align-middle my-1",
+              "block w-full rounded-md bg-transparent text-sm outline-none align-middle my-1",
               !inputValue && "text-muted-foreground",
               !isOpen || "hidden",
               className
