@@ -10,7 +10,7 @@ export const PRIME_2_MAJORS_VALUES = [
   "Space Jump Boots",
   "Gravity Boost",
   "Grapple Beam",
-  "Screw Atack",
+  "Screw Attack",
   "Dark Suit",
   "Light Suit",
   "Morph Ball Bomb",
