@@ -29,7 +29,7 @@ function Hint({ hint, onUpdate }: HintProps) {
         onUpdate({ checked: !hint.checked });
       }
     },
-    [onUpdate]
+    [onUpdate, hint.checked]
   );
   return (
     <div
@@ -39,7 +39,7 @@ function Hint({ hint, onUpdate }: HintProps) {
         hint.checked && "bg-green-900"
       )}
     >
-      <div className="flex flex-row justify-between gap-1">
+      <div className="flex flex-row justify-between">
         <p
           className={cn(
             "uppercase font-bold text-xs text-[#4fa0ff] tracking-wide",

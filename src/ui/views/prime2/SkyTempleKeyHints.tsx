@@ -15,9 +15,10 @@ type UpdateValue = {
 type HintProps = {
   hint: SkyTempleKeyHint;
   onUpdate: (update: UpdateValue) => void;
+  className?: string
 };
 
-function Hint({ hint, onUpdate }: HintProps) {
+function Hint({ hint, onUpdate, className }: HintProps) {
   // !FUNCTION
   const handleMouseDown = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
@@ -27,29 +28,36 @@ function Hint({ hint, onUpdate }: HintProps) {
         onUpdate({ checked: !hint.checked });
       }
     },
-    [onUpdate]
+    [onUpdate, hint.checked]
   );
   return (
     <div
-      className={cn("p-1 border border-zinc-900 bg-zinc-800", hint.checked && "bg-green-900")}
+      className={cn(
+        "p-1 bg-zinc-800",
+        className,
+        hint.checked && "bg-green-900"
+      )}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex flex-row gap-1">
-        <Check
-          className={cn(
-            "flex-none w-3 h-3 text-green-300 mt-1",
-            !hint.checked && "opacity-0"
-          )}
-        />
-        <div>
-          <p
-            className={cn(
-              "uppercase font-bold text-sm text-lime-400 tracking-wide",
-              hint.checked && "text-green-400"
-            )}
-          >
-            {hint.name}
-          </p>
+      <div className="flex flex-row gap-1.5">
+        <div className="flex flex-col">
+          <div className="flex flex-row gap-2">
+            <p
+              className={cn(
+                "uppercase font-bold text-sm text-lime-400 tracking-wide",
+                hint.checked && "text-green-400"
+              )}
+            >
+              {hint.name}
+            </p>
+            <Check
+              className={cn(
+                "flex-none w-3 h-3 text-green-300 mt-1",
+                !hint.checked && "opacity-0"
+              )}
+            />
+          </div>
+
           <AutoComplete
             placeholder="Location"
             emptyMessage="No location found."
@@ -100,6 +108,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
             hint={key}
             onUpdate={(update) => updateKey(key.id, update)}
             key={`stk-${idx + 1}`}
+            className="border-b md:border-r border-zinc-900"
           />
         ))}
       </div>

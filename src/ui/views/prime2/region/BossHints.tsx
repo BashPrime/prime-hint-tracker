@@ -11,22 +11,58 @@ import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
-import { useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { Check } from "lucide-react";
 
 type HintProps = {
   keyHint: BossKeyHint;
   onKeyChange: (key: BossKeyHint) => void;
+  className?: string;
 };
 
-function Hint({ keyHint: key, onKeyChange }: HintProps) {
+function Hint({ keyHint, onKeyChange, className }: HintProps) {
+  // !FUNCTION
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        onKeyChange({ ...keyHint, checked: !keyHint.checked });
+      }
+    },
+    [onKeyChange, keyHint]
+  );
+
   return (
-    <div>
-      <p className="uppercase font-bold text-[13px] text-red-500">{key.name}</p>
+    <div
+      className={cn(
+        "border-zinc-900 p-2",
+        className,
+        keyHint.checked && "bg-green-900"
+      )}
+      onMouseDown={handleMouseDown}
+    >
+      <div className="flex flex-row gap-1.5">
+        <p
+          className={cn(
+            "uppercase font-bold text-[13px] text-red-500",
+            keyHint.checked && "text-green-400"
+          )}
+        >
+          {keyHint.name}
+        </p>
+        <Check
+          className={cn(
+            "flex-none w-3 h-3 text-green-300 mt-1",
+            !keyHint.checked && "opacity-0"
+          )}
+        />
+      </div>
       <AutoComplete
         placeholder="Region"
         emptyMessage="No region found."
-        value={{ label: key.location, value: key.location }}
-        onInputChange={(value) => onKeyChange({ ...key, location: value })}
+        value={{ label: keyHint.location, value: keyHint.location }}
+        onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
         options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
         tabIndex={1}
       />
@@ -79,6 +115,17 @@ export function BossHints({ atom, variant, className }: Props) {
     });
   }
 
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        setBossHints((prev) => ({ ...prev, checked: !prev.checked }));
+      }
+    },
+    [setBossHints]
+  );
+
   // !HOOKS
   useEffect(() => {
     if (isChykkaDead) {
@@ -90,21 +137,39 @@ export function BossHints({ atom, variant, className }: Props) {
 
   return (
     <div
-      className={cn(
-        "flex sm:flex-col md:flex-row gap-2 p-2 bg-zinc-800 flex-none",
-        className
-      )}
-      data-name="boss-hints-ontainer"
+      className={cn("grid grid-cols-2 bg-zinc-800 flex-none", className)}
+      data-name="boss-hints-container"
     >
-      <div className="flex flex-col gap-2 w-3/5" data-name="boss-img-item">
+      <div
+        className={cn(
+          "flex flex-col gap-1 border-r border-zinc-900 p-2",
+          bossHints.checked && "bg-green-900"
+        )}
+        onMouseDown={handleMouseDown}
+        data-name="boss-item-container"
+      >
         <div className="w-24" data-name="boss-img">
           <img src={imgSrc} title={bossHints.name} alt={bossHints.name} />
         </div>
-        <div data-name="boss-item">
-          <p className="uppercase font-bold text-sm text-red-500">
+        <div className="flex flex-row gap-1.5">
+          <p
+            className={cn(
+              "uppercase font-bold text-sm text-red-500",
+              bossHints.checked && "text-green-400"
+            )}
+            data-name="boss-name"
+          >
             {bossHints.name}
             {displayChykkaEasterEgg && "'s"}
           </p>
+          <Check
+            className={cn(
+              "flex-none w-3 h-3 text-green-300 mt-1",
+              !bossHints.checked && "opacity-0"
+            )}
+          />
+        </div>
+        <div data-name="boss-item">
           <div
             className={cn(
               displayChykkaEasterEgg && "flex flex-row items-center gap-2"
@@ -122,19 +187,20 @@ export function BossHints({ atom, variant, className }: Props) {
                 true
               )}
               tabIndex={1}
-              className={cn(isBossDead && "text-red-200 italic")}
+              className={cn("m-0", isBossDead && "text-red-200 italic")}
             />
             {displayChykkaEasterEgg && <p className="text-xs">Nice!</p>}
           </div>
         </div>
       </div>
       {bossHints.keys.length > 0 && (
-        <div className="flex flex-col" data-name="boss-keys">
+        <div className="grid grid-rows-3" data-name="boss-keys">
           {bossHints.keys.map((keyHint, idx) => (
             <Hint
               keyHint={keyHint}
               onKeyChange={(key) => updateBossKey(key)}
               key={`boss-key-${idx + 1}`}
+              className="border-b last:border-0 border-zinc-900"
             />
           ))}
         </div>

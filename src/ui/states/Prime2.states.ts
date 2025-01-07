@@ -1,4 +1,5 @@
 import {
+  BossHintsSchema,
   KeybearerHintSchema,
   RegionHints,
   SkyTempleKeyHint,
@@ -9,11 +10,9 @@ import { atomWithReset } from "jotai/utils";
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
-  bossHints: {
+  bossHints: BossHintsSchema.parse({
     name: "U-Mos Reward",
-    item: "",
-    keys: [],
-  },
+  }),
   keybearerHints: [
     KeybearerHintSchema.parse({
       id: 1,
@@ -71,15 +70,14 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
 });
 export const agonHintsState = atomWithReset<RegionHints>({
   variant: "agon",
-  bossHints: {
+  bossHints: BossHintsSchema.parse({
     name: "Amorbis",
-    item: "",
     keys: [
-      { id: 1, name: "Key 1", location: "" },
-      { id: 2, name: "Key 2", location: "" },
-      { id: 3, name: "Key 3", location: "" },
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
     ],
-  },
+  }),
   keybearerHints: [
     KeybearerHintSchema.parse({
       id: 1,
@@ -132,15 +130,14 @@ export const agonHintsState = atomWithReset<RegionHints>({
 });
 export const torvusHintsState = atomWithReset<RegionHints>({
   variant: "torvus",
-  bossHints: {
+  bossHints: BossHintsSchema.parse({
     name: "Chykka",
-    item: "",
     keys: [
-      { id: 1, name: "Key 1", location: "" },
-      { id: 2, name: "Key 2", location: "" },
-      { id: 3, name: "Key 3", location: "" },
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
     ],
-  },
+  }),
   keybearerHints: [
     KeybearerHintSchema.parse({
       id: 1,
@@ -200,15 +197,14 @@ export const torvusHintsState = atomWithReset<RegionHints>({
 });
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
   variant: "sanctuary",
-  bossHints: {
+  bossHints: BossHintsSchema.parse({
     name: "Quadraxis",
-    item: "",
     keys: [
-      { id: 1, name: "Key 1", location: "" },
-      { id: 2, name: "Key 2", location: "" },
-      { id: 3, name: "Key 3", location: "" },
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
     ],
-  },
+  }),
   keybearerHints: [
     KeybearerHintSchema.parse({
       id: 1,

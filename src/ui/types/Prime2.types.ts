@@ -3,14 +3,16 @@ import z from "zod";
 export const BossKeyHintSchema = z.object({
   id: z.number(),
   name: z.string(),
-  location: z.string(),
+  location: z.string().default(""),
+  checked: z.boolean().default(false),
 });
 export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
 export const BossHintsSchema = z.object({
   name: z.string(),
-  item: z.string(),
-  keys: z.array(BossKeyHintSchema),
+  item: z.string().default(""),
+  checked: z.boolean().default(false),
+  keys: z.array(BossKeyHintSchema).default([]),
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
 
