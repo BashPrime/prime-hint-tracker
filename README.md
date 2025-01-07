@@ -2,6 +2,8 @@
 
 A hint tracker for Metroid Prime 2: Echoes Randomizer which helps organize the hints that players write down during a play session.
 
+![echoestracker](https://github.com/user-attachments/assets/e5bf8eb4-f0b6-4f54-a056-9cac4c9d4463)
+
 ## Installation
 
 If you're looking to use the tracker, go to the **Releases** page.
