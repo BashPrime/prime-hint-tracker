@@ -3,11 +3,11 @@ import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_RELATED_UPGRADES_HINTS,
 } from "@/data/Prime2.data";
+import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { KeybearerHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Check } from "lucide-react";
-import { MouseEvent, useCallback } from "react";
 
 type UpdateValue = {
   value?: string;
@@ -21,20 +21,14 @@ type HintProps = {
 };
 
 function Hint({ hint, onUpdate, className }: HintProps) {
-  // !FUNCTION
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        onUpdate({ checked: !hint.checked });
-      }
-    },
-    [onUpdate, hint.checked]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    onUpdate({ checked: !hint.checked })
   );
+
   return (
     <div
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleRightClick}
       className={cn(
         "bg-zinc-800 p-2",
         className,
@@ -70,9 +64,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       />
       <p className="text-xs text-zinc-400 font-bold uppercase tracking-wide">
         {"in "}
-        <span className="text-violet-400">
-          {hint.darkWorldLocation}
-        </span>
+        <span className="text-violet-400">{hint.darkWorldLocation}</span>
       </p>
     </div>
   );

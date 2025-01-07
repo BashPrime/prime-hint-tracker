@@ -11,8 +11,9 @@ import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
+import useRightClick from "@/hooks/useRightClick";
 
 type HintProps = {
   keyHint: BossKeyHint;
@@ -21,16 +22,9 @@ type HintProps = {
 };
 
 function Hint({ keyHint, onKeyChange, className }: HintProps) {
-  // !FUNCTION
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        onKeyChange({ ...keyHint, checked: !keyHint.checked });
-      }
-    },
-    [onKeyChange, keyHint]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    onKeyChange({ ...keyHint, checked: !keyHint.checked })
   );
 
   return (
@@ -40,7 +34,7 @@ function Hint({ keyHint, onKeyChange, className }: HintProps) {
         className,
         keyHint.checked && "bg-green-900"
       )}
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleRightClick}
     >
       <div className="flex flex-row gap-1.5">
         <p
@@ -115,18 +109,11 @@ export function BossHints({ atom, variant, className }: Props) {
     });
   }
 
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        setBossHints((prev) => ({ ...prev, checked: !prev.checked }));
-      }
-    },
-    [setBossHints]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    setBossHints((prev) => ({ ...prev, checked: !prev.checked }))
   );
 
-  // !HOOKS
   useEffect(() => {
     if (isChykkaDead) {
       setRandom(Math.floor(Math.random() * 1024));
@@ -145,7 +132,7 @@ export function BossHints({ atom, variant, className }: Props) {
           "flex flex-col flex-1 gap-1 border-r border-zinc-900 p-2",
           bossHints.checked && "bg-green-900"
         )}
-        onMouseDown={handleMouseDown}
+        onMouseDown={handleRightClick}
         data-name="boss-item-container"
       >
         <div className="w-24" data-name="boss-img">

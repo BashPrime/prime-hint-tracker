@@ -1,11 +1,11 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
+import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { skyTempleKeyHintsState } from "@/states/Prime2.states";
 import { SkyTempleKeyHint } from "@/types/Prime2.types";
 import { useAtom } from "jotai";
 import { Check } from "lucide-react";
-import { MouseEvent, useCallback } from "react";
 
 type UpdateValue = {
   location?: string;
@@ -19,17 +19,11 @@ type HintProps = {
 };
 
 function Hint({ hint, onUpdate, className }: HintProps) {
-  // !FUNCTION
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        onUpdate({ checked: !hint.checked });
-      }
-    },
-    [onUpdate, hint.checked]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    onUpdate({ checked: !hint.checked })
   );
+
   return (
     <div
       className={cn(
@@ -37,7 +31,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         className,
         hint.checked && "bg-green-900"
       )}
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleRightClick}
     >
       <div className="flex flex-col">
         <div className="flex flex-row justify-between">

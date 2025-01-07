@@ -4,12 +4,12 @@ import {
   PRIME_2_ALL_ITEMS_VALUES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
 } from "@/data/Prime2.data";
+import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
 import { useAtom } from "jotai";
 import { Check, Plus, X } from "lucide-react";
-import { useCallback, type MouseEvent } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 type UpdateHintValue = {
@@ -27,21 +27,14 @@ type HintInputProps = {
 };
 
 export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
-  // !FUNCTION
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        onUpdate({ checked: !hint.checked });
-      }
-    },
-    [onUpdate, hint.checked]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    onUpdate({ checked: !hint.checked })
   );
 
   return (
     <div
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleRightClick}
       className={cn(
         "flex flex-row justify-between gap-2 px-1",
         className,

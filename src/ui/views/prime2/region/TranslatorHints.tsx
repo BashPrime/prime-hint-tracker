@@ -5,11 +5,12 @@ import {
   PRIME_2_ALL_LOCATIONS,
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
+import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Check } from "lucide-react";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 type HintUpdate = {
   firstValue?: string;
@@ -69,23 +70,15 @@ function Hint({
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
   const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
-  const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue)
+  const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue);
   const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
 
-  // !FUNCTION
-  const handleMouseDown = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
-      event.preventDefault();
-      // right click
-      if (event.nativeEvent.button === 2) {
-        onHintUpdate({ checked: !hint.checked });
-      }
-    },
-    [onHintUpdate, hint.checked]
+  // !HOOKS
+  const handleRightClick = useRightClick(() =>
+    onHintUpdate({ checked: !hint.checked })
   );
 
-  // !HOOKS
   useEffect(() => {
     if (!hint.proximity) {
       setProximity("");
@@ -99,7 +92,7 @@ function Hint({
         className,
         hint.checked && "bg-green-900"
       )}
-      onMouseDown={handleMouseDown}
+      onMouseDown={handleRightClick}
       data-name="translator-hint"
     >
       <div className="flex flex-row justify-between">
