@@ -151,7 +151,7 @@ export function BossHints({ atom, variant, className }: Props) {
         <div className="w-24" data-name="boss-img">
           <img src={imgSrc} title={bossHints.name} alt={bossHints.name} />
         </div>
-        <div className="flex flex-row gap-1.5">
+        <div className="flex flex-row justify-between">
           <p
             className={cn(
               "uppercase font-bold text-sm text-red-500",
@@ -164,7 +164,7 @@ export function BossHints({ atom, variant, className }: Props) {
           </p>
           <Check
             className={cn(
-              "flex-none w-3 h-3 text-green-300 mt-1",
+              "flex-none w-3 h-3 text-green-300",
               !bossHints.checked && "opacity-0"
             )}
           />

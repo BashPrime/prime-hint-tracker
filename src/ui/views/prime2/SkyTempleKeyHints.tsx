@@ -15,7 +15,7 @@ type UpdateValue = {
 type HintProps = {
   hint: SkyTempleKeyHint;
   onUpdate: (update: UpdateValue) => void;
-  className?: string
+  className?: string;
 };
 
 function Hint({ hint, onUpdate, className }: HintProps) {
@@ -39,35 +39,33 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       )}
       onMouseDown={handleMouseDown}
     >
-      <div className="flex flex-row gap-1.5">
-        <div className="flex flex-col">
-          <div className="flex flex-row gap-2">
-            <p
-              className={cn(
-                "uppercase font-bold text-sm text-lime-400 tracking-wide",
-                hint.checked && "text-green-400"
-              )}
-            >
-              {hint.name}
-            </p>
-            <Check
-              className={cn(
-                "flex-none w-3 h-3 text-green-300 mt-1",
-                !hint.checked && "opacity-0"
-              )}
-            />
-          </div>
-
-          <AutoComplete
-            placeholder="Location"
-            emptyMessage="No location found."
-            value={{ label: hint.location, value: hint.location }}
-            onInputChange={(value) => onUpdate({ location: value })}
-            options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
-            tabIndex={1}
-            className="text-[13px]"
+      <div className="flex flex-col">
+        <div className="flex flex-row justify-between">
+          <p
+            className={cn(
+              "uppercase font-bold text-sm text-lime-400 tracking-wide",
+              hint.checked && "text-green-400"
+            )}
+          >
+            {hint.name}
+          </p>
+          <Check
+            className={cn(
+              "flex-none w-3 h-3 text-green-300",
+              !hint.checked && "opacity-0"
+            )}
           />
         </div>
+
+        <AutoComplete
+          placeholder="Location"
+          emptyMessage="No location found."
+          value={{ label: hint.location, value: hint.location }}
+          onInputChange={(value) => onUpdate({ location: value })}
+          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
+          tabIndex={1}
+          className="text-[13px]"
+        />
       </div>
     </div>
   );
