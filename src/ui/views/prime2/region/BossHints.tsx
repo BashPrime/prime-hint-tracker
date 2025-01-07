@@ -137,12 +137,12 @@ export function BossHints({ atom, variant, className }: Props) {
 
   return (
     <div
-      className={cn("grid grid-cols-2 bg-zinc-800 flex-none", className)}
+      className={cn("flex flex-row bg-zinc-800 flex-none", className)}
       data-name="boss-hints-container"
     >
       <div
         className={cn(
-          "flex flex-col gap-1 border-r border-zinc-900 p-2",
+          "flex flex-col flex-1 gap-1 border-r border-zinc-900 p-2",
           bossHints.checked && "bg-green-900"
         )}
         onMouseDown={handleMouseDown}
@@ -194,7 +194,7 @@ export function BossHints({ atom, variant, className }: Props) {
         </div>
       </div>
       {bossHints.keys.length > 0 && (
-        <div className="grid grid-rows-3" data-name="boss-keys">
+        <div className="grid grid-rows-3 flex-1" data-name="boss-keys">
           {bossHints.keys.map((keyHint, idx) => (
             <Hint
               keyHint={keyHint}
