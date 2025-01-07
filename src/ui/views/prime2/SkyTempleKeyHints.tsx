@@ -33,7 +33,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
   return (
     <div
       className={cn(
-        "p-1 bg-zinc-800",
+        "px-2 py-1 bg-zinc-800",
         className,
         hint.checked && "bg-green-900"
       )}
