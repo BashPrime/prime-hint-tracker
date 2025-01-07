@@ -1,5 +1,3 @@
-import { Hint } from "../types/Hint.types";
-
 export const PRIME_2_MAJORS_VALUES = [
   "Missile Launcher",
   "Super Missile",
@@ -12,7 +10,7 @@ export const PRIME_2_MAJORS_VALUES = [
   "Space Jump Boots",
   "Gravity Boost",
   "Grapple Beam",
-  "Screw Atack",
+  "Screw Attack",
   "Dark Suit",
   "Light Suit",
   "Morph Ball Bomb",
@@ -73,7 +71,10 @@ export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
   "Missile system",
   "Charge Combo",
   "Translator",
-]
+  "Key",
+  "Dark Temple Key",
+  "Sky Temple Key",
+];
 
 export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Missile-related",
@@ -93,11 +94,6 @@ export const PRIME_2_ALL_ITEMS_VALUES = [
   ...PRIME_2_MAJORS_CATEGORIES_HINTS,
 ] as const;
 
-export const PRIME_2_SKY_TEMPLE_KEY_HINTS: Hint[] =
-  PRIME_2_TEMPLE_KEYS_VALUES.filter((key) =>
-    key.toLowerCase().includes("sky")
-  ).map((key) => ({ label: key as string, value: "", fixedLabel: true }));
-
 export const PRIME_2_ALL_REGIONS = [
   "Temple Grounds",
   "Sky Temple Grounds",
@@ -111,7 +107,9 @@ export const PRIME_2_ALL_REGIONS = [
   "Ing Hive",
 ] as const;
 
-export const PRIME_2_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter((region) => region !== "Sky Temple")
+export const PRIME_2_REGION_OPTIONS = [...PRIME_2_ALL_REGIONS].filter(
+  (region) => region !== "Sky Temple"
+);
 
 export const PRIME_2_ALL_LOCATIONS = [
   "Landing Site",
@@ -506,8 +504,4 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Underground Tunnel",
 ] as const;
 
-export const PROXIMITY_OPTIONS = [
-  "in",
-  "up to",
-  "exactly",
-] as const
+export const PROXIMITY_OPTIONS = ["in", "up to", "exactly"] as const;

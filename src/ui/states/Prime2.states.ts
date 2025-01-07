@@ -1,215 +1,213 @@
-import { PRIME_2_SKY_TEMPLE_KEY_HINTS } from "@/data/Prime2.data";
-import { Hint } from "@/types/Hint.types";
-import { Prime2ItemLocationHint, RegionHints } from "@/types/Prime2.types";
+import {
+  BossHintsSchema,
+  KeybearerHintSchema,
+  RegionHints,
+  SkyTempleKeyHint,
+  SkyTempleKeyHintSchema,
+  TranslatorHintSchema,
+  UnhintedItem,
+} from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
 
-export const prime2ItemHintsState = atomWithReset<Hint[]>([]);
-export const prime2ItemLocationHintsState = atomWithReset<
-  Prime2ItemLocationHint[]
->([]);
-export const prime2StkHintsState = atomWithReset<Hint[]>([
-  ...PRIME_2_SKY_TEMPLE_KEY_HINTS,
-]);
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
-  bossName: "U-Mos Reward",
-  bossItem: null,
-  bossKeys: [],
-  flyingCacheHints: [
-    { name: "Accursed Lake", value: null },
-    { name: "Defiled Shrine", value: null },
-    { name: "Ing Reliquary", value: null },
+  bossHints: BossHintsSchema.parse({
+    name: "U-Mos Reward",
+  }),
+  keybearerHints: [
+    KeybearerHintSchema.parse({
+      id: 1,
+      lightWorldLocation: "Industrial Site",
+      darkWorldLocation: "Accursed Lake",
+    }),
+    KeybearerHintSchema.parse({
+      id: 2,
+      lightWorldLocation: "Landing Site",
+      darkWorldLocation: "Defiled Shrine",
+    }),
+    KeybearerHintSchema.parse({
+      id: 3,
+      lightWorldLocation: "Storage Cavern A",
+      darkWorldLocation: "Ing Reliquary",
+    }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
+      id: 1,
       name: "Main Energy Controller",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 2,
       name: "Transport to Agon Wastes",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 3,
       name: "Fortress Transport Access",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 4,
       name: "Meeting Grounds",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 5,
       name: "Path of Eyes",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
+    }),
   ],
 });
 export const agonHintsState = atomWithReset<RegionHints>({
   variant: "agon",
-  bossName: "Amorbis",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
-  flyingCacheHints: [
-    { name: "Battleground", value: null },
-    { name: "Dark Oasis", value: null },
+  bossHints: BossHintsSchema.parse({
+    name: "Amorbis",
+    keys: [
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
+    ],
+  }),
+  keybearerHints: [
+    KeybearerHintSchema.parse({
+      id: 1,
+      lightWorldLocation: "Central Mining Station",
+      darkWorldLocation: "Battleground",
+    }),
+    KeybearerHintSchema.parse({
+      id: 2,
+      lightWorldLocation: "Main Reactor",
+      darkWorldLocation: "Dark Oasis",
+    }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
+      id: 1,
       name: "Agon Energy Controller",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 2,
       name: "Mining Plaza",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 3,
       name: "Portal Terminal",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 4,
       name: "Mining Station A",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 5,
       name: "Mining Station B",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
+    }),
   ],
 });
 export const torvusHintsState = atomWithReset<RegionHints>({
   variant: "torvus",
-  bossName: "Chykka",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
-  flyingCacheHints: [
-    { name: "Poisoned Bog", value: null },
-    { name: "Dungeon", value: null },
+  bossHints: BossHintsSchema.parse({
+    name: "Chykka",
+    keys: [
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
+    ],
+  }),
+  keybearerHints: [
+    KeybearerHintSchema.parse({
+      id: 1,
+      lightWorldLocation: "Torvus Lagoon",
+      darkWorldLocation: "Poisoned Bog",
+    }),
+    KeybearerHintSchema.parse({
+      id: 2,
+      lightWorldLocation: "Catacombs",
+      darkWorldLocation: "Dungeon",
+    }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
+      id: 1,
       name: "Torvus Energy Controller",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 2,
       name: "Path of Roots",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 3,
       name: "Underground Tunnel",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 4,
       name: "Catacombs",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 5,
       name: "Gathering Hall",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 6,
       name: "Training Chamber",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
+    }),
   ],
 });
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
   variant: "sanctuary",
-  bossName: "Quadraxis",
-  bossItem: null,
-  bossKeys: Array(3).fill(null),
-  flyingCacheHints: [
-    { name: "Hive Dynamo Works", value: null },
-    { name: "Hive Entrance", value: null },
+  bossHints: BossHintsSchema.parse({
+    name: "Quadraxis",
+    keys: [
+      { id: 1, name: "Key 1" },
+      { id: 2, name: "Key 2" },
+      { id: 3, name: "Key 3" },
+    ],
+  }),
+  keybearerHints: [
+    KeybearerHintSchema.parse({
+      id: 1,
+      lightWorldLocation: "Dynamo Works",
+      darkWorldLocation: "Hive Dynamo Works",
+    }),
+    KeybearerHintSchema.parse({
+      id: 2,
+      lightWorldLocation: "Sanctuary Entrance",
+      darkWorldLocation: "Hive Entrance",
+    }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
+      id: 1,
       name: "Sanctuary Energy Controller",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 2,
       name: "Sanctuary Entrance",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 3,
       name: "Hall of Combat Mastery",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 4,
       name: "Main Gyro Chamber",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 5,
       name: "Main Research",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
+      id: 6,
       name: "Watch Station",
-      firstValue: null,
-      secondValue: null,
-      proximityType: "in",
-      numRooms: 0,
-    },
+    }),
   ],
 });
+
+export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
+
+export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
+  SkyTempleKeyHintSchema.parse({ id: 1, name: "Key 1" }),
+  SkyTempleKeyHintSchema.parse({ id: 2, name: "Key 2" }),
+  SkyTempleKeyHintSchema.parse({ id: 3, name: "Key 3" }),
+  SkyTempleKeyHintSchema.parse({ id: 4, name: "Key 4" }),
+  SkyTempleKeyHintSchema.parse({ id: 5, name: "Key 5" }),
+  SkyTempleKeyHintSchema.parse({ id: 6, name: "Key 6" }),
+  SkyTempleKeyHintSchema.parse({ id: 7, name: "Key 7" }),
+  SkyTempleKeyHintSchema.parse({ id: 8, name: "Key 8" }),
+  SkyTempleKeyHintSchema.parse({ id: 9, name: "Key 9" }),
+]);

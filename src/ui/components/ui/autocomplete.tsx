@@ -3,102 +3,155 @@ import {
   CommandItem,
   CommandList,
   CommandInput,
-} from "@/components/ui/command"
-import { Command as CommandPrimitive } from "cmdk"
-import { useState, useRef, useCallback, type KeyboardEvent } from "react"
+} from "@/components/ui/command";
+import { Command as CommandPrimitive } from "cmdk";
+import {
+  useState,
+  useRef,
+  useCallback,
+  type KeyboardEvent,
+  useEffect,
+} from "react";
 
-import { Skeleton } from "@/components/ui/skeleton"
+import { Skeleton } from "@/components/ui/skeleton";
 
-import { Check } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { Check } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export type Option = Record<"value" | "label", string> & Record<string, string>
+export type Option = Record<"value" | "label", string> & Record<string, string>;
 
 type AutoCompleteProps = {
-  options: Option[]
-  emptyMessage: string
-  value?: Option
-  onValueChange?: (value: Option) => void
-  isLoading?: boolean
-  disabled?: boolean
-  placeholder?: string
-  className?: string
-}
+  options: Option[];
+  emptyMessage: string;
+  value?: Option;
+  onInputChange?: (value: string) => void;
+  onValueChange?: (value: Option) => void;
+  isLoading?: boolean;
+  disabled?: boolean;
+  placeholder?: string;
+  tabIndex?: number;
+  openOnCreate?: boolean;
+  className?: string;
+};
 
 export const AutoComplete = ({
   options,
   placeholder,
   emptyMessage,
   value,
+  onInputChange,
   onValueChange,
   disabled,
   isLoading = false,
+  tabIndex = 0,
+  openOnCreate = false,
   className,
 }: AutoCompleteProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const [isOpen, setOpen] = useState(false)
-  const [selected, setSelected] = useState<Option>(value as Option)
-  const [inputValue, setInputValue] = useState<string>(value?.label || "")
+  const [isOpen, setOpen] = useState(false);
+  const [selected, setSelected] = useState<Option>(value as Option);
+  const [inputValue, setInputValue] = useState<string>(value?.label || "");
+
+  // If value prop changes, update the state
+  useEffect(() => {
+    if (value?.label === "") {
+      setInputValue("");
+      setSelected({ label: "", value: "" });
+    }
+  }, [value]);
+
+  // We need to focus the input ref when the autocomplete opens.
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  // If focusOnCreate is defined, try to focus on the input element on component creation
+  useEffect(() => {
+    if (openOnCreate) {
+      setOpen(true);
+    }
+  }, [openOnCreate]);
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
-      const input = inputRef.current
+      const input = inputRef.current;
       if (!input) {
-        return
+        return;
       }
 
       // Keep the options displayed when the user is typing
       if (!isOpen) {
-        setOpen(true)
+        setOpen(true);
       }
 
       // This is not a default behaviour of the <input /> field
       if (event.key === "Enter" && input.value !== "") {
         const optionToSelect = options.find(
-          (option) => option.label === input.value,
-        )
+          (option) => option.label === input.value
+        );
         if (optionToSelect) {
-          setSelected(optionToSelect)
-          onValueChange?.(optionToSelect)
+          setSelected(optionToSelect);
+          onValueChange?.(optionToSelect);
         }
       }
 
       if (event.key === "Escape") {
-        input.blur()
+        input.blur();
       }
     },
-    [isOpen, options, onValueChange],
-  )
+    [isOpen, options, onValueChange]
+  );
 
   const handleBlur = useCallback(() => {
-    setOpen(false)
+    setOpen(false);
+    onInputChange?.(inputValue);
 
     // reset selected state if input is empty
     if (!inputValue) {
-      setSelected({ label: "", value: "" } as Option)
+      const emptyOption = { label: "", value: "" } as Option;
+      setSelected(emptyOption);
+      onValueChange?.(emptyOption);
     }
-  }, [inputValue])
+  }, [inputValue, onInputChange, onValueChange]);
 
   const handleSelectOption = useCallback(
     (selectedOption: Option) => {
-      setInputValue(selectedOption.label)
+      setInputValue(selectedOption.label);
+      onInputChange?.(selectedOption.label);
 
-      setSelected(selectedOption)
-      onValueChange?.(selectedOption)
+      setSelected(selectedOption);
+      onValueChange?.(selectedOption);
 
       // This is a hack to prevent the input from being focused after the user selects an option
       // We can call this hack: "The next tick"
       setTimeout(() => {
-        inputRef?.current?.blur()
-      }, 0)
+        inputRef?.current?.blur();
+      }, 0);
     },
-    [onValueChange],
-  )
+    [onValueChange, onInputChange]
+  );
 
   return (
     <CommandPrimitive onKeyDown={handleKeyDown}>
       <div>
+        <div className="flex items-center cursor-text">
+          <p
+            onClick={() => setOpen(true)}
+            onFocus={() => setOpen(true)}
+            tabIndex={tabIndex}
+            className={cn(
+              "block w-full rounded-md bg-transparent text-sm outline-none align-middle my-1",
+              className,
+              !inputValue && "text-muted-foreground",
+              !isOpen || "hidden",
+            )}
+          >
+            {inputValue ? inputValue : placeholder}
+          </p>
+        </div>
         <CommandInput
           ref={inputRef}
           value={inputValue}
@@ -107,17 +160,18 @@ export const AutoComplete = ({
           onFocus={() => setOpen(true)}
           placeholder={placeholder}
           disabled={disabled}
-          className={cn("text-sm h-8 block", className)}
+          tabIndex={tabIndex}
+          className={cn("text-sm h-8 block", isOpen || "hidden", className)}
         />
       </div>
       <div className="relative">
         <div
           className={cn(
-            "animate-in fade-in-0 zoom-in-95 absolute top-0 z-10 w-full rounded-xl bg-zinc-700 outline-none",
-            isOpen ? "block" : "hidden",
+            "absolute top-0 z-10 w-full rounded-xl bg-zinc-900 outline-none",
+            isOpen ? "block" : "hidden"
           )}
         >
-          <CommandList className="rounded-lg ring-1 ring-slate-200">
+          <CommandList className="ring-1 ring-slate-400 bg-zinc-800 md:fixed">
             {isLoading ? (
               <CommandPrimitive.Loading>
                 <div className="p-1">
@@ -128,25 +182,25 @@ export const AutoComplete = ({
             {options.length > 0 && !isLoading ? (
               <CommandGroup>
                 {options.map((option) => {
-                  const isSelected = selected?.value === option.value
+                  const isSelected = selected?.value === option.value;
                   return (
                     <CommandItem
                       key={option.value}
                       value={option.label}
                       onMouseDown={(event) => {
-                        event.preventDefault()
-                        event.stopPropagation()
+                        event.preventDefault();
+                        event.stopPropagation();
                       }}
                       onSelect={() => handleSelectOption(option)}
                       className={cn(
                         "flex w-full items-center gap-2",
-                        !isSelected ? "pl-8" : null,
+                        !isSelected ? "pl-8" : null
                       )}
                     >
                       {isSelected ? <Check className="w-4" /> : null}
                       {option.label}
                     </CommandItem>
-                  )
+                  );
                 })}
               </CommandGroup>
             ) : null}
@@ -159,5 +213,5 @@ export const AutoComplete = ({
         </div>
       </div>
     </CommandPrimitive>
-  )
-}
+  );
+};
