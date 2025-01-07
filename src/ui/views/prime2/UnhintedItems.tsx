@@ -36,7 +36,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
         onUpdate({ checked: !hint.checked });
       }
     },
-    [onUpdate]
+    [onUpdate, hint.checked]
   );
 
   return (
