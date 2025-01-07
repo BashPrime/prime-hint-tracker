@@ -42,11 +42,11 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     }),
     TranslatorHintSchema.parse({
       id: 3,
-      name: "Fortress Transport Access",
+      name: "Meeting Grounds",
     }),
     TranslatorHintSchema.parse({
       id: 4,
-      name: "Meeting Grounds",
+      name: "Fortress Transport Access",
     }),
     TranslatorHintSchema.parse({
       id: 5,
