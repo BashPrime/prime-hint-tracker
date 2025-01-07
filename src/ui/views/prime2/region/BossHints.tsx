@@ -137,7 +137,7 @@ export function BossHints({ atom, variant, className }: Props) {
 
   return (
     <div
-      className={cn("flex flex-row bg-zinc-800 flex-none", className)}
+      className={cn("flex flex-row bg-zinc-800", className)}
       data-name="boss-hints-container"
     >
       <div
