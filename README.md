@@ -5,7 +5,7 @@ A hint tracker for Metroid Prime 2: Echoes Randomizer which helps organize the h
 ![echoestracker](https://github.com/user-attachments/assets/e5bf8eb4-f0b6-4f54-a056-9cac4c9d4463)
 
 ## How To Use
-- You can right-click any of the hint panels to give them a checkmark. This is useful for tracking which hints have been solved, which keys have been obtained, which bosses have been defeated, etc.
+- You can right-click any of the hint panels to give them a checkmark. This is useful for tracking which hints have been solved, which keys have been obtained, which bosses have been defeated, etc. You can remove the checkmark by right-clicking again.
 - For the Luminoth lore hint scans, Randovania sometimes provides you with a proximity hint. You can write down the proximity/room count into the text inputs that are marked as **"in"**.
   - i.e. "The Dark Beam can be found **exactly 2 rooms** from the Missile Launcher."
 - If you want to freely write down something in the item or location inputs instead of choosing an option from the popup, you can click away, press Tab, or press the Escape key.
