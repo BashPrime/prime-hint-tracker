@@ -8,23 +8,32 @@ import {
 import { cn, createOptions } from "@/lib/utils";
 import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
-import { useEffect, useState } from "react";
+import { Check } from "lucide-react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
 
 type HintUpdate = {
   firstValue?: string;
   secondValue?: string;
   proximity?: string;
+  checked?: boolean;
 };
 
 type TranslatorHintProps = {
   hint: TranslatorHint;
   onHintUpdate: (update: HintUpdate) => void;
   headerColor?: string;
+  className?: string;
 };
 
-function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
+function Hint({
+  hint,
+  onHintUpdate,
+  headerColor,
+  className,
+}: TranslatorHintProps) {
   // !STATE
   const [proximity, setProximity] = useState<string>("");
+
   // !LOCAL
   const JOKE_HINT_STR = "Joke Hint";
   const BOSS_KEY_HINTS = [
@@ -56,6 +65,18 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
   const hideSecondary = isJokeHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
 
+  // !FUNCTION
+  const handleMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.preventDefault();
+      // right click
+      if (event.nativeEvent.button === 2) {
+        onHintUpdate({ checked: !hint.checked });
+      }
+    },
+    [onHintUpdate, hint.checked]
+  );
+
   // !HOOKS
   useEffect(() => {
     if (!hint.proximity) {
@@ -64,12 +85,29 @@ function Hint({ hint, onHintUpdate, headerColor }: TranslatorHintProps) {
   }, [hint.proximity]);
 
   return (
-    <div>
-      <p
-        className={cn("uppercase font-bold text-xs tracking-wide", headerColor)}
-      >
-        {hint.name}
-      </p>
+    <div
+      className={cn("bg-zinc-800 p-2", className, hint.checked && "bg-green-900")}
+      onMouseDown={handleMouseDown}
+      data-name="translator-hint"
+    >
+      <div className="flex flex-row justify-between">
+        <p
+          className={cn(
+            "uppercase font-bold text-xs tracking-wide",
+            headerColor,
+            hint.checked && "text-green-400"
+          )}
+        >
+          {hint.name}
+        </p>
+        <Check
+          className={cn(
+            "flex-none w-3 h-3 text-green-300",
+            !hint.checked && "opacity-0"
+          )}
+        />
+      </div>
+
       <div className="flex flex-col">
         <AutoComplete
           placeholder="Item"
@@ -161,7 +199,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
   return (
     <div
       className={cn(
-        "grid sm:grid-cols-none md:grid-rows-3 md:grid-cols-2 md:grid-flow-col gap-2 bg-zinc-800 px-2 pt-1",
+        "grid sm:grid-cols-none md:grid-rows-3 md:grid-cols-2 md:grid-flow-col",
         className
       )}
       data-name="translator-hints"
@@ -172,6 +210,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
           onHintUpdate={(update) => updateHint(hint.id, update)}
           headerColor={headerColor}
           key={`${variant}-hint-${hint.id}`}
+          className="border-b md:border-r border-zinc-900"
         />
       ))}
     </div>

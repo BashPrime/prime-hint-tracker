@@ -17,9 +17,10 @@ type UpdateValue = {
 type HintProps = {
   hint: KeybearerHint;
   onUpdate: (update: UpdateValue) => void;
+  className?: string;
 };
 
-function Hint({ hint, onUpdate }: HintProps) {
+function Hint({ hint, onUpdate, className }: HintProps) {
   // !FUNCTION
   const handleMouseDown = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {
@@ -35,7 +36,8 @@ function Hint({ hint, onUpdate }: HintProps) {
     <div
       onMouseDown={handleMouseDown}
       className={cn(
-        "bg-zinc-800 border border-zinc-900 p-2",
+        "bg-zinc-800 p-2",
+        className,
         hint.checked && "bg-green-900"
       )}
     >
@@ -113,6 +115,7 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
           hint={hint}
           onUpdate={(update) => updateHint(hint.id, update)}
           key={`${variant}-cache-${idx}`}
+          className="border-b md:border-r border-zinc-900"
         />
       ))}
     </div>
