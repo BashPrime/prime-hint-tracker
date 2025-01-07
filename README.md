@@ -12,7 +12,7 @@ If you're looking to use the tracker, go to the **Releases** page.
 
 ### Prerequisites
 
-You will need PNPM installed. I recommend installing Node.js and then installing through corepack:
+You will need `pnpm`. I recommend installing Node.js and then installing it via `corepack`:
 
 ```bash
 corepack enable pnpm
@@ -26,7 +26,7 @@ Install the project dependencies.
 pnpm install
 ```
 
-Run the tracker in development mode (supports hot reloading):
+Run the tracker in development mode:
 
 ```bash
 pnpm run dev
@@ -36,7 +36,7 @@ Build an executable of the tracker:
 
 **NOTE**: You need to be using the operating system you intend to build for.
 
-To clarify, you need to be using macOS to build for macOS.
+i.e. you must build the macOS distribution on a macOS computer.
 
 ```bash
 pnpm run dist:win # Windows 64-bit
