@@ -41,11 +41,18 @@ function Hint({
     "Dark Torvus Temple Keys",
     "Ing Hive Temple Keys",
   ];
+  const BOSS_ITEM_HINTS = [
+    "Amorbis Item",
+    "Chykka Item",
+    "Quadraxis Item",
+    "U-Mos Reward Item",
+  ];
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
   const itemOptions = createOptions(
     [
       ...PRIME_2_ALL_ITEMS_VALUES,
       ...BOSS_KEY_HINTS,
+      ...BOSS_ITEM_HINTS,
       JOKE_HINT_STR,
       "Major Upgrade",
     ],
@@ -62,7 +69,8 @@ function Hint({
   );
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
   const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
-  const hideSecondary = isJokeHint || isBossKeyHint;
+  const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue)
+  const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
 
   // !FUNCTION
@@ -86,7 +94,11 @@ function Hint({
 
   return (
     <div
-      className={cn("bg-zinc-800 p-2", className, hint.checked && "bg-green-900")}
+      className={cn(
+        "bg-zinc-800 p-2",
+        className,
+        hint.checked && "bg-green-900"
+      )}
       onMouseDown={handleMouseDown}
       data-name="translator-hint"
     >
@@ -118,7 +130,7 @@ function Hint({
           tabIndex={1}
           className={cn(
             isJokeHint && "font-bold text-green-400",
-            isBossKeyHint && "font-bold text-red-400"
+            (isBossItemHint || isBossKeyHint) && "font-bold text-red-400"
           )}
           data-name="first-value"
         />
