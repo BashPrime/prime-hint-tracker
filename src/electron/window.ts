@@ -2,6 +2,7 @@ import { BrowserWindow, Menu } from "electron";
 import { menu } from "./menu.js";
 import { START_HEIGHT, START_WIDTH } from "./constants.js";
 import { getPreloadPath } from "./pathResolver.js";
+import { isDev } from "./util.js";
 
 let mainWindow: BrowserWindow;
 
@@ -12,6 +13,7 @@ export function create() {
     minWidth: 300,
     minHeight: 300,
     webPreferences: {
+      devTools: isDev(),
       preload: getPreloadPath(),
     }
   });
