@@ -4,6 +4,7 @@ import {
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
+  TranslatorHintSchema,
   UnhintedItem,
 } from "@/types/Prime2.types";
 import { atomWithReset } from "jotai/utils";
@@ -31,41 +32,26 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
     }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
       id: 1,
       name: "Main Energy Controller",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 2,
       name: "Transport to Agon Wastes",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 3,
       name: "Fortress Transport Access",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 4,
       name: "Meeting Grounds",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 5,
       name: "Path of Eyes",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
+    }),
   ],
 });
 export const agonHintsState = atomWithReset<RegionHints>({
@@ -91,41 +77,26 @@ export const agonHintsState = atomWithReset<RegionHints>({
     }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
       id: 1,
       name: "Agon Energy Controller",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 2,
       name: "Mining Plaza",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 3,
       name: "Portal Terminal",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 4,
       name: "Mining Station A",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 5,
       name: "Mining Station B",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
+    }),
   ],
 });
 export const torvusHintsState = atomWithReset<RegionHints>({
@@ -151,48 +122,30 @@ export const torvusHintsState = atomWithReset<RegionHints>({
     }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
       id: 1,
       name: "Torvus Energy Controller",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 2,
       name: "Path of Roots",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 3,
       name: "Underground Tunnel",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 4,
       name: "Catacombs",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 5,
       name: "Gathering Hall",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 6,
       name: "Training Chamber",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
+    }),
   ],
 });
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
@@ -218,48 +171,30 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
     }),
   ],
   translatorHints: [
-    {
+    TranslatorHintSchema.parse({
       id: 1,
       name: "Sanctuary Energy Controller",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 2,
       name: "Sanctuary Entrance",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 3,
       name: "Hall of Combat Mastery",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 4,
       name: "Main Gyro Chamber",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 5,
       name: "Main Research",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
-    {
+    }),
+    TranslatorHintSchema.parse({
       id: 6,
       name: "Watch Station",
-      firstValue: "",
-      secondValue: "",
-      proximity: "",
-    },
+    }),
   ],
 });
 

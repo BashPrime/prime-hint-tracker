@@ -27,10 +27,11 @@ export type KeybearerHint = z.infer<typeof KeybearerHintSchema>;
 
 export const TranslatorHintSchema = z.object({
   id: z.number(),
-  name: z.string().default(""),
-  firstValue: z.string(),
-  secondValue: z.string(),
-  proximity: z.string(),
+  name: z.string(),
+  firstValue: z.string().default(""),
+  secondValue: z.string().default(""),
+  proximity: z.string().default(""),
+  checked: z.boolean().default(false),
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
