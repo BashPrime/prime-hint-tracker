@@ -52,7 +52,7 @@ jobs:
             dist: mac
     runs-on: ${{ matrix.os }}
 
-    name: Build ${{ matrix.os }} Distribution
+    name: Build ${{ matrix.name }} Distribution
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
