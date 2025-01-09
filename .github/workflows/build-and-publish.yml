@@ -79,9 +79,10 @@ jobs:
       - name: "Upload artifacts"
         uses: actions/upload-artifact@v4.0.0
         with:
-          name: Prime Hint Tracker ${{ matrix.name }}
+          name: prime-hint-tracker-${{ matrix.dist }}
           if-no-files-found: error
           path: |
+            dist/prime-hint-tracker*.msi
             dist/prime-hint-tracker*.exe
             dist/prime-hint-tracker*.dmg
             dist/prime-hint-tracker*.AppImage
