@@ -9,9 +9,9 @@ name: Build and Publish
 
 on:
   push:
-    branches: ["gh-actions"]
+    branches: ["main"]
   pull_request:
-    branches: ["gh-actions"]
+    branches: ["main"]
 
 jobs:
   lint:
