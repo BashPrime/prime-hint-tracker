@@ -9,32 +9,33 @@ name: Build and Publish
 
 on:
   push:
-    branches: [ "gh-actions" ]
+    branches: ["gh-actions"]
   pull_request:
-    branches: [ "gh-actions" ]
+    branches: ["gh-actions"]
 
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-    - name: Setup node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'pnpm'
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
 
-    - name: Install dependencies
-      run: pnpm install
+      - name: Install dependencies
+        run: pnpm install
 
-    - name: Run eslint
-      run: pnpm lint
+      - name: Run eslint
+        run: pnpm lint
 
   build-and-publish:
     strategy:
@@ -51,33 +52,34 @@ jobs:
             dist: mac
     runs-on: ${{ matrix.os }}
 
-  name: Build ${{ matrix.os }} Distribution
+    name: Build ${{ matrix.os }} Distribution
     steps:
-    - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Setup pnpm
-      uses: pnpm/action-setup@v2
-      with:
-        version: 8
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-    - name: Setup node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'pnpm'
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
 
-    - name: Install dependencies
-      run: pnpm install
+      - name: Install dependencies
+        run: pnpm install
 
-    - name: Build dist with electron-builder
-      run: pnpm dist:${{ matrix.dist }}
+      - name: Build dist with electron-builder
+        run: pnpm dist:${{ matrix.dist }}
 
-    - name: 'Upload artifacts'
-      uses: actions/upload-artifact@v4.0.0
-      with:
-        name: Prime Hint Tracker ${{ matrix.name }}
-        if-no-files-found: error
-        path: |
-          dist/prime-hint-tracker*.exe
-          dist/prime-hint-tracker*.dmg
-          dist/prime-hint-tracker*.AppImage
+      - name: "Upload artifacts"
+        uses: actions/upload-artifact@v4.0.0
+        with:
+          name: Prime Hint Tracker ${{ matrix.name }}
+          if-no-files-found: error
+          path: |
+            dist/prime-hint-tracker*.exe
+            dist/prime-hint-tracker*.dmg
+            dist/prime-hint-tracker*.AppImage
