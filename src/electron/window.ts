@@ -8,6 +8,7 @@ let mainWindow: BrowserWindow;
 
 export function create() {
   mainWindow = new BrowserWindow({
+    title: "Metroid Prime Hint Tracker",
     width: START_WIDTH,
     height: START_HEIGHT,
     minWidth: 300,
