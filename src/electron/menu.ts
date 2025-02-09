@@ -1,5 +1,6 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { get, resetSize } from "./window.js";
+import { isDev } from "./util.js";
 
 function resetTracker() {
   const window = get();
@@ -8,15 +9,22 @@ function resetTracker() {
 
 const template: MenuItemConstructorOptions[] = [
   {
-    label: "File",
+    label: "Tracker",
     submenu: [
       { label: "Reset Size", click: () => resetSize() },
       { label: "Reset Tracker", click: () => resetTracker() },
     ],
   },
-  { role: "editMenu" },
-  { role: "viewMenu" },
-  { role: "windowMenu" },
+  !isDev()
+    ? { role: "viewMenu" }
+    : {
+      label: "View",
+      submenu: [
+        { role: "resetZoom" },
+        { role: "zoomIn" },
+        { role: "zoomOut" },
+      ]
+    },
   { label: `Version ${app.getVersion()}` },
 ];
 
