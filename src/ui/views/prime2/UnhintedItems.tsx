@@ -1,7 +1,7 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
+  PRIME_2_ALL_MAJOR_ITEMS,
   PRIME_2_LOCATIONS_WITH_ITEMS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
@@ -53,7 +53,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
           emptyMessage="No item found."
           value={{ label: hint.item, value: hint.item }}
           onInputChange={(value) => onUpdate({ item: value })}
-          options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
+          options={createOptions([...PRIME_2_ALL_MAJOR_ITEMS], true)}
           tabIndex={1}
           openOnCreate
           className={cn(

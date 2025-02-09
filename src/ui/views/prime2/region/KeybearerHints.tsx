@@ -1,12 +1,12 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
-  PRIME_2_EXPANSIONS_VALUES,
-  PRIME_2_MAJORS_VALUES,
+  PRIME_2_ALL_MAJOR_ITEMS,
+  PRIME_2_EXPANSIONS,
+  PRIME_2_MAJOR_UPGRADES,
   PRIME_2_PICKUP_FEATURES,
-  PRIME_2_PROGRESSIVE_MAJORS_VALUES,
-  PRIME_2_RELATED_UPGRADES_HINTS,
-  PRIME_2_TEMPLE_KEYS_VALUES,
+  PRIME_2_PROGRESSIVE_MAJORS,
+  PRIME_2_LEGACY_KEYBEARER_CATEGORIES,
+  PRIME_2_TEMPLE_KEYS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
@@ -36,16 +36,16 @@ function Hint({ hint, onUpdate, className }: HintProps) {
 
   // !LOCAL
   const legacyOptions = createOptions(
-    [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
+    [...PRIME_2_ALL_MAJOR_ITEMS, ...PRIME_2_LEGACY_KEYBEARER_CATEGORIES],
     true
   );
   const featuralOptions = createOptions(
     [
       ...PRIME_2_PICKUP_FEATURES,
-      ...PRIME_2_MAJORS_VALUES,
-      ...PRIME_2_PROGRESSIVE_MAJORS_VALUES,
-      ...PRIME_2_EXPANSIONS_VALUES,
-      ...PRIME_2_TEMPLE_KEYS_VALUES,
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_EXPANSIONS,
+      ...PRIME_2_TEMPLE_KEYS,
     ],
     true
   );

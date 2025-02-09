@@ -1,7 +1,7 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Input } from "@/components/ui/input";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
+  PRIME_2_ALL_MAJOR_ITEMS,
   PRIME_2_ALL_LOCATIONS,
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
@@ -49,9 +49,9 @@ function Hint({
     "U-Mos Reward Item",
   ];
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
-  const itemOptions = createOptions(
+  const firstValueOptions = createOptions(
     [
-      ...PRIME_2_ALL_ITEMS_VALUES,
+      ...PRIME_2_ALL_MAJOR_ITEMS,
       ...BOSS_KEY_HINTS,
       ...BOSS_ITEM_HINTS,
       JOKE_HINT_STR,
@@ -61,7 +61,7 @@ function Hint({
   );
   const secondValueOptions = createOptions(
     [
-      ...PRIME_2_ALL_ITEMS_VALUES,
+      ...PRIME_2_ALL_MAJOR_ITEMS,
       ...PRIME_2_ALL_LOCATIONS,
       ...PRIME_2_REGION_OPTIONS,
       ...BOSSES,
@@ -119,7 +119,7 @@ function Hint({
           emptyMessage="No item found."
           value={{ label: hint.firstValue, value: hint.firstValue }}
           onInputChange={(value) => onHintUpdate({ firstValue: value })}
-          options={itemOptions}
+          options={firstValueOptions}
           tabIndex={1}
           className={cn(
             isJokeHint && "font-bold text-green-400",

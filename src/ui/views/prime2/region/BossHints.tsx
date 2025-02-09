@@ -1,6 +1,6 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
+  PRIME_2_ALL_MAJOR_ITEMS,
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
@@ -170,7 +170,7 @@ export function BossHints({ atom, variant, className }: Props) {
                 setBossHints((prev) => ({ ...prev, item: value }))
               }
               options={createOptions(
-                [...PRIME_2_ALL_ITEMS_VALUES, DEAD_STR],
+                [...PRIME_2_ALL_MAJOR_ITEMS, DEAD_STR],
                 true
               )}
               tabIndex={1}

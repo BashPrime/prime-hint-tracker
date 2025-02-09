@@ -1,4 +1,4 @@
-export const PRIME_2_MAJORS_VALUES = [
+export const PRIME_2_MAJOR_UPGRADES = [
   "Missile Launcher",
   "Super Missile",
   "Seeker Launcher",
@@ -27,12 +27,12 @@ export const PRIME_2_MAJORS_VALUES = [
   "Unlimited Missile Ammo",
 ] as const;
 
-export const PRIME_2_PROGRESSIVE_MAJORS_VALUES = [
+export const PRIME_2_PROGRESSIVE_MAJORS = [
   "Progressive Suit",
   "Progressive Grapple",
 ] as const;
 
-export const PRIME_2_EXPANSIONS_VALUES = [
+export const PRIME_2_EXPANSIONS = [
   "Energy Tank",
   "Missile Expansion",
   "Beam Ammo Expansion",
@@ -41,7 +41,7 @@ export const PRIME_2_EXPANSIONS_VALUES = [
   "Power Bomb Expansion",
 ] as const;
 
-export const PRIME_2_TEMPLE_KEYS_VALUES = [
+export const PRIME_2_TEMPLE_KEYS = [
   "Dark Agon Key 1",
   "Dark Agon Key 2",
   "Dark Agon Key 3",
@@ -62,7 +62,7 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
   "Sky Temple Key 9",
 ] as const;
 
-export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
+export const PRIME_2_LEGACY_MAJORS_CATEGORIES = [
   "Visor",
   "Suit",
   "Beam",
@@ -76,7 +76,7 @@ export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
   "Sky Temple Key",
 ];
 
-export const PRIME_2_RELATED_UPGRADES_HINTS = [
+export const PRIME_2_LEGACY_KEYBEARER_CATEGORIES = [
   "Missile-related",
   "Morph Ball-related",
   "Beam-related",
@@ -86,12 +86,12 @@ export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Key",
 ] as const;
 
-export const PRIME_2_ALL_ITEMS_VALUES = [
-  ...PRIME_2_MAJORS_VALUES,
-  ...PRIME_2_PROGRESSIVE_MAJORS_VALUES,
-  ...PRIME_2_EXPANSIONS_VALUES,
-  ...PRIME_2_TEMPLE_KEYS_VALUES,
-  ...PRIME_2_MAJORS_CATEGORIES_HINTS,
+export const PRIME_2_ALL_MAJOR_ITEMS = [
+  ...PRIME_2_MAJOR_UPGRADES,
+  ...PRIME_2_PROGRESSIVE_MAJORS,
+  ...PRIME_2_EXPANSIONS,
+  ...PRIME_2_TEMPLE_KEYS,
+  ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
 ] as const;
 
 export const PRIME_2_ALL_REGIONS = [
