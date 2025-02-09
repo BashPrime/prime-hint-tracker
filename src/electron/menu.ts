@@ -25,6 +25,7 @@ const template: MenuItemConstructorOptions[] = [
         { role: "zoomOut" },
       ]
     },
+  { label: "Help", submenu: [{ label: "About", role: "about" }]},
   { label: `Version ${app.getVersion()}` },
 ];
 
