@@ -511,6 +511,7 @@ export const PRIME_2_PICKUP_FEATURES = [
   "Charge combo",
   "Cheater's delight",
   "Dark-aligned upgrade",
+  "Key",
   "Light-aligned upgrade",
   "Missile system",
   "Morph Ball system",
