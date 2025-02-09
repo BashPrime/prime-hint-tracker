@@ -15,7 +15,7 @@ const template: MenuItemConstructorOptions[] = [
       { label: "Reset Tracker", click: () => resetTracker() },
     ],
   },
-  !isDev()
+  isDev()
     ? { role: "viewMenu" }
     : {
       label: "View",
