@@ -504,4 +504,46 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Underground Tunnel",
 ] as const;
 
+export const PRIME_2_PICKUP_FEATURES = [
+  "Chozo technology",
+  "Luminoth technology",
+  "Beam",
+  "Charge combo",
+  "Cheater's delight",
+  "Dark-aligned upgrade",
+  "Light-aligned upgrade",
+  "Missile system",
+  "Morph Ball system",
+  "Movement system",
+  "Suit",
+  "Translator",
+  "Visor"
+] as const;
+
+export const PRIME_2_LOCATION_FEATURES = [
+  "guarded by a Boss",
+  "in a Morph Ball tunnel",
+  "in a regional Temple",
+  "near a Bomb Slot",
+  "near a Boost Pipe",
+  "near a Boost Spinner",
+  "near a Dark Visor Lock",
+  "near a Grapple Point",
+  "near a Keybearer Corpse",
+  "near a Kinetic Orb Cannon",
+  "near a Light Beam Transport",
+  "near a Luminoth Corpse",
+  "near a Portal",
+  "near a Screw Attack Wall",
+  "near a Spider Track",
+  "near a Translator Gate",
+  "near an Echo Visor Lock",
+  "near an Energy Controller",
+  "near an Elevator Unit",
+  "near some Luminoth lore",
+  "near some Phazon",
+  "overtop an Abyss",
+  "submerged in water",
+]
+
 export const PROXIMITY_OPTIONS = ["in", "up to", "exactly"] as const;
