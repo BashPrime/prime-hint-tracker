@@ -16,9 +16,9 @@ export function create() {
     webPreferences: {
       devTools: isDev(),
       preload: getPreloadPath(),
-    }
+    },
   });
-  
+
   Menu.setApplicationMenu(menu);
   return mainWindow;
 }
@@ -34,9 +34,9 @@ export function requestGameForResize() {
 
 ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
   const mainWindow = get();
-  const windowSize = getDefaultWindowSize(game, isLegacyHints)
+  const windowSize = getDefaultWindowSize(game, isLegacyHints);
+  console.log("windowSize", windowSize);
   if (windowSize && mainWindow) {
-    mainWindow.setSize(windowSize.width, windowSize.height)
+    mainWindow.setSize(windowSize.width, windowSize.height);
   }
 });
-

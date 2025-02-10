@@ -2,11 +2,11 @@ export const WINDOW_SIZE = {
   echoes: {
     featural: {
       width: 1345,
-      height: 860,
+      height: 794,
     },
     legacy: {
       width: 1345,
-      height: 840,
+      height: 860,
     },
   },
   default: {
