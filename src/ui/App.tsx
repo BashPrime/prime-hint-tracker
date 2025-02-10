@@ -37,7 +37,7 @@ export default function App() {
       } catch (err) {
         if (err instanceof z.ZodError) {
           alert(`Error trying to parse action: ${action}`);
-          console.log(err.issues);
+          console.error(err.issues);
         }
       }
     });

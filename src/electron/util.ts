@@ -15,7 +15,7 @@ export function getDefaultWindowSize(game: string, isLegacyHints: boolean) {
     return WINDOW_SIZE[parsedGame].featural;
   } catch (err) {
     if (err instanceof z.ZodError) {
-      console.log(err.issues);
+      console.error(err.issues);
     }
   }
 }
