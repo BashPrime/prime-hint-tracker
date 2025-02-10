@@ -4,35 +4,44 @@ import { isDev } from "./util.js";
 
 function requestAppState(action: string) {
   const window = get();
-  window.webContents.send("request-app-state", action);
+  window?.webContents.send("request-app-state", action);
 }
 
 function resetTracker() {
   const window = get();
-  window.webContents.send("reset-tracker");
+  window?.webContents.send("reset-tracker");
 }
 
-function toggleFeaturalHints(checked: boolean) {
+function toggleLegacyHints(checked: boolean) {
   const window = get();
-  window.webContents.send("set-legacy-hints", checked);
+  window?.webContents.send("set-legacy-hints", checked);
 }
 
 const template: MenuItemConstructorOptions[] = [
   {
     label: "Tracker",
     submenu: [
-      {
-        label: "Use Legacy Hints",
-        type: "checkbox",
-        checked: true,
-        click: (item) => {
-          toggleFeaturalHints(item.checked);
-        },
-      },
       { label: "Reset Size", click: () => requestAppState("reset-size") },
       { label: "Reset Tracker", click: () => resetTracker() },
     ],
   },
+  {
+    label: "Toggles",
+    submenu: [
+      {
+        label: "Legacy Hints",
+        type: "checkbox",
+        checked: true,
+        click: (item) => {
+          toggleLegacyHints(item.checked);
+        },
+      },
+    ],
+  },
+  // {
+  //   label: "Game",
+  //   submenu: [{ label: "Metroid Prime 2: Echoes" }],
+  // },
   isDev()
     ? { role: "viewMenu" }
     : {

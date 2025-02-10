@@ -4,7 +4,7 @@ import { START_HEIGHT, START_WIDTH } from "./constants.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { getDefaultWindowSize, isDev } from "./util.js";
 
-let mainWindow: BrowserWindow;
+let mainWindow: BrowserWindow | null = null;
 
 export function create() {
   mainWindow = new BrowserWindow({
@@ -20,10 +20,16 @@ export function create() {
   });
 
   Menu.setApplicationMenu(menu);
+
   return mainWindow;
 }
 
 export function get() {
+  return mainWindow;
+}
+
+export function close() {
+  mainWindow = null;
   return mainWindow;
 }
 

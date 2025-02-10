@@ -2,8 +2,9 @@ import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
 import useResetTracker from "./hooks/useResetTracker";
 import { useEffect } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
+  appSessionLoaded as appSessionLoadedState,
   legacyHintsEnabledState,
   selectedGameState,
 } from "./states/App.states";
@@ -17,14 +18,20 @@ export default function App() {
   const [legacyHintsEnabled, setLegacyHintsEnabled] = useAtom(
     legacyHintsEnabledState
   );
+  const setAppSessionLoaded = useSetAtom(appSessionLoadedState);
 
   // !HOOKS
   const appConfig = useAppConfig();
   const resetTracker = useResetTracker();
 
+  // On load, get app session
+  useEffect(() => {
+    window.electronApi.requestLoadAppSession();
+  }, []);
+
   useEffect(() => {
     window.electronApi.onResetTracker(() => resetTracker());
-    window.electronApi.onSetLegacyHintsEnabled((checked) =>
+    window.electronApi.setLegacyHints((checked) =>
       setLegacyHintsEnabled(checked)
     );
     window.electronApi.onRequestAppState((action) => {
@@ -43,12 +50,11 @@ export default function App() {
         }
       }
     });
-    window.electronApi.onLoadAppConfig((json) => {
-      appConfig.load(json);
-    });
-    window.electronApi.onSaveAppConfig(() => {
-      const json = appConfig.save();
-      window.electronApi.saveAppConfig(json);
+    window.electronApi.loadAppSession((json) => {
+      if (json) {
+        appConfig.load(json);
+      }
+      setAppSessionLoaded(true);
     });
   }, [
     resetTracker,
