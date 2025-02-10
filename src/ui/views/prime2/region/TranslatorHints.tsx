@@ -1,14 +1,21 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Input } from "@/components/ui/input";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
+  PRIME_2_ALL_MAJOR_ITEMS,
   PRIME_2_ALL_LOCATIONS,
   PRIME_2_REGION_OPTIONS,
+  PRIME_2_PICKUP_FEATURES,
+  PRIME_2_MAJOR_UPGRADES,
+  PRIME_2_LOCATIONS_WITH_ITEMS,
+  PRIME_2_LOCATION_FEATURES,
+  PRIME_2_PROGRESSIVE_MAJORS,
+  PRIME_2_LEGACY_MAJORS_CATEGORIES,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { TranslatorHint } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -33,6 +40,7 @@ function Hint({
   className,
 }: TranslatorHintProps) {
   // !STATE
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   const [proximity, setProximity] = useState<string>("");
 
   // !LOCAL
@@ -49,30 +57,55 @@ function Hint({
     "U-Mos Reward Item",
   ];
   const BOSSES = ["U-Mos Reward", "Amorbis", "Chykka", "Quadraxis"];
-  const itemOptions = createOptions(
+  const itemFeaturalOptions = createOptions(
     [
-      ...PRIME_2_ALL_ITEMS_VALUES,
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_PICKUP_FEATURES,
       ...BOSS_KEY_HINTS,
       ...BOSS_ITEM_HINTS,
       JOKE_HINT_STR,
-      "Major Upgrade",
     ],
     true
   );
-  const secondValueOptions = createOptions(
+  const itemLegacyOptions = createOptions(
     [
-      ...PRIME_2_ALL_ITEMS_VALUES,
-      ...PRIME_2_ALL_LOCATIONS,
-      ...PRIME_2_REGION_OPTIONS,
-      ...BOSSES,
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
+      ...BOSS_KEY_HINTS,
+      ...BOSS_ITEM_HINTS,
+      JOKE_HINT_STR,
     ],
     true
   );
+  const firstValueOptions = legacyHintsEnabled
+    ? itemLegacyOptions
+    : itemFeaturalOptions;
+  const locationFeaturalOptions = createOptions(
+    [...PRIME_2_LOCATIONS_WITH_ITEMS, ...PRIME_2_LOCATION_FEATURES, ...BOSSES],
+    true
+  );
+  const locationLegacyOptions = createOptions([
+    ...(!hint.proximity ? PRIME_2_LOCATIONS_WITH_ITEMS : PRIME_2_ALL_LOCATIONS),
+    ...(!hint.proximity ? [] : PRIME_2_ALL_MAJOR_ITEMS),
+    ...PRIME_2_REGION_OPTIONS,
+    ...BOSSES,
+  ]);
+  const secondValueOptions = legacyHintsEnabled
+    ? locationLegacyOptions
+    : locationFeaturalOptions;
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
   const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
   const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue);
   const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
+  const secondValuePlaceholder =
+    legacyHintsEnabled && hint.proximity ? "Location or Item" : "Location";
+  const secondValueEmptyStr =
+    legacyHintsEnabled && hint.proximity
+      ? "No value found."
+      : "No location found.";
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
@@ -119,7 +152,7 @@ function Hint({
           emptyMessage="No item found."
           value={{ label: hint.firstValue, value: hint.firstValue }}
           onInputChange={(value) => onHintUpdate({ firstValue: value })}
-          options={itemOptions}
+          options={firstValueOptions}
           tabIndex={1}
           className={cn(
             isJokeHint && "font-bold text-green-400",
@@ -129,19 +162,21 @@ function Hint({
         />
         {!hideSecondary && (
           <>
-            <Input
-              type="text"
-              placeholder={proximityPlaceholder}
-              value={proximity}
-              onChange={(e) => setProximity(e.target.value)}
-              onBlur={() => onHintUpdate({ proximity })}
-              data-name="proximity"
-              tabIndex={-1}
-              className="-my-2"
-            />
+            {legacyHintsEnabled && (
+              <Input
+                type="text"
+                placeholder={proximityPlaceholder}
+                value={proximity}
+                onChange={(e) => setProximity(e.target.value)}
+                onBlur={() => onHintUpdate({ proximity })}
+                data-name="proximity"
+                tabIndex={-1}
+                className="-my-2"
+              />
+            )}
             <AutoComplete
-              placeholder="Location or Item"
-              emptyMessage="No location found."
+              placeholder={secondValuePlaceholder}
+              emptyMessage={secondValueEmptyStr}
               value={{ label: hint.secondValue, value: hint.secondValue }}
               onInputChange={(value) => onHintUpdate({ secondValue: value })}
               options={secondValueOptions}

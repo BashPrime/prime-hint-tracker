@@ -1,14 +1,18 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
+  PRIME_2_LEGACY_MAJORS_CATEGORIES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
+  PRIME_2_MAJOR_UPGRADES,
+  PRIME_2_PICKUP_FEATURES,
+  PRIME_2_PROGRESSIVE_MAJORS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { Check, Plus, X } from "lucide-react";
 import { v4 as uuidV4 } from "uuid";
 
@@ -27,9 +31,35 @@ type HintInputProps = {
 };
 
 export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
+  // !STATE
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
+  );
+  // !LOCAL
+  const itemFeaturalOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_PICKUP_FEATURES,
+    ],
+    true
+  );
+  const itemLegacyOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
+    ],
+    true
+  );
+  const itemOptions = legacyHintsEnabled
+    ? itemFeaturalOptions
+    : itemLegacyOptions;
+  const locationOptions = createOptions(
+    [...PRIME_2_LOCATIONS_WITH_ITEMS],
+    true
   );
 
   return (
@@ -53,7 +83,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
           emptyMessage="No item found."
           value={{ label: hint.item, value: hint.item }}
           onInputChange={(value) => onUpdate({ item: value })}
-          options={createOptions([...PRIME_2_ALL_ITEMS_VALUES], true)}
+          options={itemOptions}
           tabIndex={1}
           openOnCreate
           className={cn(
@@ -66,7 +96,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
           emptyMessage="No location found."
           value={{ label: hint.location ?? "", value: hint.location ?? "" }}
           onInputChange={(value) => onUpdate({ location: value })}
-          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
+          options={locationOptions}
           tabIndex={1}
           className="text-[13px]"
         />

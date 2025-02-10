@@ -1,12 +1,18 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import {
-  PRIME_2_ALL_ITEMS_VALUES,
-  PRIME_2_RELATED_UPGRADES_HINTS,
+  PRIME_2_ALL_MAJOR_ITEMS,
+  PRIME_2_EXPANSIONS,
+  PRIME_2_MAJOR_UPGRADES,
+  PRIME_2_PICKUP_FEATURES,
+  PRIME_2_PROGRESSIVE_MAJORS,
+  PRIME_2_LEGACY_KEYBEARER_CATEGORIES,
+  PRIME_2_TEMPLE_KEYS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { KeybearerHint } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
 
 type UpdateValue = {
@@ -21,10 +27,29 @@ type HintProps = {
 };
 
 function Hint({ hint, onUpdate, className }: HintProps) {
+  // !STATE
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
   );
+
+  // !LOCAL
+  const legacyOptions = createOptions(
+    [...PRIME_2_ALL_MAJOR_ITEMS, ...PRIME_2_LEGACY_KEYBEARER_CATEGORIES],
+    true
+  );
+  const featuralOptions = createOptions(
+    [
+      ...PRIME_2_PICKUP_FEATURES,
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_EXPANSIONS,
+      ...PRIME_2_TEMPLE_KEYS,
+    ],
+    true
+  );
+  const optionsToUse = legacyHintsEnabled ? legacyOptions : featuralOptions;
 
   return (
     <div
@@ -56,10 +81,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         emptyMessage="No item found."
         value={{ label: hint.value, value: hint.value }}
         onInputChange={(value) => onUpdate({ value })}
-        options={createOptions(
-          [...PRIME_2_ALL_ITEMS_VALUES, ...PRIME_2_RELATED_UPGRADES_HINTS],
-          true
-        )}
+        options={optionsToUse}
         tabIndex={1}
       />
       <p className="text-xs text-zinc-400 font-bold uppercase tracking-wide">

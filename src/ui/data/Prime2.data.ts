@@ -1,4 +1,4 @@
-export const PRIME_2_MAJORS_VALUES = [
+export const PRIME_2_MAJOR_UPGRADES = [
   "Missile Launcher",
   "Super Missile",
   "Seeker Launcher",
@@ -27,12 +27,12 @@ export const PRIME_2_MAJORS_VALUES = [
   "Unlimited Missile Ammo",
 ] as const;
 
-export const PRIME_2_PROGRESSIVE_MAJORS_VALUES = [
+export const PRIME_2_PROGRESSIVE_MAJORS = [
   "Progressive Suit",
   "Progressive Grapple",
 ] as const;
 
-export const PRIME_2_EXPANSIONS_VALUES = [
+export const PRIME_2_EXPANSIONS = [
   "Energy Tank",
   "Missile Expansion",
   "Beam Ammo Expansion",
@@ -41,7 +41,7 @@ export const PRIME_2_EXPANSIONS_VALUES = [
   "Power Bomb Expansion",
 ] as const;
 
-export const PRIME_2_TEMPLE_KEYS_VALUES = [
+export const PRIME_2_TEMPLE_KEYS = [
   "Dark Agon Key 1",
   "Dark Agon Key 2",
   "Dark Agon Key 3",
@@ -62,7 +62,7 @@ export const PRIME_2_TEMPLE_KEYS_VALUES = [
   "Sky Temple Key 9",
 ] as const;
 
-export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
+export const PRIME_2_LEGACY_MAJORS_CATEGORIES = [
   "Visor",
   "Suit",
   "Beam",
@@ -74,9 +74,10 @@ export const PRIME_2_MAJORS_CATEGORIES_HINTS = [
   "Key",
   "Dark Temple Key",
   "Sky Temple Key",
+  "Major Upgrade",
 ];
 
-export const PRIME_2_RELATED_UPGRADES_HINTS = [
+export const PRIME_2_LEGACY_KEYBEARER_CATEGORIES = [
   "Missile-related",
   "Morph Ball-related",
   "Beam-related",
@@ -86,12 +87,12 @@ export const PRIME_2_RELATED_UPGRADES_HINTS = [
   "Key",
 ] as const;
 
-export const PRIME_2_ALL_ITEMS_VALUES = [
-  ...PRIME_2_MAJORS_VALUES,
-  ...PRIME_2_PROGRESSIVE_MAJORS_VALUES,
-  ...PRIME_2_EXPANSIONS_VALUES,
-  ...PRIME_2_TEMPLE_KEYS_VALUES,
-  ...PRIME_2_MAJORS_CATEGORIES_HINTS,
+export const PRIME_2_ALL_MAJOR_ITEMS = [
+  ...PRIME_2_MAJOR_UPGRADES,
+  ...PRIME_2_PROGRESSIVE_MAJORS,
+  ...PRIME_2_EXPANSIONS,
+  ...PRIME_2_TEMPLE_KEYS,
+  ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
 ] as const;
 
 export const PRIME_2_ALL_REGIONS = [
@@ -503,5 +504,48 @@ export const PRIME_2_LOCATIONS_WITH_ITEMS = [
   "Transit Tunnel South",
   "Underground Tunnel",
 ] as const;
+
+export const PRIME_2_PICKUP_FEATURES = [
+  "Chozo technology",
+  "Luminoth technology",
+  "Beam",
+  "Charge combo",
+  "Cheater's delight",
+  "Dark-aligned upgrade",
+  "Key",
+  "Light-aligned upgrade",
+  "Missile system",
+  "Morph Ball system",
+  "Movement system",
+  "Suit",
+  "Translator",
+  "Visor"
+] as const;
+
+export const PRIME_2_LOCATION_FEATURES = [
+  "guarded by a Boss",
+  "in a Morph Ball tunnel",
+  "in a regional Temple",
+  "near a Bomb Slot",
+  "near a Boost Pipe",
+  "near a Boost Spinner",
+  "near a Dark Visor Lock",
+  "near a Grapple Point",
+  "near a Keybearer Corpse",
+  "near a Kinetic Orb Cannon",
+  "near a Light Beam Transport",
+  "near a Luminoth Corpse",
+  "near a Portal",
+  "near a Screw Attack Wall",
+  "near a Spider Track",
+  "near a Translator Gate",
+  "near an Echo Visor Lock",
+  "near an Energy Controller",
+  "near an Elevator Unit",
+  "near some Luminoth lore",
+  "near some Phazon",
+  "overtop an Abyss",
+  "submerged in water",
+]
 
 export const PROXIMITY_OPTIONS = ["in", "up to", "exactly"] as const;
