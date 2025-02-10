@@ -1,6 +1,6 @@
 import {
   appConfigSelector,
-  appSessionLoaded as appSessionLoadedState,
+  appSessionLoadedState,
   legacyHintsEnabledState,
   selectedGameState,
 } from "@/states/App.states";
@@ -37,7 +37,7 @@ export default function useAppConfig() {
       const game = GameSchema.parse(rawConfig.game);
       setGame(game);
       setlegacyHintsEnabled(rawConfig.legacyHintsEnabled);
-      trackerState.load(game, rawConfig.tracker); 
+      trackerState.load(game, rawConfig.tracker);
     } catch (err) {
       if (err instanceof z.ZodError) {
         alert("Error occurred while trying to load app session");

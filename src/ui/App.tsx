@@ -4,7 +4,7 @@ import useResetTracker from "./hooks/useResetTracker";
 import { useEffect } from "react";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
-  appSessionLoaded as appSessionLoadedState,
+  appSessionLoadedState,
   legacyHintsEnabledState,
   selectedGameState,
 } from "./states/App.states";
