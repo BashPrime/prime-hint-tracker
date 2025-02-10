@@ -6,6 +6,7 @@ import {
   PRIME_2_LOCATIONS_WITH_ITEMS,
   PRIME_2_MAJOR_UPGRADES,
   PRIME_2_PICKUP_FEATURES,
+  PRIME_2_PROGRESSIVE_MAJORS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
@@ -40,10 +41,12 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
   // !LOCAL
   const itemFeaturalOptions = createOptions([
     ...PRIME_2_MAJOR_UPGRADES,
+    ...PRIME_2_PROGRESSIVE_MAJORS,
     ...PRIME_2_PICKUP_FEATURES,
   ], true)
   const itemLegacyOptions = createOptions([
     ...PRIME_2_MAJOR_UPGRADES,
+    ...PRIME_2_PROGRESSIVE_MAJORS,
     ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
   ], true)
   const itemOptions = featuralHintsEnabled ? itemFeaturalOptions : itemLegacyOptions

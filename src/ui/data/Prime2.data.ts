@@ -74,6 +74,7 @@ export const PRIME_2_LEGACY_MAJORS_CATEGORIES = [
   "Key",
   "Dark Temple Key",
   "Sky Temple Key",
+  "Major Upgrade",
 ];
 
 export const PRIME_2_LEGACY_KEYBEARER_CATEGORIES = [
