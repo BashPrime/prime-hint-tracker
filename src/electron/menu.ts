@@ -1,6 +1,9 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { get } from "./window.js";
 import { isDev } from "./util.js";
+import { getToggles } from "./toggles.js";
+
+const toggles = getToggles();
 
 function requestAppState(action: string) {
   const window = get();
@@ -15,6 +18,7 @@ function resetTracker() {
 function toggleLegacyHints(checked: boolean) {
   const window = get();
   window?.webContents.send("set-legacy-hints", checked);
+  toggles?.setLegacyHintsEnabled(checked);
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -31,7 +35,7 @@ const template: MenuItemConstructorOptions[] = [
       {
         label: "Legacy Hints",
         type: "checkbox",
-        checked: true,
+        checked: toggles?.legacyHintsEnabled,
         click: (item) => {
           toggleLegacyHints(item.checked);
         },

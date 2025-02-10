@@ -2,7 +2,7 @@ import { atom } from "jotai";
 import { Game } from "../types/App.types";
 import { echoesTrackerSelector } from "./Prime2.states";
 
-export const appSessionLoaded = atom<boolean>(false);
+export const appSessionLoadedState = atom<boolean>(false);
 export const selectedGameState = atom<Game>("echoes");
 export const legacyHintsEnabledState = atom<boolean>(true);
 

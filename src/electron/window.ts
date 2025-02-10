@@ -28,11 +28,6 @@ export function get() {
   return mainWindow;
 }
 
-export function close() {
-  mainWindow = null;
-  return mainWindow;
-}
-
 ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
   const mainWindow = get();
   const windowSize = getDefaultWindowSize(game, isLegacyHints);
