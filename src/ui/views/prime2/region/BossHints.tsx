@@ -57,7 +57,7 @@ function Hint({ keyHint, onKeyChange, className }: HintProps) {
         emptyMessage="No region found."
         value={{ label: keyHint.location, value: keyHint.location }}
         onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
-        options={createOptions([...PRIME_2_REGION_OPTIONS, "Either"], true)}
+        options={createOptions([...PRIME_2_REGION_OPTIONS], true)}
         tabIndex={1}
       />
     </div>
