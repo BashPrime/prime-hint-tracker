@@ -22,8 +22,9 @@ const template: MenuItemConstructorOptions[] = [
     label: "Tracker",
     submenu: [
       {
-        label: "Toggle Featural Hints",
+        label: "Use Legacy Hints",
         type: "checkbox",
+        checked: true,
         click: (item) => {
           toggleFeaturalHints(item.checked);
         },

@@ -1,7 +1,6 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
 import {
-  PRIME_2_ALL_MAJOR_ITEMS,
   PRIME_2_LEGACY_MAJORS_CATEGORIES,
   PRIME_2_LOCATIONS_WITH_ITEMS,
   PRIME_2_MAJOR_UPGRADES,
@@ -10,7 +9,7 @@ import {
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { featuralHintsEnabledState } from "@/states/App.states";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
 import { useAtom, useAtomValue } from "jotai";
@@ -33,24 +32,35 @@ type HintInputProps = {
 
 export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
   // !STATE
-  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledState)
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
   );
   // !LOCAL
-  const itemFeaturalOptions = createOptions([
-    ...PRIME_2_MAJOR_UPGRADES,
-    ...PRIME_2_PROGRESSIVE_MAJORS,
-    ...PRIME_2_PICKUP_FEATURES,
-  ], true)
-  const itemLegacyOptions = createOptions([
-    ...PRIME_2_MAJOR_UPGRADES,
-    ...PRIME_2_PROGRESSIVE_MAJORS,
-    ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
-  ], true)
-  const itemOptions = featuralHintsEnabled ? itemFeaturalOptions : itemLegacyOptions
-  const locationOptions = createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)
+  const itemFeaturalOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_PICKUP_FEATURES,
+    ],
+    true
+  );
+  const itemLegacyOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
+    ],
+    true
+  );
+  const itemOptions = legacyHintsEnabled
+    ? itemFeaturalOptions
+    : itemLegacyOptions;
+  const locationOptions = createOptions(
+    [...PRIME_2_LOCATIONS_WITH_ITEMS],
+    true
+  );
 
   return (
     <div

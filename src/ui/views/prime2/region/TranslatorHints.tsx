@@ -13,7 +13,7 @@ import {
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { featuralHintsEnabledState } from "@/states/App.states";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -40,7 +40,7 @@ function Hint({
   className,
 }: TranslatorHintProps) {
   // !STATE
-  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledState);
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   const [proximity, setProximity] = useState<string>("");
 
   // !LOCAL
@@ -79,9 +79,9 @@ function Hint({
     ],
     true
   );
-  const firstValueOptions = featuralHintsEnabled
-    ? itemFeaturalOptions
-    : itemLegacyOptions;
+  const firstValueOptions = legacyHintsEnabled
+    ? itemLegacyOptions
+    : itemFeaturalOptions;
   const locationFeaturalOptions = createOptions(
     [...PRIME_2_LOCATIONS_WITH_ITEMS, ...PRIME_2_LOCATION_FEATURES, ...BOSSES],
     true
@@ -92,20 +92,20 @@ function Hint({
     ...PRIME_2_REGION_OPTIONS,
     ...BOSSES,
   ]);
-  const secondValueOptions = featuralHintsEnabled
-    ? locationFeaturalOptions
-    : locationLegacyOptions;
+  const secondValueOptions = legacyHintsEnabled
+    ? locationLegacyOptions
+    : locationFeaturalOptions;
   const isJokeHint = hint.firstValue === JOKE_HINT_STR;
   const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
   const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue);
   const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
   const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
   const secondValuePlaceholder =
-    featuralHintsEnabled || !hint.proximity ? "Location" : "Location or Item";
+    legacyHintsEnabled && hint.proximity ? "Location or Item" : "Location";
   const secondValueEmptyStr =
-    featuralHintsEnabled || !hint.proximity
-      ? "No location found."
-      : "No value found.";
+    legacyHintsEnabled && hint.proximity
+      ? "No value found."
+      : "No location found.";
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
@@ -162,7 +162,7 @@ function Hint({
         />
         {!hideSecondary && (
           <>
-            {!featuralHintsEnabled && (
+            {legacyHintsEnabled && (
               <Input
                 type="text"
                 placeholder={proximityPlaceholder}

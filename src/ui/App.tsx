@@ -2,9 +2,9 @@ import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
 import useResetTracker from "./hooks/useResetTracker";
 import { useEffect } from "react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import {
-  featuralHintsEnabledState,
+  legacyHintsEnabledState,
   selectedGameState,
 } from "./states/App.states";
 import { ActionSchema } from "./types/App.types";
@@ -12,8 +12,8 @@ import { ActionSchema } from "./types/App.types";
 export default function App() {
   // !STATE
   const selectedGame = useAtomValue(selectedGameState);
-  const [featuralHintsEnabled, setFeaturalHintsEnabled] = useAtom(
-    featuralHintsEnabledState
+  const [legacyHintsEnabled, setLegacyHintsEnabled] = useAtom(
+    legacyHintsEnabledState
   );
 
   // !HOOKS
@@ -22,7 +22,7 @@ export default function App() {
   useEffect(() => {
     window.electronApi.onResetTracker(() => resetTracker());
     window.electronApi.onSetFeaturalHints((checked) =>
-      setFeaturalHintsEnabled(checked)
+      setLegacyHintsEnabled(checked)
     );
     window.electronApi.onRequestAppState((action: string) => {
       try {
@@ -30,7 +30,7 @@ export default function App() {
 
         switch (parsedAction) {
           case "reset-size":
-            window.electronApi.resetSize(selectedGame, !featuralHintsEnabled);
+            window.electronApi.resetSize(selectedGame, legacyHintsEnabled);
             break;
           default:
             alert("Unable to interpret menu command");

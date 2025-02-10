@@ -10,7 +10,7 @@ import {
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { featuralHintsEnabledState } from "@/states/App.states";
+import { legacyHintsEnabledState } from "@/states/App.states";
 import { KeybearerHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -28,7 +28,7 @@ type HintProps = {
 
 function Hint({ hint, onUpdate, className }: HintProps) {
   // !STATE
-  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledState);
+  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
@@ -49,7 +49,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
     ],
     true
   );
-  const optionsToUse = featuralHintsEnabled ? featuralOptions : legacyOptions;
+  const optionsToUse = legacyHintsEnabled ? legacyOptions : featuralOptions;
 
   return (
     <div
