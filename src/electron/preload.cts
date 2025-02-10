@@ -17,5 +17,7 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.invoke("reset-size", game, isLegacyHints),
   onLoadAppConfig: (callback: (json: string) => void) =>
     ipcRenderer.on("load-app-config", (_, json: string) => callback(json)),
+  onSaveAppConfig: (callback: () => void) =>
+    ipcRenderer.on("request-save-app-config", (_, json: string) => callback()),
   saveAppConfig: (json: string) => ipcRenderer.invoke("save-app-config", json),
 });
