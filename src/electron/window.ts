@@ -27,15 +27,9 @@ export function get() {
   return mainWindow;
 }
 
-export function requestGameForResize() {
-  const mainWindow = get();
-  mainWindow.webContents.send("request-current-game", "reset-size");
-}
-
 ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
   const mainWindow = get();
   const windowSize = getDefaultWindowSize(game, isLegacyHints);
-  console.log("windowSize", windowSize);
   if (windowSize && mainWindow) {
     mainWindow.setSize(windowSize.width, windowSize.height);
   }

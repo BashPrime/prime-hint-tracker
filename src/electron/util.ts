@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { WINDOW_SIZE } from "./data.js";
 import { GameSchema } from "./types.js";
 
@@ -5,18 +6,16 @@ export function isDev(): boolean {
   return process.env.NODE_ENV === "development";
 }
 
-export function getDefaultWindowSize(
-  game: string,
-  isLegacyHints: boolean
-) {
+export function getDefaultWindowSize(game: string, isLegacyHints: boolean) {
   try {
     const parsedGame = GameSchema.parse(game);
     if (isLegacyHints) {
       return WINDOW_SIZE[parsedGame].legacy;
     }
     return WINDOW_SIZE[parsedGame].featural;
-  } catch (e) {
-    console.error("Could not reset size: No valid game found");
-    return WINDOW_SIZE.default;
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.log(err.issues);
+    }
   }
 }

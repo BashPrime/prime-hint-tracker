@@ -8,6 +8,7 @@ import {
   selectedGameState,
 } from "./states/App.states";
 import { ActionSchema } from "./types/App.types";
+import { z } from "zod";
 
 export default function App() {
   // !STATE
@@ -32,14 +33,15 @@ export default function App() {
           case "reset-size":
             window.electronApi.resetSize(selectedGame, legacyHintsEnabled);
             break;
-          default:
-            alert("Unable to interpret menu command");
         }
-      } catch (e) {
-        alert("invalid action requested from menu");
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          alert(`Error trying to parse action: ${action}`);
+          console.log(err.issues);
+        }
       }
     });
-  }, [resetTracker]);
+  }, [resetTracker, selectedGame, legacyHintsEnabled, setLegacyHintsEnabled]);
 
   return (
     <>
