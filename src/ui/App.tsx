@@ -9,6 +9,7 @@ import {
 } from "./states/App.states";
 import { ActionSchema } from "./types/App.types";
 import { z } from "zod";
+import useAppConfig from "./hooks/useAppConfig";
 
 export default function App() {
   // !STATE
@@ -18,11 +19,12 @@ export default function App() {
   );
 
   // !HOOKS
+  const appConfig = useAppConfig();
   const resetTracker = useResetTracker();
 
   useEffect(() => {
     window.electronApi.onResetTracker(() => resetTracker());
-    window.electronApi.onSetFeaturalHints((checked) =>
+    window.electronApi.onSetLegacyHintsEnabled((checked) =>
       setLegacyHintsEnabled(checked)
     );
     window.electronApi.onRequestAppState((action: string) => {
