@@ -1,8 +1,8 @@
-import { BrowserWindow, Menu } from "electron";
+import { BrowserWindow, ipcMain, Menu } from "electron";
 import { menu } from "./menu.js";
 import { START_HEIGHT, START_WIDTH } from "./constants.js";
 import { getPreloadPath } from "./pathResolver.js";
-import { isDev } from "./util.js";
+import { getDefaultWindowSize, isDev } from "./util.js";
 
 let mainWindow: BrowserWindow;
 
@@ -27,9 +27,16 @@ export function get() {
   return mainWindow;
 }
 
-export function resetSize() {
+export function requestGameForResize() {
   const mainWindow = get();
-  if (mainWindow) {
-    mainWindow.setSize(START_WIDTH, START_HEIGHT);
-  }
+  mainWindow.webContents.send("request-current-game", "reset-size");
 }
+
+ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
+  const mainWindow = get();
+  const windowSize = getDefaultWindowSize(game, isLegacyHints)
+  if (windowSize && mainWindow) {
+    mainWindow.setSize(windowSize.width, windowSize.height)
+  }
+});
+

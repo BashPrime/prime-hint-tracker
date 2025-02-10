@@ -13,7 +13,7 @@ import {
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { featuralHintsEnabledAtom } from "@/states/App.states";
+import { featuralHintsEnabledState } from "@/states/App.states";
 import { TranslatorHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -40,7 +40,7 @@ function Hint({
   className,
 }: TranslatorHintProps) {
   // !STATE
-  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledAtom);
+  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledState);
   const [proximity, setProximity] = useState<string>("");
 
   // !LOCAL

@@ -10,7 +10,7 @@ import {
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { featuralHintsEnabledAtom } from "@/states/App.states";
+import { featuralHintsEnabledState } from "@/states/App.states";
 import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
 import { useAtom, useAtomValue } from "jotai";
@@ -33,7 +33,7 @@ type HintInputProps = {
 
 export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
   // !STATE
-  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledAtom)
+  const featuralHintsEnabled = useAtomValue(featuralHintsEnabledState)
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
