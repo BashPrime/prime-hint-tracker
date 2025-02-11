@@ -11,6 +11,6 @@
         "category": "Game"
     },
     "win": {
-        "target": ["portable", "msi"]
+        "target": ["portable"]
     }
 }
