@@ -22,7 +22,7 @@ export default function useAppConfig() {
   // Automatically save app config session when it changes
   useEffect(() => {
     if (appSessionLoaded) {
-      const json = save();
+      const json = JSON.stringify(appConfig);
       window.electronApi.saveAppSession(json);
     }
   }, [appConfig, appSessionLoaded]);

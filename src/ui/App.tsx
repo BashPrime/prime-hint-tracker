@@ -62,6 +62,7 @@ export default function App() {
     legacyHintsEnabled,
     setLegacyHintsEnabled,
     appConfig,
+    setAppSessionLoaded,
   ]);
 
   return (
