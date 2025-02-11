@@ -1,13 +1,12 @@
 import {
   appConfigSelector,
   appSessionLoadedState,
-  currentGameTrackerSelector,
   legacyHintsEnabledState,
   selectedGameState,
 } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTrackerState } from "./useTrackerState";
-import { AppConfig, AppConfigSchema, GameSchema } from "../../shared/types";
+import { AppConfig, GameSchema } from "../../shared/types";
 import { z } from "zod";
 import { useEffect } from "react";
 
