@@ -7,6 +7,7 @@ import {
   TranslatorHintSchema,
   UnhintedItem,
 } from "@/types/Prime2.types";
+import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
@@ -211,3 +212,23 @@ export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
   SkyTempleKeyHintSchema.parse({ id: 8, name: "Key 8" }),
   SkyTempleKeyHintSchema.parse({ id: 9, name: "Key 9" }),
 ]);
+
+export const echoesTrackerSelector = atom((get) => {
+  const templeHints = get(templeGroundsHintsState);
+  const agonHints = get(agonHintsState);
+  const torvusHints = get(torvusHintsState);
+  const sanctuaryHints = get(sanctuaryHintsState);
+  const unhintedItems = get(unhintedItemsState);
+  const skyTempleKeys = get(skyTempleKeyHintsState);
+
+  return {
+    regions: {
+      temple: templeHints,
+      agon: agonHints,
+      torvus: torvusHints,
+      sanctuary: sanctuaryHints
+    },
+    unhintedItems,
+    skyTempleKeys
+  }  
+});
