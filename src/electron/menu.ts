@@ -33,7 +33,7 @@ const template: MenuItemConstructorOptions[] = [
         id: 'legacyHintsEnabled',
         label: "Legacy Hints",
         type: "checkbox",
-        checked: true,
+        checked: false,
         click: (item) => {
           toggleLegacyHints(item.checked);
         },
