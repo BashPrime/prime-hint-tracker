@@ -3,9 +3,9 @@ import path from "path";
 import { isDev } from "./util.js";
 import { create, get } from "./window.js";
 import {
-  readAppSession,
-  writeAppSession,
-} from "./appSession.js";
+  readTrackerSession,
+  writeTrackerSession,
+} from "./appConfig.js";
 import { menu } from "./menu.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
@@ -29,7 +29,7 @@ app.on("ready", () => {
 });
 
 ipcMain.handle("load-app-session", () => {
-  const config = readAppSession();
+  const config = readTrackerSession();
 
   const mainWindow = get();
   mainWindow?.webContents.send("load-app-session", config);
@@ -44,5 +44,5 @@ ipcMain.handle("load-app-session", () => {
 });
 
 ipcMain.handle("save-app-session", (_, config: object) =>
-  writeAppSession(config)
+  writeTrackerSession(config)
 );

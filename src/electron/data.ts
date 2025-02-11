@@ -11,14 +11,15 @@ type Size = {
   height: number;
 };
 
+// heights use a +65px offset
 export const WINDOW_SIZE: WindowSize = {
   echoes: {
     width: 1345,
-    height: 794,
+    height: 802,
   },
   echoesLegacy: {
     width: 1345,
-    height: 860,
+    height: 862,
   },
   prime: {
     width: 1024,
@@ -29,7 +30,7 @@ export const WINDOW_SIZE: WindowSize = {
     height: 768,
   },
   default: {
-    width: 1024,
+    width: 1366,
     height: 768,
   },
 };
