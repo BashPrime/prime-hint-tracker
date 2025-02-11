@@ -2,8 +2,10 @@ import { AboutPanelOptionsOptions, app, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
 import { create, get } from "./window.js";
-import { readAppSession, writeAppSession } from "./appSession.js";
-import { AppConfig } from "../shared/types.js";
+import {
+  readAppSession,
+  writeAppSession,
+} from "./appSession.js";
 import { menu } from "./menu.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
@@ -27,21 +29,20 @@ app.on("ready", () => {
 });
 
 ipcMain.handle("load-app-session", () => {
-  const json = readAppSession();
-  const parsed = json ? JSON.parse(json) : null;
+  const config = readAppSession();
 
   const mainWindow = get();
-  mainWindow?.webContents.send("load-app-session", parsed);
+  mainWindow?.webContents.send("load-app-session", config);
 
-  if (parsed) {
+  if (config) {
     const hintsToggle = menu.getMenuItemById("legacyHintsEnabled");
 
     if (hintsToggle) {
-      hintsToggle.checked = parsed.legacyHintsEnabled
+      hintsToggle.checked = config.legacyHintsEnabled;
     }
   }
 });
 
-ipcMain.handle("save-app-session", (_, config: AppConfig) =>
-  writeAppSession(JSON.stringify(config))
+ipcMain.handle("save-app-session", (_, config: object) =>
+  writeAppSession(config)
 );

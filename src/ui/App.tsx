@@ -50,9 +50,9 @@ export default function App() {
         }
       }
     });
-    window.electronApi.loadAppSession((json) => {
-      if (json) {
-        appConfig.load(json);
+    window.electronApi.loadAppSession((config) => {
+      if (config) {
+        appConfig.load(config);
       }
       setAppSessionLoaded(true);
     });

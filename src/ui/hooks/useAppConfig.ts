@@ -6,7 +6,7 @@ import {
 } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTrackerState } from "./useTrackerState";
-import { AppConfig, GameSchema } from "../../shared/types";
+import { AppConfigSchema } from "../../shared/types";
 import { z } from "zod";
 import { useEffect } from "react";
 
@@ -22,22 +22,16 @@ export default function useAppConfig() {
   // Automatically save app config session when it changes
   useEffect(() => {
     if (appSessionLoaded) {
-      const json = JSON.stringify(appConfig);
-      window.electronApi.saveAppSession(json);
+      window.electronApi.saveAppSession(appConfig);
     }
   }, [appConfig, appSessionLoaded]);
 
-  function save() {
-    return JSON.stringify(appConfig);
-  }
-
-  function load(json: string) {
-    const parsed = JSON.parse(json) as AppConfig;
+  function load(config: object) {
     try {
-      const game = GameSchema.parse(parsed.game);
-      setGame(game);
+      const parsed = AppConfigSchema.parse(config)
+      setGame(parsed.game);
       setlegacyHintsEnabled(parsed.legacyHintsEnabled);
-      trackerState.load(game, parsed.tracker);
+      trackerState.load(parsed.game, parsed.tracker);
     } catch (err) {
       if (err instanceof z.ZodError) {
         alert("Error occurred while trying to load app session");
@@ -47,7 +41,6 @@ export default function useAppConfig() {
   }
 
   return {
-    save,
     load,
   };
 }
