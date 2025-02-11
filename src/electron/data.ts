@@ -1,16 +1,36 @@
-export const WINDOW_SIZE = {
+type WindowSize = {
+  prime: Size;
+  echoes: Size;
+  echoesLegacy: Size;
+  corruption: Size;
+  default: Size;
+};
+
+type Size = {
+  width: number;
+  height: number;
+};
+
+// heights use a +65px offset
+export const WINDOW_SIZE: WindowSize = {
   echoes: {
-    featural: {
-      width: 1345,
-      height: 794,
-    },
-    legacy: {
-      width: 1345,
-      height: 860,
-    },
+    width: 1345,
+    height: 802,
   },
-  default: {
+  echoesLegacy: {
+    width: 1345,
+    height: 862,
+  },
+  prime: {
     width: 1024,
     height: 768,
-  }
+  },
+  corruption: {
+    width: 1024,
+    height: 768,
+  },
+  default: {
+    width: 1366,
+    height: 768,
+  },
 };

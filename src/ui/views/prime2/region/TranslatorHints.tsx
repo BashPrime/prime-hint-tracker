@@ -10,6 +10,7 @@ import {
   PRIME_2_LOCATION_FEATURES,
   PRIME_2_PROGRESSIVE_MAJORS,
   PRIME_2_LEGACY_MAJORS_CATEGORIES,
+  PRIME_2_EXPANSIONS,
 } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
@@ -62,6 +63,7 @@ function Hint({
       ...PRIME_2_MAJOR_UPGRADES,
       ...PRIME_2_PROGRESSIVE_MAJORS,
       ...PRIME_2_PICKUP_FEATURES,
+      ...PRIME_2_EXPANSIONS,
       ...BOSS_KEY_HINTS,
       ...BOSS_ITEM_HINTS,
       JOKE_HINT_STR,
@@ -83,7 +85,11 @@ function Hint({
     ? itemLegacyOptions
     : itemFeaturalOptions;
   const locationFeaturalOptions = createOptions(
-    [...PRIME_2_LOCATIONS_WITH_ITEMS, ...PRIME_2_LOCATION_FEATURES, ...BOSSES],
+    [
+      ...PRIME_2_LOCATIONS_WITH_ITEMS,
+      ...PRIME_2_LOCATION_FEATURES,
+      ...BOSSES,
+    ],
     true
   );
   const locationLegacyOptions = createOptions([
