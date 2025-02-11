@@ -14,7 +14,7 @@ function resetTracker() {
 
 function toggleFeaturalHints(checked: boolean) {
   const window = get();
-  window.webContents.send("set-featural-hints", checked);
+  window.webContents.send("set-legacy-hints", checked);
 }
 
 const template: MenuItemConstructorOptions[] = [
