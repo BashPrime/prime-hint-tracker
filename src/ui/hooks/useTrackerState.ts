@@ -1,4 +1,4 @@
-import { Game } from "@/types/App.types";
+import { Game } from "../../shared/types";
 import useEchoesTracker from "./prime2/useEchoesTracker";
 
 export function useTrackerState() {
@@ -16,6 +16,7 @@ export function useTrackerState() {
     switch (game) {
       case "echoes":
         echoesTracker.load(data);
+        break;
     }
   }
 

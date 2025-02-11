@@ -2,11 +2,9 @@ import { AboutPanelOptionsOptions, app, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
 import { create, get } from "./window.js";
-import {
-  readAppConfig as readAppSession,
-  writeAppConfig as writeAppSession,
-} from "./appConfig.js";
+import { readAppSession, writeAppSession } from "./appSession.js";
 import { createToggles, getToggles } from "./toggles.js";
+import { AppConfig } from "../shared/types.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -31,15 +29,17 @@ app.on("ready", () => {
 
 ipcMain.handle("load-app-session", () => {
   const json = readAppSession();
-  const toggles = getToggles();
+  const parsed = json ? JSON.parse(json) : null;
 
   const mainWindow = get();
-  mainWindow?.webContents.send("load-app-session", json);
+  const toggles = getToggles();
+  mainWindow?.webContents.send("load-app-session", parsed);
 
-  if (json && toggles) {
-    const parsed = JSON.parse(json);
-    toggles.setLegacyHintsEnabled(parsed.legacyHintsEnabled)
+  if (parsed) {
+    toggles?.setLegacyHintsEnabled(parsed.legacyHintsEnabled);
   }
 });
 
-ipcMain.handle("save-app-session", (_, json: string) => writeAppSession(json));
+ipcMain.handle("save-app-session", (_, config: AppConfig) =>
+  writeAppSession(JSON.stringify(config))
+);

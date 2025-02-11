@@ -8,7 +8,7 @@ import {
   legacyHintsEnabledState,
   selectedGameState,
 } from "./states/App.states";
-import { ActionSchema } from "./types/App.types";
+import { ActionSchema, AppConfig } from "../shared/types";
 import { z } from "zod";
 import useAppConfig from "./hooks/useAppConfig";
 

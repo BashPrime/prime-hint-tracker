@@ -1,12 +1,13 @@
 import {
   appConfigSelector,
   appSessionLoadedState,
+  currentGameTrackerSelector,
   legacyHintsEnabledState,
   selectedGameState,
 } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTrackerState } from "./useTrackerState";
-import { GameSchema } from "@/types/App.types";
+import { AppConfig, AppConfigSchema, GameSchema } from "../../shared/types";
 import { z } from "zod";
 import { useEffect } from "react";
 
@@ -22,22 +23,22 @@ export default function useAppConfig() {
   // Automatically save app config session when it changes
   useEffect(() => {
     if (appSessionLoaded) {
-      const json = saveAppConfig();
+      const json = save();
       window.electronApi.saveAppSession(json);
     }
   }, [appConfig, appSessionLoaded]);
 
-  function saveAppConfig() {
+  function save() {
     return JSON.stringify(appConfig);
   }
 
-  function loadAppConfig(json: string) {
-    const rawConfig = JSON.parse(json);
+  function load(json: string) {
+    const parsed = JSON.parse(json) as AppConfig;
     try {
-      const game = GameSchema.parse(rawConfig.game);
+      const game = GameSchema.parse(parsed.game);
       setGame(game);
-      setlegacyHintsEnabled(rawConfig.legacyHintsEnabled);
-      trackerState.load(game, rawConfig.tracker);
+      setlegacyHintsEnabled(parsed.legacyHintsEnabled);
+      trackerState.load(game, parsed.tracker);
     } catch (err) {
       if (err instanceof z.ZodError) {
         alert("Error occurred while trying to load app session");
@@ -47,7 +48,7 @@ export default function useAppConfig() {
   }
 
   return {
-    save: saveAppConfig,
-    load: loadAppConfig,
+    save,
+    load,
   };
 }

@@ -22,7 +22,7 @@ export default function useEchoesTracker() {
   const setStkHints = useSetAtom(skyTempleKeyHintsState);
 
   // !FUNCTION
-  function loadFromJson(data: typeof echoesTracker) {
+  function load(data: typeof echoesTracker) {
     try {
       // Load regional hints
       setTempleHints(RegionHintsSchema.parse(data.regions.temple));
@@ -41,12 +41,12 @@ export default function useEchoesTracker() {
     }
   }
 
-  function saveToJson() {
+  function save() {
     return echoesTracker;
   }
 
   return {
-    load: loadFromJson,
-    save: saveToJson,
+    load,
+    save,
   };
 }

@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { Game } from "../types/App.types";
+import { AppConfig, Game } from "../../shared/types";
 import { echoesTrackerSelector } from "./Prime2.states";
 
 export const appSessionLoadedState = atom<boolean>(false);
@@ -16,7 +16,7 @@ export const currentGameTrackerSelector = atom((get) => {
   }
 });
 
-export const appConfigSelector = atom((get) => {
+export const appConfigSelector = atom<AppConfig>((get) => {
   const game = get(selectedGameState);
   const legacyHintsEnabled = get(legacyHintsEnabledState);
   const tracker = get(currentGameTrackerSelector);
