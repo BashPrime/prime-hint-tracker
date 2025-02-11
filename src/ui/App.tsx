@@ -27,7 +27,7 @@ export default function App() {
     window.electronApi.onSetLegacyHintsEnabled((checked) =>
       setLegacyHintsEnabled(checked)
     );
-    window.electronApi.onRequestAppState((action: string) => {
+    window.electronApi.onRequestAppState((action) => {
       try {
         const parsedAction = ActionSchema.parse(action);
 
@@ -43,7 +43,20 @@ export default function App() {
         }
       }
     });
-  }, [resetTracker, selectedGame, legacyHintsEnabled, setLegacyHintsEnabled]);
+    window.electronApi.onLoadAppConfig((json) => {
+      appConfig.load(json);
+    });
+    window.electronApi.onSaveAppConfig(() => {
+      const json = appConfig.save();
+      window.electronApi.saveAppConfig(json);
+    });
+  }, [
+    resetTracker,
+    selectedGame,
+    legacyHintsEnabled,
+    setLegacyHintsEnabled,
+    appConfig,
+  ]);
 
   return (
     <>
