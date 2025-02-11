@@ -156,7 +156,7 @@ export default function UnhintedItems({ className }: Props) {
       className={cn("flex flex-col md:flex-1", className)}
       data-name="unhinted-items"
     >
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase">Unhinted Items</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Unhinted Items</h2>
       <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto gap-2">
         {...hints.map((hint) => (
           <Hint

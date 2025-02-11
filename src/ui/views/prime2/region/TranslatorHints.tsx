@@ -131,7 +131,7 @@ function Hint({
       <div className="flex flex-row justify-between">
         <p
           className={cn(
-            "uppercase font-bold text-xs tracking-wide",
+            "uppercase font-bold text-xs tracking-wide select-none",
             headerColor,
             hint.checked && "text-green-400"
           )}

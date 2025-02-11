@@ -37,7 +37,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         <div className="flex flex-row justify-between">
           <p
             className={cn(
-              "uppercase font-bold text-sm text-lime-400 tracking-wide",
+              "uppercase font-bold text-sm text-lime-400 tracking-wide select-none",
               hint.checked && "text-green-400"
             )}
           >
@@ -93,7 +93,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
 
   return (
     <div className={className} data-name="stkHints">
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase">Sky Temple Keys</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Sky Temple Keys</h2>
       <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col">
         {keys.map((key, idx) => (
           <Hint
