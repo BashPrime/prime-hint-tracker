@@ -55,9 +55,12 @@ export const AutoComplete = ({
 
   // If value prop changes, update the state
   useEffect(() => {
-    if (value?.label === "") {
+    if (!value || value?.label === "") {
       setInputValue("");
       setSelected({ label: "", value: "" });
+    } else {
+      setInputValue(value.label);
+      setSelected({ label: value.label, value: value.label });
     }
   }, [value]);
 

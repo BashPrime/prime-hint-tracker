@@ -14,6 +14,7 @@ import { unhintedItemsState } from "@/states/Prime2.states";
 import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
 import { useAtom, useAtomValue } from "jotai";
 import { Check, Plus, X } from "lucide-react";
+import { useState } from "react";
 import { v4 as uuidV4 } from "uuid";
 
 type UpdateHintValue = {
@@ -25,12 +26,19 @@ type UpdateHintValue = {
 
 type HintInputProps = {
   hint: UnhintedItem;
+  openOnCreate: boolean;
   onUpdate: (update: UpdateHintValue) => void;
   onDelete: () => void;
   className?: string;
 };
 
-export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
+export function Hint({
+  hint,
+  openOnCreate,
+  onUpdate,
+  onDelete,
+  className,
+}: HintInputProps) {
   // !STATE
   const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
@@ -85,7 +93,7 @@ export function Hint({ hint, onUpdate, onDelete, className }: HintInputProps) {
           onInputChange={(value) => onUpdate({ item: value })}
           options={itemOptions}
           tabIndex={1}
-          openOnCreate
+          openOnCreate={openOnCreate}
           className={cn(
             "font-bold text-red-400 my-0",
             hint.checked && "text-green-400"
@@ -121,6 +129,7 @@ type Props = {
 export default function UnhintedItems({ className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(unhintedItemsState);
+  const [newHintId, setNewHintId] = useState("")
 
   // !FUNCTION
   function addNewHint() {
@@ -128,6 +137,7 @@ export default function UnhintedItems({ className }: Props) {
       id: uuidV4(),
     });
     setHints((prev) => [...prev, newHint]);
+    setNewHintId(newHint.id);
   }
 
   function updateHint(id: string, update: UpdateHintValue) {
@@ -161,6 +171,7 @@ export default function UnhintedItems({ className }: Props) {
         {...hints.map((hint) => (
           <Hint
             hint={hint}
+            openOnCreate={hint.id === newHintId}
             onUpdate={(value) => updateHint(hint.id, value)}
             onDelete={() => deleteHint(hint)}
             className="pl-1 bg-zinc-800"
