@@ -20,7 +20,7 @@ export default function Region({ name, atom, className }: Props) {
 
   return (
     <div className={cn("flex flex-col", className)} data-name="region">
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase">{name}</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">{name}</h2>
       <div className="flex flex-col gap-2 h-full flex-1">
         <BossHints atom={bossHintsAtom} variant={variant} />
         <KeybearerHints atom={keybearerHintsAtom} variant={variant} />

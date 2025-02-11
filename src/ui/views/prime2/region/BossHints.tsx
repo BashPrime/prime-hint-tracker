@@ -39,7 +39,7 @@ function Hint({ keyHint, onKeyChange, className }: HintProps) {
       <div className="flex flex-row gap-1.5">
         <p
           className={cn(
-            "uppercase font-bold text-[13px] text-red-500",
+            "uppercase font-bold text-[13px] text-red-500 select-none",
             keyHint.checked && "text-green-400"
           )}
         >
@@ -141,7 +141,7 @@ export function BossHints({ atom, variant, className }: Props) {
         <div className="flex flex-row justify-between">
           <p
             className={cn(
-              "uppercase font-bold text-sm text-red-500",
+              "uppercase font-bold text-sm text-red-500 select-none",
               bossHints.checked && "text-green-400"
             )}
             data-name="boss-name"

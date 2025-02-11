@@ -29,6 +29,7 @@ type HintProps = {
 function Hint({ hint, onUpdate, className }: HintProps) {
   // !STATE
   const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
+
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
@@ -61,14 +62,16 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       )}
     >
       <div className="flex flex-row justify-between">
-        <p
+        <div
           className={cn(
-            "uppercase font-bold text-xs text-[#4fa0ff] tracking-wide",
-            hint.checked && "text-green-400"
+            "flex flex-col gap-0.5 uppercase font-bold text-xs tracking-wide select-none"
           )}
         >
-          {hint.lightWorldLocation}
-        </p>
+          <p className={cn("text-[#4fa0ff]", hint.checked && "text-green-400")}>
+            {hint.lightWorldLocation}
+          </p>
+          <p className={cn("text-violet-400", hint.checked && "text-indigo-200")}>{hint.darkWorldLocation}</p>
+        </div>
         <Check
           className={cn(
             "flex-none w-3 h-3 text-green-300",
@@ -84,10 +87,6 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         options={optionsToUse}
         tabIndex={1}
       />
-      <p className="text-xs text-zinc-400 font-bold uppercase tracking-wide">
-        {"in "}
-        <span className="text-violet-400">{hint.darkWorldLocation}</span>
-      </p>
     </div>
   );
 }
