@@ -3,8 +3,8 @@ import path from "path";
 import { isDev } from "./util.js";
 import { create, get } from "./window.js";
 import { readAppSession, writeAppSession } from "./appSession.js";
-import { createToggles, getToggles } from "./toggles.js";
 import { AppConfig } from "../shared/types.js";
+import { menu } from "./menu.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -19,7 +19,6 @@ const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
 app.on("ready", () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
   const mainWindow = create();
-  createToggles();
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5173");
   } else {
@@ -32,11 +31,14 @@ ipcMain.handle("load-app-session", () => {
   const parsed = json ? JSON.parse(json) : null;
 
   const mainWindow = get();
-  const toggles = getToggles();
   mainWindow?.webContents.send("load-app-session", parsed);
 
   if (parsed) {
-    toggles?.setLegacyHintsEnabled(parsed.legacyHintsEnabled);
+    const hintsToggle = menu.getMenuItemById("legacyHintsEnabled");
+
+    if (hintsToggle) {
+      hintsToggle.checked = parsed.legacyHintsEnabled
+    }
   }
 });
 
