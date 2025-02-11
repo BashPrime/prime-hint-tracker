@@ -40,10 +40,6 @@ const template: MenuItemConstructorOptions[] = [
       },
     ],
   },
-  // {
-  //   label: "Game",
-  //   submenu: [{ label: "Metroid Prime 2: Echoes" }],
-  // },
   isDev()
     ? { role: "viewMenu" }
     : {
