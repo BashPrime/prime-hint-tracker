@@ -1,6 +1,7 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { get } from "./window.js";
 import { isDev } from "./util.js";
+import { openTrackerFile } from "./appConfig.js";
 
 
 function requestAppState(action: string) {
@@ -24,6 +25,8 @@ const template: MenuItemConstructorOptions[] = [
     submenu: [
       { label: "Reset Size", click: () => requestAppState("reset-size") },
       { label: "Reset Tracker", click: () => resetTracker() },
+      { type: "separator" },
+      { label: "Open", click: () => openTrackerFile() }
     ],
   },
   {

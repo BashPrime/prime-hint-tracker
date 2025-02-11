@@ -1,12 +1,12 @@
 import { AboutPanelOptionsOptions, app, ipcMain } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { create, get } from "./window.js";
+import { create } from "./window.js";
 import {
+  loadTrackerConfig,
   readTrackerSession,
   writeTrackerSession,
 } from "./appConfig.js";
-import { menu } from "./menu.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -30,17 +30,7 @@ app.on("ready", () => {
 
 ipcMain.handle("load-app-session", () => {
   const config = readTrackerSession();
-
-  const mainWindow = get();
-  mainWindow?.webContents.send("load-app-session", config);
-
-  if (config) {
-    const hintsToggle = menu.getMenuItemById("legacyHintsEnabled");
-
-    if (hintsToggle) {
-      hintsToggle.checked = config.legacyHintsEnabled;
-    }
-  }
+  loadTrackerConfig(config);
 });
 
 ipcMain.handle("save-app-session", (_, config: object) =>

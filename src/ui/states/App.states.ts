@@ -1,6 +1,7 @@
 import { atom } from "jotai";
-import { AppConfig, Game } from "../../shared/types";
+import { TrackerConfig, Game } from "../../shared/types";
 import { echoesTrackerSelector } from "./Prime2.states";
+import { atomWithReset } from "jotai/utils";
 
 export const appSessionLoadedState = atom<boolean>(false);
 export const selectedGameState = atom<Game>("echoes");
@@ -16,7 +17,7 @@ export const currentGameTrackerSelector = atom((get) => {
   }
 });
 
-export const appConfigSelector = atom<AppConfig>((get) => {
+export const appConfigSelector = atom<TrackerConfig>((get) => {
   const game = get(selectedGameState);
   const legacyHintsEnabled = get(legacyHintsEnabledState);
   const tracker = get(currentGameTrackerSelector);
@@ -27,3 +28,4 @@ export const appConfigSelector = atom<AppConfig>((get) => {
     tracker,
   };
 });
+export const appLoadingMsgAtom = atomWithReset<string>("Getting Ready...");

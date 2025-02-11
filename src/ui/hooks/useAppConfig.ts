@@ -6,7 +6,7 @@ import {
 } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useTrackerState } from "./useTrackerState";
-import { AppConfigSchema } from "../../shared/types";
+import { TrackerConfigSchema } from "../../shared/types";
 import { z } from "zod";
 import { useEffect } from "react";
 
@@ -28,7 +28,7 @@ export default function useAppConfig() {
 
   function load(config: object) {
     try {
-      const parsed = AppConfigSchema.parse(config)
+      const parsed = TrackerConfigSchema.parse(config)
       setGame(parsed.game);
       setlegacyHintsEnabled(parsed.legacyHintsEnabled);
       trackerState.load(parsed.game, parsed.tracker);

@@ -4,6 +4,7 @@ import useResetTracker from "./hooks/useResetTracker";
 import { useEffect } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import {
+  appLoadingMsgAtom,
   appSessionLoadedState,
   legacyHintsEnabledState,
   selectedGameState,
@@ -23,6 +24,7 @@ export default function App() {
   const [appSessionLoaded, setAppSessionLoaded] = useAtom(
     appSessionLoadedState
   );
+  const [appLoadingMsg, setAppLoadingMsg] = useAtom(appLoadingMsgAtom);
 
   // !HOOKS
   const appConfig = useAppConfig();
@@ -34,7 +36,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    window.electronApi.onResetTracker(() => resetTracker());
+    window.electronApi.onResetTracker(() => {
+      setAppLoadingMsg("Resetting the tracker...")
+      setAppSessionLoaded(false);
+      resetTracker();
+      setTimeout(() => {
+        setAppSessionLoaded(true);
+      }, 1);
+    });
     window.electronApi.setLegacyHints((checked) =>
       setLegacyHintsEnabled(checked)
     );
@@ -55,10 +64,14 @@ export default function App() {
       }
     });
     window.electronApi.loadAppSession((config) => {
+      setAppLoadingMsg("Loading tracker session...");
+      setAppSessionLoaded(false);
       if (config) {
         appConfig.load(config);
       }
-      setAppSessionLoaded(true);
+      setTimeout(() => {
+        setAppSessionLoaded(true);
+      }, 1);
     });
   }, [
     resetTracker,
@@ -67,6 +80,7 @@ export default function App() {
     setLegacyHintsEnabled,
     appConfig,
     setAppSessionLoaded,
+    setAppLoadingMsg
   ]);
 
   return (
@@ -83,7 +97,7 @@ export default function App() {
             <h1 className={cn("text-5xl text-center font-semibold")}>
               Metroid Prime Hint Tracker
             </h1>
-            <p className={cn("text-2xl")}>Loading tracker session...</p>
+            <p className={cn("text-2xl")}>{appLoadingMsg}</p>
             <LoadingSpinner size={100} />
           </div>
         </div>
