@@ -7,12 +7,8 @@ import {
   torvusHintsState,
   unhintedItemsState,
 } from "@/states/Prime2.states";
-import {
-  RegionHintsSchema,
-  SkyTempleKeyHintSchema,
-  UnhintedItemSchema,
-} from "@/types/Prime2.types";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { RegionHintsSchema } from "@/types/Prime2.types";
+import { useAtomValue, useSetAtom } from "jotai";
 import { z } from "zod";
 
 export default function useEchoesTracker() {
