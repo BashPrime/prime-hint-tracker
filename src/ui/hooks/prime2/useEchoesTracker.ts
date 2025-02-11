@@ -33,8 +33,10 @@ export default function useEchoesTracker() {
       setAgonHints(RegionHintsSchema.parse(data.regions.agon));
       setTorvusHints(RegionHintsSchema.parse(data.regions.torvus));
       setSancHints(RegionHintsSchema.parse(data.regions.sanctuary));
-      setUnhintedItems(z.array(UnhintedItemSchema).parse(data.unhintedItems));
-      setStkHints(z.array(SkyTempleKeyHintSchema).parse(data.skyTempleKeys));
+      // setUnhintedItems(z.array(UnhintedItemSchema).parse(data.unhintedItems));
+      setUnhintedItems(data.unhintedItems);
+      // setStkHints(z.array(SkyTempleKeyHintSchema).parse(data.skyTempleKeys));
+      setStkHints(data.skyTempleKeys);
     } catch (err) {
       if (err instanceof z.ZodError) {
         alert("Error trying to load Echoes tracker session");
