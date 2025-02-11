@@ -56,7 +56,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
     <div
       onMouseDown={handleRightClick}
       className={cn(
-        "flex flex-col gap-1 bg-zinc-800 p-2",
+        "bg-zinc-800 p-2",
         className,
         hint.checked && "bg-green-900"
       )}
@@ -64,7 +64,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       <div className="flex flex-row justify-between">
         <div
           className={cn(
-            "flex flex-col gap-0.5 uppercase font-bold text-xs tracking-wide cursor-pointer"
+            "flex flex-col gap-0.5 uppercase font-bold text-xs tracking-wide select-none"
           )}
         >
           <p className={cn("text-[#4fa0ff]", hint.checked && "text-green-400")}>
