@@ -11,8 +11,8 @@ export function create() {
     title: "Metroid Prime Hint Tracker",
     width: START_WIDTH,
     height: START_HEIGHT,
-    minWidth: 300,
-    minHeight: 300,
+    minWidth: 640,
+    minHeight: 480,
     webPreferences: {
       devTools: isDev(),
       preload: getPreloadPath(),

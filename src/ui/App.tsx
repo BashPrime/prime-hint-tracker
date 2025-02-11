@@ -1,8 +1,8 @@
 import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
 import useResetTracker from "./hooks/useResetTracker";
-import { useEffect } from "react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { Suspense, useEffect } from "react";
+import { useAtom, useAtomValue } from "jotai";
 import {
   appSessionLoadedState,
   legacyHintsEnabledState,
@@ -11,6 +11,8 @@ import {
 import { ActionSchema } from "../shared/types";
 import { z } from "zod";
 import useAppConfig from "./hooks/useAppConfig";
+import { LoadingSpinner } from "./components/ui/loading-spinner";
+import { cn } from "./lib/utils";
 
 export default function App() {
   // !STATE
@@ -18,7 +20,9 @@ export default function App() {
   const [legacyHintsEnabled, setLegacyHintsEnabled] = useAtom(
     legacyHintsEnabledState
   );
-  const setAppSessionLoaded = useSetAtom(appSessionLoadedState);
+  const [appSessionLoaded, setAppSessionLoaded] = useAtom(
+    appSessionLoadedState
+  );
 
   // !HOOKS
   const appConfig = useAppConfig();
@@ -67,7 +71,23 @@ export default function App() {
 
   return (
     <>
-      <LayoutSelector />
+      {appSessionLoaded && <LayoutSelector />}
+      {!appSessionLoaded && (
+        <div
+          className={cn(
+            "flex flex-col justify-center items-center w-full h-full"
+          )}
+          data-name="app-session-loading-wrapper"
+        >
+          <div className={cn("flex flex-col items-center gap-4")}>
+            <h1 className={cn("text-5xl text-center font-semibold")}>
+              Metroid Prime Hint Tracker
+            </h1>
+            <p className={cn("text-2xl")}>Loading tracker session...</p>
+            <LoadingSpinner size={100} />
+          </div>
+        </div>
+      )}
     </>
   );
 }
