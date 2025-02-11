@@ -1,7 +1,7 @@
 import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
 import useResetTracker from "./hooks/useResetTracker";
-import { Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import {
   appSessionLoadedState,
