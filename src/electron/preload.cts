@@ -15,9 +15,9 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ),
   resetSize: (game: string, isLegacyHints: boolean) =>
     ipcRenderer.invoke("reset-size", game, isLegacyHints),
-  requestLoadAppSession: () => ipcRenderer.invoke("load-app-session"),
-  loadAppSession: (callback: (config: object) => void) =>
-    ipcRenderer.on("load-app-session", (_, config: object) => callback(config)),
-  saveAppSession: (config: object) =>
-    ipcRenderer.invoke("save-app-session", config),
+  requestLoadTrackerSession: () => ipcRenderer.invoke("load-tracker-session"),
+  loadTrackerSession: (callback: (config: object, legacyHintsEnabled: boolean) => void) =>
+    ipcRenderer.on("load-tracker-session", (_, config: object, legacyHintsEnabled: boolean) => callback(config, legacyHintsEnabled)),
+  saveTrackerSession: (config: object) =>
+    ipcRenderer.invoke("save-tracker-session", config),
 });

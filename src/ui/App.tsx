@@ -32,7 +32,7 @@ export default function App() {
 
   // On load, get app session
   useEffect(() => {
-    window.electronApi.requestLoadAppSession();
+    window.electronApi.requestLoadTrackerSession();
   }, []);
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export default function App() {
         }
       }
     });
-    window.electronApi.loadAppSession((config) => {
+    window.electronApi.loadTrackerSession((config) => {
       setAppLoadingMsg("Loading tracker session...");
       setAppSessionLoaded(false);
       if (config) {
@@ -91,7 +91,7 @@ export default function App() {
           className={cn(
             "flex flex-col justify-center items-center w-full h-full"
           )}
-          data-name="app-session-loading-wrapper"
+          data-name="tracker-session-loading-wrapper"
         >
           <div className={cn("flex flex-col items-center gap-4")}>
             <h1 className={cn("text-5xl text-center font-semibold")}>

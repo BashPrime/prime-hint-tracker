@@ -2,14 +2,14 @@ import { BrowserWindow, ipcMain, Menu } from "electron";
 import { menu } from "./menu.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { getDefaultWindowSize, isDev } from "./util.js";
-import { handleSaveAppConfig, readAppConfig } from "./config.js";
+import { handleSaveAppConfig, readAppConfigFile } from "./config.js";
 import { WINDOW_SIZE } from "./data.js";
 import { AppConfig } from "../shared/types.js";
 
 let mainWindow: BrowserWindow | null = null;
 
 export function create() {
-  const config = readAppConfig();
+  const config = readAppConfigFile();
 
   mainWindow = new BrowserWindow({
     title: "Metroid Prime Hint Tracker",

@@ -12,6 +12,7 @@ export function useTrackerState() {
     }
   }
 
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   function load(game: string, data: any) {
     switch (game) {
       case "echoes":

@@ -5,22 +5,24 @@ import { get } from "./window.js";
 import {
   AppConfig,
   AppConfigSchema,
+  TrackerConfig,
   TrackerConfigSchema,
 } from "../shared/types.js";
 import { z } from "zod";
 import { menu } from "./menu.js";
+import { getErrorMsg } from "./util.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
-function readJsonFile(path: string): any {
+function readJsonFile(path: string) {
   try {
     const json = fs.readFileSync(path, "utf-8");
     if (json) {
       return JSON.parse(json);
     }
-  } catch (error) {
-    console.error("Error reading json file", error);
+  } catch (err) {
+    console.error("Error reading json file:", path, getErrorMsg(err));
   }
 
   return null;
@@ -29,42 +31,44 @@ function readJsonFile(path: string): any {
 function writeJsonFile(path: string, json: string) {
   fs.writeFile(path, json, (err) => {
     if (err) {
-      console.error(err);
+      console.error("Error writing json file:", path, err);
     }
   });
 }
 
-export function loadTrackerConfig(config: any) {
-  try {
-    const parsed = TrackerConfigSchema.parse(config);
-    const mainWindow = get();
-    mainWindow?.webContents.send("load-app-session", parsed);
-
-    if (config) {
-      const hintsToggle = menu.getMenuItemById("legacyHintsEnabled");
-
-      if (hintsToggle) {
-        hintsToggle.checked = config.legacyHintsEnabled;
-      }
-    }
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      dialog.showErrorBox("Error", "Unable to parse tracker session.");
-      console.error(err.issues);
-    }
+export function loadTrackerSession(config: TrackerConfig | null) {
+  const mainWindow = get();
+  if (config && mainWindow) {
+    mainWindow?.webContents.send("load-tracker-session", config);
   }
 }
 
-export function readTrackerSession() {
-  return readJsonFile(TRACKER_CONFIG_PATH);
+export function readTrackerConfigFile(path: string = TRACKER_CONFIG_PATH) {
+  const raw = readJsonFile(path);
+
+  if (raw) {
+    try {
+      const parsed = TrackerConfigSchema.parse(raw);
+      return parsed;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error("readTrackerConfigFile(): Error trying to read tracker config file:", err.issues);
+      } else console.error(getErrorMsg(err));
+    }
+  }
+
+  return null;
 }
 
-export function writeTrackerSession(config: object) {
+export function writeTrackerConfigFile(
+  config: TrackerConfig,
+  path: string = TRACKER_CONFIG_PATH
+) {
   const json = JSON.stringify(config, null, 2);
-  writeJsonFile(TRACKER_CONFIG_PATH, json);
+  writeJsonFile(path, json);
 }
 
-export function readAppConfig() {
+export function readAppConfigFile() {
   const raw = readJsonFile(APP_CONFIG_PATH);
 
   if (raw) {
@@ -73,15 +77,18 @@ export function readAppConfig() {
       return parsed;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error(`Error trying to load application config: ${err.issues}`);
-      }
+        console.error(
+          "readAppConfigFile(): Error trying to read application config file:",
+          err.issues
+        );
+      } else console.error(getErrorMsg(err));
     }
   }
 
   return null;
 }
 
-export function writeAppConfig(config: AppConfig) {
+export function writeAppConfigFile(config: AppConfig) {
   const json = JSON.stringify(config, null, 2);
   writeJsonFile(APP_CONFIG_PATH, json);
 }
@@ -101,9 +108,9 @@ export function getAppConfigState() {
       });
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error(`Error parsing app configuration: ${err.issues}`);
-      }
-    } 
+        console.error("getAppConfigState(): Error parsing app configuration:", err.issues);
+      } else console.error(getErrorMsg(err));
+    }
   }
 
   return null;
@@ -113,7 +120,7 @@ export function handleSaveAppConfig() {
   const config = getAppConfigState();
 
   if (config) {
-    writeAppConfig(config);
+    writeAppConfigFile(config);
   }
 }
 
@@ -128,13 +135,20 @@ export function openTrackerFile() {
       })
       .then((value) => {
         if (!value.canceled) {
-          const trackerData = readJsonFile(value.filePaths[0]);
-          loadTrackerConfig(trackerData);
+          const config = readTrackerConfigFile(value.filePaths[0]);
+          if (!config) {
+            dialog.showErrorBox(
+              "Cannot Parse Tracker File",
+              "This does not appear to be a valid tracker file."
+            );
+            throw new Error("openTrackerFile(): trackerConfig is null");
+          }
+
+          loadTrackerSession(config);
         }
       })
       .catch((err) => {
-        console.error(err);
-        alert("Error trying to open tracker file");
+        console.error(getErrorMsg(err));
       });
   }
 }

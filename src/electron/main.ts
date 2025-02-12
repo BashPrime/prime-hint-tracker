@@ -3,10 +3,11 @@ import path from "path";
 import { isDev } from "./util.js";
 import { create } from "./window.js";
 import {
-  loadTrackerConfig,
-  readTrackerSession,
-  writeTrackerSession,
+  loadTrackerSession as loadTrackerSession,
+  readTrackerConfigFile,
+  writeTrackerConfigFile,
 } from "./config.js";
+import { TrackerConfig } from "../shared/types.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -28,11 +29,11 @@ app.on("ready", () => {
   }
 });
 
-ipcMain.handle("load-app-session", () => {
-  const config = readTrackerSession();
-  loadTrackerConfig(config);
+ipcMain.handle("load-tracker-session", () => {
+  const trackerConfig = readTrackerConfigFile();
+  loadTrackerSession(trackerConfig);
 });
 
-ipcMain.handle("save-app-session", (_, config: object) =>
-  writeTrackerSession(config)
+ipcMain.handle("save-tracker-session", (_, config: object) =>
+  writeTrackerConfigFile(config as TrackerConfig)
 );

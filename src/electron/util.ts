@@ -16,9 +16,18 @@ export function getDefaultWindowSize(game: string, isLegacyHints: boolean) {
     return WINDOW_SIZE[parsedGame];
   } catch (err) {
     if (err instanceof z.ZodError) {
-      console.error(err.issues);
-    }
+      console.error("Error while parsing game:", err.issues);
+    } else console.error(getErrorMsg(err));
   }
 
   return WINDOW_SIZE.default;
+}
+
+/* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
+export function getErrorMsg(err: any) {
+  if (err instanceof Error) {
+    return err.message;
+  }
+
+  return String(err);
 }
