@@ -135,7 +135,7 @@ export function BossHints({ atom, variant, className }: Props) {
         onMouseDown={handleRightClick}
         data-name="boss-item-container"
       >
-        <div className="w-24" data-name="boss-img">
+        <div className="w-24 select-none" data-name="boss-img">
           <img src={imgSrc} title={bossHints.name} alt={bossHints.name} />
         </div>
         <div className="flex flex-row justify-between">
