@@ -1,7 +1,7 @@
 import { app, dialog } from "electron";
 import path from "path";
 import fs from "fs";
-import { get } from "./window.js";
+import { getMainWindow } from "./window.js";
 import {
   AppConfig,
   AppConfigSchema,
@@ -15,6 +15,16 @@ import { IPC_IDS, MENU_IDS } from "./data.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
+
+let trackerState: TrackerConfig | null = null;
+
+export function getTrackerState() {
+  return trackerState;
+}
+
+export function setTrackerState(state: TrackerConfig | null) {
+  trackerState = state;
+}
 
 function readJsonFile(path: string) {
   try {
@@ -32,14 +42,15 @@ function readJsonFile(path: string) {
 function writeJsonFile(path: string, json: string) {
   fs.writeFile(path, json, (err) => {
     if (err) {
-      console.error("Error writing json file:", path, err);
+      console.error("Error writing json file:", path, getErrorMsg(err));
     }
   });
 }
 
 export function loadTrackerSession(config: TrackerConfig | null) {
-  const mainWindow = get();
+  const mainWindow = getMainWindow();
   if (config && mainWindow) {
+    setTrackerState(config);
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
 }
@@ -98,7 +109,7 @@ export function writeAppConfigFile(config: AppConfig) {
 }
 
 export function getAppConfigState() {
-  const mainWindow = get();
+  const mainWindow = getMainWindow();
 
   if (mainWindow) {
     try {
@@ -131,8 +142,8 @@ export function handleSaveAppConfig() {
   }
 }
 
-export function openTrackerFile() {
-  const mainWindow = get();
+export function openUserProvidedTrackerFile() {
+  const mainWindow = getMainWindow();
   if (mainWindow) {
     dialog
       .showOpenDialog(mainWindow, {
@@ -148,10 +159,37 @@ export function openTrackerFile() {
               "Cannot Parse Tracker File",
               "This does not appear to be a valid tracker file."
             );
-            throw new Error("openTrackerFile(): trackerConfig is null");
+            throw new Error("openTrackerFile(): tracker config is null");
           }
 
           loadTrackerSession(config);
+        }
+      })
+      .catch((err) => {
+        console.error(getErrorMsg(err));
+      });
+  }
+}
+
+export function saveTrackerFileAs() {
+  const mainWindow = getMainWindow();
+  const config = getTrackerState();
+
+  if (!config) {
+    dialog.showErrorBox(
+      "Cannot Save Tracker File",
+      "There is currently no tracker state to save."
+    );
+    console.error("saveTrackerFile(): tracker state is null");
+  } else if (mainWindow) {
+    dialog
+      .showSaveDialog(mainWindow, {
+        filters: [{ name: "JSON files", extensions: ["json"] }],
+        properties: ["showOverwriteConfirmation"],
+      })
+      .then((value) => {
+        if (!value.canceled) {
+          writeTrackerConfigFile(config, value.filePath);
         }
       })
       .catch((err) => {

@@ -6,16 +6,18 @@ import {
 } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { create, get } from "./window.js";
+import { create, getMainWindow } from "./window.js";
 import {
   loadTrackerSession as loadTrackerSession,
   readAppConfigFile,
   readTrackerConfigFile,
+  setTrackerState,
   writeTrackerConfigFile,
 } from "./config.js";
-import { AppConfig, TrackerConfig } from "../shared/types.js";
+import { AppConfig, TrackerConfigSchema } from "../shared/types.js";
 import { menu } from "./menu.js";
 import { IPC_IDS, MENU_IDS } from "./data.js";
+import { z } from "zod";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -44,7 +46,7 @@ app.on("ready", () => {
 });
 
 ipcMain.handle(IPC_IDS.requestMainState, () => {
-  const mainWindow = get();
+  const mainWindow = getMainWindow();
   const trackerConfig = readTrackerConfigFile();
 
   // Send data to renderer
@@ -55,9 +57,17 @@ ipcMain.handle(IPC_IDS.requestMainState, () => {
   );
 });
 
-ipcMain.handle(IPC_IDS.saveTrackerSession, (_, config: object) =>
-  writeTrackerConfigFile(config as TrackerConfig)
-);
+ipcMain.handle(IPC_IDS.saveTrackerSession, (_, config: object) => {
+  try {
+    const parsed = TrackerConfigSchema.parse(config);
+    setTrackerState(parsed);
+    writeTrackerConfigFile(parsed)
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error("ipc-saveTrackerSession: Error parsing tracker config:", err.issues)
+    }
+  }
+});
 
 function setToggle(id: string, checked: boolean) {
   const menuItem = menu.getMenuItemById(id);

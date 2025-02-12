@@ -1,27 +1,27 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
-import { get } from "./window.js";
+import { getMainWindow } from "./window.js";
 import { isDev } from "./util.js";
-import { handleSaveAppConfig, openTrackerFile } from "./config.js";
+import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from "./config.js";
 import { IPC_IDS, MENU_IDS } from "./data.js";
 
 function requestRendererState(action: string) {
-  const window = get();
+  const window = getMainWindow();
   window?.webContents.send(IPC_IDS.requestRendererState, action);
 }
 
 function resetTracker() {
-  const window = get();
+  const window = getMainWindow();
   window?.webContents.send(IPC_IDS.resetTracker);
 }
 
 function toggleAlwaysOnTop(checked: boolean) {
-  const window = get();
+  const window = getMainWindow();
   window?.setAlwaysOnTop(checked);
   handleSaveAppConfig();
 }
 
 function toggleLegacyHints(checked: boolean) {
-  const window = get();
+  const window = getMainWindow();
   window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, checked);
   handleSaveAppConfig();
 }
@@ -33,7 +33,8 @@ const template: MenuItemConstructorOptions[] = [
       { label: "Reset Size", click: () => requestRendererState("reset-size") },
       { label: "Reset Tracker", click: () => resetTracker() },
       { type: "separator" },
-      { label: "Open", click: () => openTrackerFile() },
+      { label: "Open", click: () => openUserProvidedTrackerFile() },
+      { label: "Save As...", click: () => saveTrackerFileAs() },
     ],
   },
   {

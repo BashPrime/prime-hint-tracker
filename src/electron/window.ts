@@ -29,7 +29,7 @@ export function create(config: AppConfig | null) {
   return mainWindow;
 }
 
-export function get() {
+export function getMainWindow() {
   return mainWindow;
 }
 
@@ -44,7 +44,7 @@ function mainWindowHandlers(window: BrowserWindow) {
 }
 
 ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
-  const mainWindow = get();
+  const mainWindow = getMainWindow();
   const windowSize = getDefaultWindowSize(game, isLegacyHints);
   if (windowSize && mainWindow) {
     mainWindow.setSize(windowSize.width, windowSize.height);
