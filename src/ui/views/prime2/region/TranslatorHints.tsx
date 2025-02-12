@@ -85,11 +85,7 @@ function Hint({
     ? itemLegacyOptions
     : itemFeaturalOptions;
   const locationFeaturalOptions = createOptions(
-    [
-      ...PRIME_2_LOCATIONS_WITH_ITEMS,
-      ...PRIME_2_LOCATION_FEATURES,
-      ...BOSSES,
-    ],
+    [...PRIME_2_LOCATIONS_WITH_ITEMS, ...PRIME_2_LOCATION_FEATURES, ...BOSSES],
     true
   );
   const locationLegacyOptions = createOptions([
@@ -119,9 +115,7 @@ function Hint({
   );
 
   useEffect(() => {
-    if (!hint.proximity) {
-      setProximity("");
-    }
+    setProximity(hint.proximity ?? "");
   }, [hint.proximity]);
 
   return (
