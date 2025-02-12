@@ -2,14 +2,18 @@ import { app, dialog } from "electron";
 import path from "path";
 import fs from "fs";
 import { get } from "./window.js";
-import { TrackerConfigSchema } from "../shared/types.js";
+import {
+  AppConfig,
+  AppConfigSchema,
+  TrackerConfigSchema,
+} from "../shared/types.js";
 import { z } from "zod";
 import { menu } from "./menu.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
-const WINDOW_CONFIG_PATH = path.join(app.getPath("userData"), "window.json");
+const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
-function readJsonFile(path: string) {
+function readJsonFile(path: string): any {
   try {
     const json = fs.readFileSync(path, "utf-8");
     if (json) {
@@ -60,13 +64,57 @@ export function writeTrackerSession(config: object) {
   writeJsonFile(TRACKER_CONFIG_PATH, json);
 }
 
-export function readWindowConfig() {
-  return readJsonFile(WINDOW_CONFIG_PATH);
+export function readAppConfig() {
+  const raw = readJsonFile(APP_CONFIG_PATH);
+
+  if (raw) {
+    try {
+      const parsed = AppConfigSchema.parse(raw);
+      return parsed;
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error(`Error trying to load application config: ${err.issues}`);
+      }
+    }
+  }
+
+  return null;
 }
 
-export function writeWindowConfig(bounds: Electron.Rectangle) {
-  const json = JSON.stringify(bounds, null, 2);
-  writeJsonFile(WINDOW_CONFIG_PATH, json);
+export function writeAppConfig(config: AppConfig) {
+  const json = JSON.stringify(config, null, 2);
+  writeJsonFile(APP_CONFIG_PATH, json);
+}
+
+export function getAppConfigState() {
+  const mainWindow = get();
+
+  if (mainWindow) {
+    try {
+      return AppConfigSchema.parse({
+        toggles: {
+          alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked,
+          legacyHintsEnabled:
+            menu.getMenuItemById("legacyHintsEnabled")?.checked,
+        },
+        window: mainWindow.getBounds(),
+      });
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        console.error(`Error parsing app configuration: ${err.issues}`);
+      }
+    } 
+  }
+
+  return null;
+}
+
+export function handleSaveAppConfig() {
+  const config = getAppConfigState();
+
+  if (config) {
+    writeAppConfig(config);
+  }
 }
 
 export function openTrackerFile() {

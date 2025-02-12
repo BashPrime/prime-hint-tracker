@@ -6,7 +6,7 @@ import {
   loadTrackerConfig,
   readTrackerSession,
   writeTrackerSession,
-} from "./appConfig.js";
+} from "./config.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
