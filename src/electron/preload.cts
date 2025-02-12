@@ -5,17 +5,17 @@ const electron = require("electron");
 electron.contextBridge.exposeInMainWorld("electronApi", {
   onResetTracker: (callback: () => void) =>
     ipcRenderer.on("reset-tracker", () => callback()),
-  setLegacyHints: (callback: (checked: boolean) => void) =>
-    ipcRenderer.on("set-legacy-hints", (_, checked: boolean) =>
+  setLegacyHintsEnabled: (callback: (checked: boolean) => void) =>
+    ipcRenderer.on("set-legacy-hints-enabled", (_, checked: boolean) =>
       callback(checked)
     ),
-  onRequestAppState: (callback: (action: string) => void) =>
-    ipcRenderer.on("request-app-state", (_, action: string) =>
+  onRequestRendererState: (callback: (action: string) => void) =>
+    ipcRenderer.on("request-renderer-state", (_, action: string) =>
       callback(action)
     ),
   resetSize: (game: string, isLegacyHints: boolean) =>
     ipcRenderer.invoke("reset-size", game, isLegacyHints),
-  requestLoadTrackerSession: () => ipcRenderer.invoke("load-tracker-session"),
+  requestMainState: () => ipcRenderer.invoke("request-main-state"),
   loadTrackerSession: (callback: (config: object, legacyHintsEnabled: boolean) => void) =>
     ipcRenderer.on("load-tracker-session", (_, config: object, legacyHintsEnabled: boolean) => callback(config, legacyHintsEnabled)),
   saveTrackerSession: (config: object) =>

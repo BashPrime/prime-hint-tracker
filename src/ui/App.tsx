@@ -30,9 +30,9 @@ export default function App() {
   const appConfig = useAppConfig();
   const resetTracker = useResetTracker();
 
-  // On load, get app session
+  // On load, get state from main process
   useEffect(() => {
-    window.electronApi.requestLoadTrackerSession();
+    window.electronApi.requestMainState();
   }, []);
 
   useEffect(() => {
@@ -44,10 +44,10 @@ export default function App() {
         setAppSessionLoaded(true);
       }, 1);
     });
-    window.electronApi.setLegacyHints((checked) =>
+    window.electronApi.setLegacyHintsEnabled((checked) =>
       setLegacyHintsEnabled(checked)
     );
-    window.electronApi.onRequestAppState((action) => {
+    window.electronApi.onRequestRendererState((action) => {
       try {
         const parsedAction = ActionSchema.parse(action);
 

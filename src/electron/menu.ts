@@ -2,15 +2,16 @@ import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { get } from "./window.js";
 import { isDev } from "./util.js";
 import { handleSaveAppConfig, openTrackerFile } from "./config.js";
+import { IPC_IDS, MENU_IDS } from "./data.js";
 
-function requestAppState(action: string) {
+function requestRendererState(action: string) {
   const window = get();
-  window?.webContents.send("request-app-state", action);
+  window?.webContents.send(IPC_IDS.requestRendererState, action);
 }
 
 function resetTracker() {
   const window = get();
-  window?.webContents.send("reset-tracker");
+  window?.webContents.send(IPC_IDS.resetTracker);
 }
 
 function toggleAlwaysOnTop(checked: boolean) {
@@ -21,7 +22,7 @@ function toggleAlwaysOnTop(checked: boolean) {
 
 function toggleLegacyHints(checked: boolean) {
   const window = get();
-  window?.webContents.send("set-legacy-hints", checked);
+  window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, checked);
   handleSaveAppConfig();
 }
 
@@ -29,7 +30,7 @@ const template: MenuItemConstructorOptions[] = [
   {
     label: "Tracker",
     submenu: [
-      { label: "Reset Size", click: () => requestAppState("reset-size") },
+      { label: "Reset Size", click: () => requestRendererState("reset-size") },
       { label: "Reset Tracker", click: () => resetTracker() },
       { type: "separator" },
       { label: "Open", click: () => openTrackerFile() },
@@ -39,14 +40,14 @@ const template: MenuItemConstructorOptions[] = [
     label: "Toggles",
     submenu: [
       {
-        id: "alwaysOnTop",
+        id: MENU_IDS.alwaysOnTop,
         label: "Always on Top",
         type: "checkbox",
         checked: false,
         click: (item) => toggleAlwaysOnTop(item.checked),
       },
       {
-        id: "legacyHintsEnabled",
+        id: MENU_IDS.legacyHintsEnabled,
         label: "Legacy Hints",
         type: "checkbox",
         checked: false,

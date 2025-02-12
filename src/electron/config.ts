@@ -11,6 +11,7 @@ import {
 import { z } from "zod";
 import { menu } from "./menu.js";
 import { getErrorMsg } from "./util.js";
+import { IPC_IDS, MENU_IDS } from "./data.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
@@ -39,7 +40,7 @@ function writeJsonFile(path: string, json: string) {
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = get();
   if (config && mainWindow) {
-    mainWindow?.webContents.send("load-tracker-session", config);
+    mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
 }
 
@@ -52,7 +53,10 @@ export function readTrackerConfigFile(path: string = TRACKER_CONFIG_PATH) {
       return parsed;
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error("readTrackerConfigFile(): Error trying to read tracker config file:", err.issues);
+        console.error(
+          "readTrackerConfigFile(): Error trying to read tracker config file:",
+          err.issues
+        );
       } else console.error(getErrorMsg(err));
     }
   }
@@ -101,14 +105,17 @@ export function getAppConfigState() {
       return AppConfigSchema.parse({
         toggles: {
           alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked,
-          legacyHintsEnabled:
-            menu.getMenuItemById("legacyHintsEnabled")?.checked,
+          legacyHintsEnabled: menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)
+            ?.checked,
         },
         window: mainWindow.getBounds(),
       });
     } catch (err) {
       if (err instanceof z.ZodError) {
-        console.error("getAppConfigState(): Error parsing app configuration:", err.issues);
+        console.error(
+          "getAppConfigState(): Error parsing app configuration:",
+          err.issues
+        );
       } else console.error(getErrorMsg(err));
     }
   }

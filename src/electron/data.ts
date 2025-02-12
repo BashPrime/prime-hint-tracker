@@ -1,3 +1,18 @@
+export const MENU_IDS = {
+  alwaysOnTop: "alwaysOnTop",
+  legacyHintsEnabled: "legacyHintsEnabled",
+};
+
+export const IPC_IDS = {
+  requestRendererState: "request-renderer-state",
+  requestMainState: "request-main-state",
+  resetTracker: "reset-tracker",
+  setLegacyHintsEnabled: "set-legacy-hints-enabled",
+  resetSize: "reset-size",
+  loadTrackerSession: "load-tracker-session",
+  saveTrackerSession: "save-tracker-session",
+};
+
 type WindowSize = {
   prime: Size;
   echoes: Size;

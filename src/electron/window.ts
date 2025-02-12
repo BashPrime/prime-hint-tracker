@@ -2,15 +2,13 @@ import { BrowserWindow, ipcMain, Menu } from "electron";
 import { menu } from "./menu.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { getDefaultWindowSize, isDev } from "./util.js";
-import { handleSaveAppConfig, readAppConfigFile } from "./config.js";
-import { WINDOW_SIZE } from "./data.js";
+import { handleSaveAppConfig } from "./config.js";
+import { IPC_IDS, WINDOW_SIZE } from "./data.js";
 import { AppConfig } from "../shared/types.js";
 
 let mainWindow: BrowserWindow | null = null;
 
-export function create() {
-  const config = readAppConfigFile();
-
+export function create(config: AppConfig | null) {
   mainWindow = new BrowserWindow({
     title: "Metroid Prime Hint Tracker",
     width: config?.window.width ?? WINDOW_SIZE.default.width,
@@ -28,10 +26,6 @@ export function create() {
   Menu.setApplicationMenu(menu);
   mainWindowHandlers(mainWindow);
 
-  if (config) {
-    setInitialToggles(config.toggles, mainWindow);
-  }
-
   return mainWindow;
 }
 
@@ -46,25 +40,10 @@ function mainWindowHandlers(window: BrowserWindow) {
 
   window.on("moved", () => {
     handleSaveAppConfig();
-  })
+  });
 }
 
-function setToggle(id: string, checked: boolean) {
-  const menuItem = menu.getMenuItemById(id);
-
-  if (menuItem) {
-    menuItem.checked = checked;
-  }
-}
-
-function setInitialToggles(toggles: AppConfig["toggles"], window: BrowserWindow) {
-  setToggle("alwaysOnTop", toggles.alwaysOnTop);
-  setToggle("legacyHintsEnabled", toggles.legacyHintsEnabled);
-  window.setAlwaysOnTop(toggles.alwaysOnTop);
-  window?.webContents.send("set-legacy-hints", toggles.legacyHintsEnabled);
-}
-
-ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
+ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
   const mainWindow = get();
   const windowSize = getDefaultWindowSize(game, isLegacyHints);
   if (windowSize && mainWindow) {
