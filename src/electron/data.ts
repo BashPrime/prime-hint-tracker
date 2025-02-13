@@ -6,6 +6,7 @@ export const MENU_IDS = {
 export const IPC_IDS = {
   requestRendererState: "request-renderer-state",
   requestMainState: "request-main-state",
+  rendererTrackerState: "renderer-tracker-state",
   resetTracker: "reset-tracker",
   setLegacyHintsEnabled: "set-legacy-hints-enabled",
   resetSize: "reset-size",

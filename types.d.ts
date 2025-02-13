@@ -3,7 +3,7 @@ interface Window {
     onResetTracker: (callback: () => void) => void;
     setLegacyHintsEnabled: (callback: (checked: boolean) => void) => void;
     onRequestRendererState: (callback: (action: string) => void) => void;
-    rendererTrackerState: (config: object) => void;
+    rendererTrackerState: (state: object) => void;
     resetSize: (game: string, isLegacyHints: boolean) => void;
     requestMainState: () => void;
     loadTrackerSession: (

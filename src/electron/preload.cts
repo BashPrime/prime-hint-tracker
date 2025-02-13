@@ -13,12 +13,19 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.on("request-renderer-state", (_, action: string) =>
       callback(action)
     ),
-  rendererTrackerState: (config: object) => ipcRenderer.invoke("renderer-tracker-state"),
+  rendererTrackerState: (state: object) =>
+    ipcRenderer.invoke("renderer-tracker-state", state),
   resetSize: (game: string, isLegacyHints: boolean) =>
     ipcRenderer.invoke("reset-size", game, isLegacyHints),
   requestMainState: () => ipcRenderer.invoke("request-main-state"),
-  loadTrackerSession: (callback: (config: object, legacyHintsEnabled: boolean) => void) =>
-    ipcRenderer.on("load-tracker-session", (_, config: object, legacyHintsEnabled: boolean) => callback(config, legacyHintsEnabled)),
+  loadTrackerSession: (
+    callback: (config: object, legacyHintsEnabled: boolean) => void
+  ) =>
+    ipcRenderer.on(
+      "load-tracker-session",
+      (_, config: object, legacyHintsEnabled: boolean) =>
+        callback(config, legacyHintsEnabled)
+    ),
   saveTrackerSession: (config: object) =>
     ipcRenderer.invoke("save-tracker-session", config),
 });

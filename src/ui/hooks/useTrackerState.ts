@@ -1,27 +1,13 @@
-import {
-  appSessionLoadedState,
-  selectedGameState,
-  trackerStateSelector,
-} from "@/states/App.states";
+import { selectedGameState, trackerStateSelector } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useGameTrackerHandler } from "./useGameTrackerHandler";
 import { TrackerConfigSchema } from "../../shared/types";
 import { z } from "zod";
-import { useEffect } from "react";
 
 export default function useTrackerState() {
   // !STATE
   const trackerState = useAtomValue(trackerStateSelector);
-  const appSessionLoaded = useAtomValue(appSessionLoadedState);
   const setGame = useSetAtom(selectedGameState);
-
-  // !HOOKS
-  // Automatically save tracker state (send to main process) when it changes
-  useEffect(() => {
-    if (appSessionLoaded) {
-      window.electronApi.saveTrackerSession(trackerState);
-    }
-  }, [trackerState, appSessionLoaded]);
 
   // !TRACKER HOOKS
   const gameTrackerHandler = useGameTrackerHandler();

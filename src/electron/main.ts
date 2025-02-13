@@ -6,7 +6,7 @@ import {
 } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { create, getMainWindow } from "./window.js";
+import { createMainWindow, getMainWindow } from "./window.js";
 import {
   loadTrackerSession as loadTrackerSession,
   readAppConfigFile,
@@ -32,7 +32,7 @@ const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
 app.on("ready", () => {
   app.setAboutPanelOptions(ABOUT_PANEL_OPTIONS);
   const config = readAppConfigFile();
-  const mainWindow = create(config);
+  const mainWindow = createMainWindow(config);
 
   if (isDev()) {
     mainWindow.loadURL("http://localhost:5173");

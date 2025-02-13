@@ -1,14 +1,19 @@
-import { BrowserWindow, ipcMain, Menu } from "electron";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import { menu } from "./menu.js";
 import { getPreloadPath } from "./pathResolver.js";
-import { getDefaultWindowSize, isDev } from "./util.js";
-import { handleSaveAppConfig } from "./config.js";
+import { getDefaultWindowSize, isDev, requestRendererState } from "./util.js";
+import {
+  handleSaveAppConfig,
+  setTrackerState,
+  writeTrackerConfigFile,
+} from "./config.js";
 import { IPC_IDS, WINDOW_SIZE } from "./data.js";
-import { AppConfig } from "../shared/types.js";
+import { AppConfig, TrackerConfigSchema } from "../shared/types.js";
+import { z } from "zod";
 
 let mainWindow: BrowserWindow | null = null;
 
-export function create(config: AppConfig | null) {
+export function createMainWindow(config: AppConfig | null) {
   mainWindow = new BrowserWindow({
     title: "Metroid Prime Hint Tracker",
     width: config?.window.width ?? WINDOW_SIZE.default.width,
@@ -33,6 +38,11 @@ export function getMainWindow() {
   return mainWindow;
 }
 
+export function clearMainWindow() {
+  mainWindow = null;
+  return mainWindow;
+}
+
 function mainWindowHandlers(window: BrowserWindow) {
   window.on("resized", () => {
     handleSaveAppConfig();
@@ -40,6 +50,27 @@ function mainWindowHandlers(window: BrowserWindow) {
 
   window.on("moved", () => {
     handleSaveAppConfig();
+  });
+
+  window.on("close", (event) => {
+    event.preventDefault();
+    ipcMain.once(IPC_IDS.rendererTrackerState, (_, state: object) => {
+      try {
+        const parsed = TrackerConfigSchema.parse(state);
+        writeTrackerConfigFile(parsed);
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          console.error(
+            "ipc-saveTrackerSession: Error parsing tracker config:",
+            err.issues
+          );
+        }
+      }
+
+      app.quit();
+    });
+
+    requestRendererState("tracker");
   });
 }
 

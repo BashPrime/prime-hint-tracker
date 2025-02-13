@@ -1,13 +1,8 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { getMainWindow } from "./window.js";
-import { isDev } from "./util.js";
+import { isDev, requestRendererState } from "./util.js";
 import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from "./config.js";
 import { IPC_IDS, MENU_IDS } from "./data.js";
-
-function requestRendererState(action: string) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.requestRendererState, action);
-}
 
 function resetTracker() {
   const window = getMainWindow();
