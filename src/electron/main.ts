@@ -1,7 +1,7 @@
 import { AboutPanelOptionsOptions, app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { clearMainWindow, createMainWindow, getMainWindow } from "./window.js";
+import { clearMainWindow, closeMainWindow, createMainWindow, getMainWindow } from "./window.js";
 import {
   getTrackerState,
   readAppConfigFile,
@@ -57,7 +57,7 @@ app.on("before-quit", (event) => {
     event.preventDefault();
     writeTrackerConfigFile(state);
     setTrackerState(null);
-    clearMainWindow();
+    closeMainWindow();
   }
 });
 

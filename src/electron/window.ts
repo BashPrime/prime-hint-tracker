@@ -38,6 +38,10 @@ export function clearMainWindow() {
   return mainWindow;
 }
 
+export function closeMainWindow() {
+  mainWindow?.close();
+}
+
 function mainWindowHandlers(window: BrowserWindow) {
   window.on("resized", () => {
     handleSaveAppConfig();
@@ -45,5 +49,9 @@ function mainWindowHandlers(window: BrowserWindow) {
 
   window.on("moved", () => {
     handleSaveAppConfig();
+  });
+
+  window.on("closed", () => {
+    clearMainWindow();
   });
 }
