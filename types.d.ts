@@ -9,6 +9,5 @@ interface Window {
     loadTrackerSession: (
       callback: (config: object, legacyHintsEnabled: boolean) => void
     ) => void;
-    saveTrackerSession: (config: object) => void;
   };
 }

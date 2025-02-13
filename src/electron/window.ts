@@ -1,15 +1,11 @@
-import { app, BrowserWindow, ipcMain, Menu } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import { menu } from "./menu.js";
 import { getPreloadPath } from "./pathResolver.js";
-import { getDefaultWindowSize, isDev, requestRendererState } from "./util.js";
-import {
-  handleSaveAppConfig,
-  setTrackerState,
-  writeTrackerConfigFile,
-} from "./config.js";
-import { IPC_IDS, WINDOW_SIZE } from "./data.js";
-import { AppConfig, TrackerConfigSchema } from "../shared/types.js";
-import { z } from "zod";
+import { isDev } from "./util.js";
+import { handleSaveAppConfig, writeTrackerConfigFile } from "./config.js";
+import { WINDOW_SIZE } from "./data.js";
+import { AppConfig } from "../shared/types.js";
+import { getTrackerStateFromRenderer } from "./ipc.js";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -54,30 +50,12 @@ function mainWindowHandlers(window: BrowserWindow) {
 
   window.on("close", (event) => {
     event.preventDefault();
-    ipcMain.once(IPC_IDS.rendererTrackerState, (_, state: object) => {
-      try {
-        const parsed = TrackerConfigSchema.parse(state);
-        writeTrackerConfigFile(parsed);
-      } catch (err) {
-        if (err instanceof z.ZodError) {
-          console.error(
-            "ipc-saveTrackerSession: Error parsing tracker config:",
-            err.issues
-          );
-        }
+    getTrackerStateFromRenderer((state, err) => {
+      if (!err && state) {
+        writeTrackerConfigFile(state);
       }
 
       app.quit();
     });
-
-    requestRendererState("tracker");
   });
 }
-
-ipcMain.handle(IPC_IDS.resetSize, (_, game: string, isLegacyHints: boolean) => {
-  const mainWindow = getMainWindow();
-  const windowSize = getDefaultWindowSize(game, isLegacyHints);
-  if (windowSize && mainWindow) {
-    mainWindow.setSize(windowSize.width, windowSize.height);
-  }
-});

@@ -2,22 +2,17 @@ import {
   AboutPanelOptionsOptions,
   app,
   BrowserWindow,
-  ipcMain,
 } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { createMainWindow, getMainWindow } from "./window.js";
+import { createMainWindow } from "./window.js";
 import {
-  loadTrackerSession as loadTrackerSession,
   readAppConfigFile,
-  readTrackerConfigFile,
-  setTrackerState,
-  writeTrackerConfigFile,
 } from "./config.js";
-import { AppConfig, TrackerConfigSchema } from "../shared/types.js";
+import { AppConfig } from "../shared/types.js";
 import { menu } from "./menu.js";
-import { IPC_IDS, MENU_IDS } from "./data.js";
-import { z } from "zod";
+import { MENU_IDS } from "./data.js";
+import { handleRendererInitialization, handleResetSize } from "./ipc.js";
 
 const ABOUT_PANEL_OPTIONS: AboutPanelOptionsOptions = {
   applicationName: "Metroid Prime Hint Tracker",
@@ -45,29 +40,9 @@ app.on("ready", () => {
   }
 });
 
-ipcMain.handle(IPC_IDS.requestMainState, () => {
-  const mainWindow = getMainWindow();
-  const trackerConfig = readTrackerConfigFile();
-
-  // Send data to renderer
-  loadTrackerSession(trackerConfig);
-  mainWindow?.webContents.send(
-    IPC_IDS.setLegacyHintsEnabled,
-    menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked
-  );
-});
-
-ipcMain.handle(IPC_IDS.saveTrackerSession, (_, config: object) => {
-  try {
-    const parsed = TrackerConfigSchema.parse(config);
-    setTrackerState(parsed);
-    writeTrackerConfigFile(parsed)
-  } catch (err) {
-    if (err instanceof z.ZodError) {
-      console.error("ipc-saveTrackerSession: Error parsing tracker config:", err.issues)
-    }
-  }
-});
+// IPC Handlers
+handleRendererInitialization();
+handleResetSize();
 
 function setToggle(id: string, checked: boolean) {
   const menuItem = menu.getMenuItemById(id);

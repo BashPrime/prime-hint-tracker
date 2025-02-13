@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { IPC_IDS, WINDOW_SIZE } from "./data.js";
-import { GameSchema } from "../shared/types.js";
+import { GameSchema, TrackerConfigSchema } from "../shared/types.js";
 import { getMainWindow } from "./window.js";
 
 export function isDev(): boolean {
@@ -33,7 +33,17 @@ export function getErrorMsg(err: any) {
   return String(err);
 }
 
-export function requestRendererState(action: string) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.requestRendererState, action);
+export function parseTrackerConfig(config: object) {
+  try {
+    return TrackerConfigSchema.parse(config);
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      console.error(
+        "parseTrackerConfig() - Cannot parse config object:",
+        err.issues
+      );
+    } else console.error(getErrorMsg(err));
+  }
+
+  return null;
 }

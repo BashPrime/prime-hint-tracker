@@ -1,13 +1,9 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { getMainWindow } from "./window.js";
-import { isDev, requestRendererState } from "./util.js";
+import { isDev } from "./util.js";
 import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from "./config.js";
-import { IPC_IDS, MENU_IDS } from "./data.js";
-
-function resetTracker() {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.resetTracker);
-}
+import { MENU_IDS } from "./data.js";
+import { requestRendererState, resetTracker, setLegacyHintsEnabled } from "./ipc.js";
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
@@ -16,8 +12,7 @@ function toggleAlwaysOnTop(checked: boolean) {
 }
 
 function toggleLegacyHints(checked: boolean) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, checked);
+  setLegacyHintsEnabled(checked);
   handleSaveAppConfig();
 }
 

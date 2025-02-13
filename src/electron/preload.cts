@@ -26,6 +26,4 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
       (_, config: object, legacyHintsEnabled: boolean) =>
         callback(config, legacyHintsEnabled)
     ),
-  saveTrackerSession: (config: object) =>
-    ipcRenderer.invoke("save-tracker-session", config),
 });

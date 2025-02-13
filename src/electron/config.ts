@@ -2,16 +2,12 @@ import { app, dialog } from "electron";
 import path from "path";
 import fs from "fs";
 import { getMainWindow } from "./window.js";
-import {
-  AppConfig,
-  AppConfigSchema,
-  TrackerConfig,
-  TrackerConfigSchema,
-} from "../shared/types.js";
+import { AppConfig, AppConfigSchema, TrackerConfig } from "../shared/types.js";
 import { z } from "zod";
 import { menu } from "./menu.js";
-import { getErrorMsg } from "./util.js";
+import { getErrorMsg, parseTrackerConfig } from "./util.js";
 import { IPC_IDS, MENU_IDS } from "./data.js";
+import { getTrackerStateFromRenderer } from "./ipc.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
@@ -56,23 +52,7 @@ export function loadTrackerSession(config: TrackerConfig | null) {
 }
 
 export function readTrackerConfigFile(path: string = TRACKER_CONFIG_PATH) {
-  const raw = readJsonFile(path);
-
-  if (raw) {
-    try {
-      const parsed = TrackerConfigSchema.parse(raw);
-      return parsed;
-    } catch (err) {
-      if (err instanceof z.ZodError) {
-        console.error(
-          "readTrackerConfigFile(): Error trying to read tracker config file:",
-          err.issues
-        );
-      } else console.error(getErrorMsg(err));
-    }
-  }
-
-  return null;
+  return parseTrackerConfig(readJsonFile(path));
 }
 
 export function writeTrackerConfigFile(
@@ -172,28 +152,33 @@ export function openUserProvidedTrackerFile() {
 }
 
 export function saveTrackerFileAs() {
-  const mainWindow = getMainWindow();
-  const config = getTrackerState();
+  // async handle tracker state received from renderer
+  getTrackerStateFromRenderer((state, err) => {
+    if (!err && state) {
+      setTrackerState(state);
+      const mainWindow = getMainWindow();
 
-  if (!config) {
-    dialog.showErrorBox(
-      "Cannot Save Tracker File",
-      "There is currently no tracker state to save."
-    );
-    console.error("saveTrackerFile(): tracker state is null");
-  } else if (mainWindow) {
-    dialog
-      .showSaveDialog(mainWindow, {
-        filters: [{ name: "JSON files", extensions: ["json"] }],
-        properties: ["showOverwriteConfirmation"],
-      })
-      .then((value) => {
-        if (!value.canceled) {
-          writeTrackerConfigFile(config, value.filePath);
-        }
-      })
-      .catch((err) => {
-        console.error(getErrorMsg(err));
-      });
-  }
+      if (mainWindow) {
+        dialog
+          .showSaveDialog(mainWindow, {
+            filters: [{ name: "JSON files", extensions: ["json"] }],
+            properties: ["showOverwriteConfirmation"],
+          })
+          .then((value) => {
+            if (!value.canceled) {
+              writeTrackerConfigFile(state, value.filePath);
+            }
+          })
+          .catch((err) => {
+            console.error(getErrorMsg(err));
+          });
+      }
+    } else {
+      dialog.showErrorBox(
+        "Cannot Save Tracker File",
+        "There is currently no tracker state to save."
+      );
+      console.error("saveTrackerFile(): there is no tracker state to save");
+    }
+  });
 }
