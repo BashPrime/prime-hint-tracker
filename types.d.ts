@@ -1,8 +1,14 @@
 interface Window {
   electronApi: {
     onResetTracker: (callback: () => void) => void;
-    onSetFeaturalHints: (callback: (checked: boolean) => void) => void;
-    onRequestAppState: (callback: (action: string) => void) => void;
+    setLegacyHintsEnabled: (callback: (checked: boolean) => void) => void;
+    onRequestRendererState: (callback: (action: string) => void) => void;
+    rendererTrackerState: (state: object) => void;
     resetSize: (game: string, isLegacyHints: boolean) => void;
+    requestMainState: () => void;
+    loadTrackerSession: (
+      callback: (config: object, legacyHintsEnabled: boolean) => void
+    ) => void;
+    setKeybearerRooms: (callback: (value: string) => void) => void;
   };
 }

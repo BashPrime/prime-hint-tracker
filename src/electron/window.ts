@@ -1,18 +1,27 @@
-import { BrowserWindow, ipcMain, Menu } from "electron";
+import { BrowserWindow, Menu } from "electron";
 import { menu } from "./menu.js";
-import { START_HEIGHT, START_WIDTH } from "./constants.js";
 import { getPreloadPath } from "./pathResolver.js";
-import { getDefaultWindowSize, isDev } from "./util.js";
+import { isDev } from "./util.js";
+import {
+  getTrackerState,
+  handleSaveAppConfig,
+  setTrackerState,
+  writeTrackerConfigFile,
+} from "./config.js";
+import { WINDOW_SIZE } from "./data.js";
+import { AppConfig } from "../shared/types.js";
 
-let mainWindow: BrowserWindow;
+let mainWindow: BrowserWindow | null = null;
 
-export function create() {
+export function createMainWindow(config: AppConfig | null) {
   mainWindow = new BrowserWindow({
     title: "Metroid Prime Hint Tracker",
-    width: START_WIDTH,
-    height: START_HEIGHT,
-    minWidth: 300,
-    minHeight: 300,
+    width: config?.window.width ?? WINDOW_SIZE.default.width,
+    height: config?.window.height ?? WINDOW_SIZE.default.height,
+    x: config?.window.x ?? undefined,
+    y: config?.window.y ?? undefined,
+    minWidth: 640,
+    minHeight: 480,
     webPreferences: {
       devTools: isDev(),
       preload: getPreloadPath(),
@@ -20,17 +29,41 @@ export function create() {
   });
 
   Menu.setApplicationMenu(menu);
+  mainWindowHandlers(mainWindow);
+
   return mainWindow;
 }
 
-export function get() {
+export function getMainWindow() {
   return mainWindow;
 }
 
-ipcMain.handle("reset-size", (_, game: string, isLegacyHints: boolean) => {
-  const mainWindow = get();
-  const windowSize = getDefaultWindowSize(game, isLegacyHints);
-  if (windowSize && mainWindow) {
-    mainWindow.setSize(windowSize.width, windowSize.height);
-  }
-});
+export function clearMainWindow() {
+  mainWindow = null;
+  return mainWindow;
+}
+
+export function closeMainWindow() {
+  mainWindow?.close();
+}
+
+function mainWindowHandlers(window: BrowserWindow) {
+  window.on("resized", () => {
+    handleSaveAppConfig();
+  });
+
+  window.on("moved", () => {
+    handleSaveAppConfig();
+  });
+
+  window.on("close", (event) => {
+    const state = getTrackerState();
+
+    if (state) {
+      event.preventDefault();
+      writeTrackerConfigFile(state);
+      setTrackerState(null);
+      window.close();
+    }
+  });
+}

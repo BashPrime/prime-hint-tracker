@@ -1,36 +1,94 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
-import { get } from "./window.js";
+import { getMainWindow } from "./window.js";
 import { isDev } from "./util.js";
+import {
+  handleSaveAppConfig,
+  openUserProvidedTrackerFile,
+  saveTrackerFileAs,
+} from "./config.js";
+import { MENU_IDS } from "./data.js";
+import {
+  requestRendererState,
+  resetTracker,
+  setKeybearerRoomLabels,
+  setLegacyHintsEnabled,
+} from "./ipc.js";
+import { KeybearerRoom, KeybearerRoomsSchema } from "../shared/types.js";
 
-function requestAppState(action: string) {
-  const window = get();
-  window.webContents.send("request-app-state", action);
+function toggleAlwaysOnTop(checked: boolean) {
+  const window = getMainWindow();
+  window?.setAlwaysOnTop(checked);
+  handleSaveAppConfig();
 }
 
-function resetTracker() {
-  const window = get();
-  window.webContents.send("reset-tracker");
+function toggleLegacyHints(checked: boolean) {
+  setLegacyHintsEnabled(checked);
+  handleSaveAppConfig();
 }
 
-function toggleFeaturalHints(checked: boolean) {
-  const window = get();
-  window.webContents.send("set-featural-hints", checked);
+function toggleKeybearerRooms(value: KeybearerRoom) {
+  setKeybearerRoomLabels(value);
+  handleSaveAppConfig();
 }
 
 const template: MenuItemConstructorOptions[] = [
   {
     label: "Tracker",
     submenu: [
+      { label: "Reset Size", click: () => requestRendererState("reset-size") },
+      { label: "Reset Tracker", click: () => resetTracker() },
+      { type: "separator" },
+      { label: "Open", click: () => openUserProvidedTrackerFile() },
+      { label: "Save As...", click: () => saveTrackerFileAs() },
+    ],
+  },
+  {
+    label: "Toggles",
+    submenu: [
       {
-        label: "Use Legacy Hints",
+        id: MENU_IDS.alwaysOnTop,
+        label: "Always on Top",
         type: "checkbox",
-        checked: true,
+        checked: false,
+        click: (item) => toggleAlwaysOnTop(item.checked),
+      },
+      {
+        id: MENU_IDS.legacyHintsEnabled,
+        label: "Legacy Hints",
+        type: "checkbox",
+        checked: false,
         click: (item) => {
-          toggleFeaturalHints(item.checked);
+          toggleLegacyHints(item.checked);
         },
       },
-      { label: "Reset Size", click: () => requestAppState("reset-size") },
-      { label: "Reset Tracker", click: () => resetTracker() },
+      {
+        label: "Prime 2 Keybearer Room Labels",
+        submenu: [
+          {
+            id: MENU_IDS.keybearerRoomLabels.both,
+            label: "Both",
+            type: "radio",
+            checked: true,
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.Values.both),
+          },
+          {
+            id: MENU_IDS.keybearerRoomLabels.aether,
+            label: "Aether only",
+            type: "radio",
+            checked: false,
+            click: () =>
+              toggleKeybearerRooms(KeybearerRoomsSchema.Values.aether),
+          },
+          {
+            id: MENU_IDS.keybearerRoomLabels.darkAether,
+            label: "Dark Aether only",
+            type: "radio",
+            checked: false,
+            click: () =>
+              toggleKeybearerRooms(KeybearerRoomsSchema.Values.darkAether),
+          },
+        ],
+      },
     ],
   },
   isDev()

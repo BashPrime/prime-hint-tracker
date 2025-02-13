@@ -11,6 +11,7 @@ import {
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { legacyHintsEnabledState } from "@/states/App.states";
+import { keybearerRoomsState } from "@/states/Prime2.states";
 import { KeybearerHint } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -29,6 +30,7 @@ type HintProps = {
 function Hint({ hint, onUpdate, className }: HintProps) {
   // !STATE
   const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
+  const keybearerRooms = useAtomValue(keybearerRoomsState);
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
@@ -67,10 +69,23 @@ function Hint({ hint, onUpdate, className }: HintProps) {
             "flex flex-col gap-0.5 uppercase font-bold text-xs tracking-wide select-none"
           )}
         >
-          <p className={cn("text-[#4fa0ff]", hint.checked && "text-green-400")}>
-            {hint.lightWorldLocation}
-          </p>
-          <p className={cn("text-violet-400", hint.checked && "text-indigo-200")}>{hint.darkWorldLocation}</p>
+          {(keybearerRooms === "aether" || keybearerRooms === "both") && (
+            <p
+              className={cn("text-[#4fa0ff]", hint.checked && "text-green-400")}
+            >
+              {hint.lightWorldLocation}
+            </p>
+          )}
+          {(keybearerRooms === "darkAether" || keybearerRooms === "both") && (
+            <p
+              className={cn(
+                "text-violet-400",
+                hint.checked && "text-indigo-200"
+              )}
+            >
+              {hint.darkWorldLocation}
+            </p>
+          )}
         </div>
         <Check
           className={cn(
