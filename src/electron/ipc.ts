@@ -1,4 +1,4 @@
-import { ipcMain } from "electron";
+import { dialog, ipcMain } from "electron";
 import { IPC_IDS, MENU_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
 import { Action, KeybearerRoom, TrackerConfig } from "../shared/types.js";
@@ -21,8 +21,24 @@ export function loadTrackerSession(config: TrackerConfig | null) {
 }
 
 export function resetTracker() {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.resetTracker);
+  const mainWindow = getMainWindow();
+  const cancelId = 0;
+  if (mainWindow) {
+    dialog
+      .showMessageBox(mainWindow, {
+        title: "Confirm Reset",
+        message:
+          "This will reset the entire tracker. ALL PROGRESS WILL BE LOST.\n\nDo you want to continue?",
+        type: "warning",
+        buttons: ["Cancel", "Yes"],
+        cancelId,
+      })
+      .then((value) => {
+        if (value.response !== cancelId) {
+          mainWindow?.webContents.send(IPC_IDS.resetTracker);
+        }
+      });
+  }
 }
 
 export function setLegacyHintsEnabled(enabled: boolean) {
@@ -32,7 +48,7 @@ export function setLegacyHintsEnabled(enabled: boolean) {
 
 export function setKeybearerRooms(value: KeybearerRoom) {
   const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setKeybearerRooms, value)
+  window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
 }
 
 export function handleRendererInitialization() {
