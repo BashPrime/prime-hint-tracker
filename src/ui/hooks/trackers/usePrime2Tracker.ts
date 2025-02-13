@@ -1,6 +1,5 @@
 import {
   agonHintsState,
-  echoesTrackerSelector,
   sanctuaryHintsState,
   skyTempleKeyHintsState,
   templeGroundsHintsState,
@@ -8,45 +7,56 @@ import {
   unhintedItemsState,
 } from "@/states/Prime2.states";
 import { RegionHintsSchema } from "@/types/Prime2.types";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useSetAtom } from "jotai";
+import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
 
-export default function useEchoesTracker() {
+export default function usePrime2Tracker() {
   // !STATE
-  const echoesTracker = useAtomValue(echoesTrackerSelector);
   const setTempleHints = useSetAtom(templeGroundsHintsState);
   const setAgonHints = useSetAtom(agonHintsState);
   const setTorvusHints = useSetAtom(torvusHintsState);
   const setSancHints = useSetAtom(sanctuaryHintsState);
   const setUnhintedItems = useSetAtom(unhintedItemsState);
   const setStkHints = useSetAtom(skyTempleKeyHintsState);
+  const resetUnhinted = useResetAtom(unhintedItemsState);
+  const resetStkHints = useResetAtom(skyTempleKeyHintsState);
+  const resetTempleGroundsHints = useResetAtom(templeGroundsHintsState);
+  const resetAgonHints = useResetAtom(agonHintsState);
+  const resetTorvusHints = useResetAtom(torvusHintsState);
+  const resetSanctuaryHints = useResetAtom(sanctuaryHintsState);
 
   // !FUNCTION
-  function load(data: typeof echoesTracker) {
+  function set(data: any) {
     try {
       // Load regional hints
       setTempleHints(RegionHintsSchema.parse(data.regions.temple));
       setAgonHints(RegionHintsSchema.parse(data.regions.agon));
       setTorvusHints(RegionHintsSchema.parse(data.regions.torvus));
       setSancHints(RegionHintsSchema.parse(data.regions.sanctuary));
-      // setUnhintedItems(z.array(UnhintedItemSchema).parse(data.unhintedItems));
       setUnhintedItems(data.unhintedItems);
-      // setStkHints(z.array(SkyTempleKeyHintSchema).parse(data.skyTempleKeys));
       setStkHints(data.skyTempleKeys);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        alert("Error trying to load Echoes tracker session");
-        console.error(err.issues);
-      }
+        console.error(
+          "Error trying to load Echoes tracker session:",
+          err.issues
+        );
+      } else console.error(String(err));
     }
   }
 
-  function save() {
-    return echoesTracker;
+  function reset() {
+    resetUnhinted();
+    resetStkHints();
+    resetTempleGroundsHints();
+    resetAgonHints();
+    resetTorvusHints();
+    resetSanctuaryHints();
   }
 
   return {
-    load,
-    save,
+    set,
+    reset,
   };
 }

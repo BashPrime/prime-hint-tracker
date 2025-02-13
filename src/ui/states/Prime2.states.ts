@@ -213,7 +213,7 @@ export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
   SkyTempleKeyHintSchema.parse({ id: 9, name: "Key 9" }),
 ]);
 
-export const echoesTrackerSelector = atom((get) => {
+export const prime2TrackerSelector = atom((get) => {
   const templeHints = get(templeGroundsHintsState);
   const agonHints = get(agonHintsState);
   const torvusHints = get(torvusHintsState);

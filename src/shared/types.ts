@@ -4,7 +4,7 @@ import { Rectangle } from "electron";
 export const GameSchema = z.enum(["prime", "echoes", "corruption"]);
 export type Game = z.infer<typeof GameSchema>;
 
-export const ActionSchema = z.enum(["reset-size"]);
+export const ActionSchema = z.enum(["reset-size", "tracker"]);
 export type Action = z.infer<typeof ActionSchema>;
 
 export const TrackerConfigSchema = z.object({

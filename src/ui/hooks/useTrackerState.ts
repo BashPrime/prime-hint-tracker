@@ -1,28 +1,56 @@
-import { Game } from "../../shared/types";
-import useEchoesTracker from "./prime2/useEchoesTracker";
+import {
+  appSessionLoadedState,
+  selectedGameState,
+  trackerStateSelector,
+} from "@/states/App.states";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useGameTrackerHandler } from "./useGameTrackerHandler";
+import { TrackerConfigSchema } from "../../shared/types";
+import { z } from "zod";
+import { useEffect } from "react";
 
-export function useTrackerState() {
+export default function useTrackerState() {
+  // !STATE
+  const trackerState = useAtomValue(trackerStateSelector);
+  const appSessionLoaded = useAtomValue(appSessionLoadedState);
+  const setGame = useSetAtom(selectedGameState);
+
   // !HOOKS
-  const echoesTracker = useEchoesTracker();
-  // !FUNCTION
-  function save(game: Game) {
-    switch (game) {
-      case "echoes":
-        return echoesTracker.save();
+  // Automatically save tracker state (send to main process) when it changes
+  useEffect(() => {
+    if (appSessionLoaded) {
+      window.electronApi.saveTrackerSession(trackerState);
+    }
+  }, [trackerState, appSessionLoaded]);
+
+  // !TRACKER HOOKS
+  const gameTrackerHandler = useGameTrackerHandler();
+
+  // !FUNCTIONS
+  function get() {
+    return trackerState;
+  }
+
+  function set(config: object) {
+    try {
+      const parsed = TrackerConfigSchema.parse(config);
+      setGame(parsed.game);
+      gameTrackerHandler.setTracker(parsed.tracker);
+    } catch (err) {
+      if (err instanceof z.ZodError) {
+        alert("Error occurred while trying to load app session");
+        console.error(err.issues);
+      } else console.error(String(err));
     }
   }
 
-  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
-  function load(game: string, data: any) {
-    switch (game) {
-      case "echoes":
-        echoesTracker.load(data);
-        break;
-    }
+  function reset() {
+    gameTrackerHandler.resetTracker();
   }
 
   return {
-    save,
-    load,
+    get,
+    set,
+    reset,
   };
 }

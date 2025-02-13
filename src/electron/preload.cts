@@ -13,6 +13,7 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.on("request-renderer-state", (_, action: string) =>
       callback(action)
     ),
+  rendererTrackerState: (config: object) => ipcRenderer.invoke("renderer-tracker-state"),
   resetSize: (game: string, isLegacyHints: boolean) =>
     ipcRenderer.invoke("reset-size", game, isLegacyHints),
   requestMainState: () => ipcRenderer.invoke("request-main-state"),

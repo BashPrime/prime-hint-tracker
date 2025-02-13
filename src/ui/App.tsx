@@ -1,6 +1,5 @@
 import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
-import useResetTracker from "./hooks/useResetTracker";
 import { useEffect } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import {
@@ -11,13 +10,13 @@ import {
 } from "./states/App.states";
 import { ActionSchema } from "../shared/types";
 import { z } from "zod";
-import useAppConfig from "./hooks/useAppConfig";
+import useTrackerState from "./hooks/useTrackerState";
 import { LoadingSpinner } from "./components/ui/loading-spinner";
 import { cn } from "./lib/utils";
 
 export default function App() {
   // !STATE
-  const selectedGame = useAtomValue(selectedGameState);
+  const currentGame = useAtomValue(selectedGameState);
   const [legacyHintsEnabled, setLegacyHintsEnabled] = useAtom(
     legacyHintsEnabledState
   );
@@ -27,33 +26,38 @@ export default function App() {
   const [appLoadingMsg, setAppLoadingMsg] = useAtom(appLoadingMsgAtom);
 
   // !HOOKS
-  const appConfig = useAppConfig();
-  const resetTracker = useResetTracker();
+  const trackerState = useTrackerState();
 
   // On load, get state from main process
   useEffect(() => {
     window.electronApi.requestMainState();
   }, []);
 
+  // !IPC HANDLERS
   useEffect(() => {
     window.electronApi.onResetTracker(() => {
-      setAppLoadingMsg("Resetting the tracker...")
+      setAppLoadingMsg("Resetting the tracker...");
       setAppSessionLoaded(false);
-      resetTracker();
+      trackerState.reset();
       setTimeout(() => {
         setAppSessionLoaded(true);
       }, 1);
     });
+
     window.electronApi.setLegacyHintsEnabled((checked) =>
       setLegacyHintsEnabled(checked)
     );
+
     window.electronApi.onRequestRendererState((action) => {
       try {
         const parsedAction = ActionSchema.parse(action);
 
         switch (parsedAction) {
           case "reset-size":
-            window.electronApi.resetSize(selectedGame, legacyHintsEnabled);
+            window.electronApi.resetSize(currentGame, legacyHintsEnabled);
+            break;
+          case "tracker":
+            window.electronApi.rendererTrackerState(trackerState.get());
             break;
         }
       } catch (err) {
@@ -63,24 +67,24 @@ export default function App() {
         }
       }
     });
+
     window.electronApi.loadTrackerSession((config) => {
       setAppLoadingMsg("Loading tracker session...");
       setAppSessionLoaded(false);
       if (config) {
-        appConfig.load(config);
+        trackerState.set(config);
       }
       setTimeout(() => {
         setAppSessionLoaded(true);
       }, 1);
     });
   }, [
-    resetTracker,
-    selectedGame,
+    currentGame,
     legacyHintsEnabled,
+    trackerState,
     setLegacyHintsEnabled,
-    appConfig,
     setAppSessionLoaded,
-    setAppLoadingMsg
+    setAppLoadingMsg,
   ]);
 
   return (
