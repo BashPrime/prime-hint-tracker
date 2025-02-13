@@ -3,7 +3,7 @@ import { IPC_IDS, MENU_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
 import { Action, TrackerConfig } from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
-import { readTrackerConfigFile } from "./config.js";
+import { readTrackerConfigFile, setTrackerState } from "./config.js";
 import { menu } from "./menu.js";
 
 export function requestRendererState(action: Action) {
@@ -14,6 +14,7 @@ export function requestRendererState(action: Action) {
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = getMainWindow();
   if (mainWindow) {
+    setTrackerState(config);
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
 }
@@ -28,28 +29,14 @@ export function setLegacyHintsEnabled(enabled: boolean) {
   window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, enabled);
 }
 
-export function getTrackerStateFromRenderer(
-  callback: (state: TrackerConfig | null, err: Error | null) => void
-) {
-  // handle receive from the renderer
-  ipcMain.handleOnce(IPC_IDS.rendererTrackerState, (_, state: object) => {
-    const parsed = parseTrackerConfig(state);
-
-    if (parsed) {
-      callback(parsed, null);
-    } else {
-      callback(null, new Error("Cannot parse config object"));
-    }
-  });
-
-  // Request the renderer state from the renderer
-  requestRendererState("tracker");
-}
-
 export function handleRendererInitialization() {
   ipcMain.handle(IPC_IDS.requestMainState, () => {
     const mainWindow = getMainWindow();
     const trackerConfig = readTrackerConfigFile();
+
+    if (trackerConfig) {
+      setTrackerState(trackerConfig);
+    }
 
     // Send tracker and toggle data to renderer
     loadTrackerSession(trackerConfig);
@@ -71,4 +58,12 @@ export function handleResetSize() {
       }
     }
   );
+}
+
+export function handleRendererTrackerStateUpdates() {
+  // handle receive from the renderer
+  ipcMain.handle(IPC_IDS.rendererTrackerState, (_, state: object) => {
+    const parsed = parseTrackerConfig(state);
+    setTrackerState(parsed);
+  });
 }

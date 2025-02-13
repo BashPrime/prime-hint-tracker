@@ -1,11 +1,10 @@
-import { app, BrowserWindow, Menu } from "electron";
+import { BrowserWindow, Menu } from "electron";
 import { menu } from "./menu.js";
 import { getPreloadPath } from "./pathResolver.js";
 import { isDev } from "./util.js";
-import { handleSaveAppConfig, writeTrackerConfigFile } from "./config.js";
+import { handleSaveAppConfig } from "./config.js";
 import { WINDOW_SIZE } from "./data.js";
 import { AppConfig } from "../shared/types.js";
-import { getTrackerStateFromRenderer } from "./ipc.js";
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -46,16 +45,5 @@ function mainWindowHandlers(window: BrowserWindow) {
 
   window.on("moved", () => {
     handleSaveAppConfig();
-  });
-
-  window.on("close", (event) => {
-    event.preventDefault();
-    getTrackerStateFromRenderer((state, err) => {
-      if (!err && state) {
-        writeTrackerConfigFile(state);
-      }
-
-      app.quit();
-    });
   });
 }
