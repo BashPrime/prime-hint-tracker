@@ -38,8 +38,7 @@ export default function useTrackerState() {
       gameTrackerHandler.setTracker(parsed.tracker);
     } catch (err) {
       if (err instanceof z.ZodError) {
-        alert("Error occurred while trying to load app session");
-        console.error(err.issues);
+        console.error("Error occurred while trying to set tracker", err.issues);
       } else console.error(String(err));
     }
   }

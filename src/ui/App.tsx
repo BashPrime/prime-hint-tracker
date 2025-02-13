@@ -62,8 +62,7 @@ export default function App() {
         }
       } catch (err) {
         if (err instanceof z.ZodError) {
-          alert(`Error trying to parse action: ${action}`);
-          console.error(err.issues);
+          console.error("Error trying to parse action:", action, err.issues);
         }
       }
     });
