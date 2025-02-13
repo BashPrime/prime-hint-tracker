@@ -12,7 +12,7 @@ A hint tracker for Metroid Prime 2: Echoes Randomizer which helps organize the h
 
 ## Installation
 
-If you're looking to download and use the tracker, check out the to the [latest release](https://github.com/BashPrime/prime-hint-tracker/releases/latest).
+If you're looking to download and use the tracker, check out the [latest release](https://github.com/BashPrime/prime-hint-tracker/releases/latest).
 
 ## Build from Source
 
@@ -26,19 +26,23 @@ corepack enable pnpm
 
 ### Instructions
 
-Install the project dependencies.
+#### Install the project dependencies
 
 ```bash
 pnpm install
 ```
 
-Run the tracker in development mode:
+#### Run the tracker in development mode
 
 ```bash
 pnpm run dev
 ```
 
-Build an executable of the tracker:
+#### VS Code Debugging
+
+This project is configured for use with the VS Code debugger. You can launch the debugger by pressing F5.
+
+#### Build an executable of the tracker
 
 **NOTE**: You need to be using the operating system you intend to build for.
 
