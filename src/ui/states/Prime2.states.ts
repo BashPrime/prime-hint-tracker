@@ -9,6 +9,7 @@ import {
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
+import { KeybearerRoom as KeybearerRooms } from "src/shared/types";
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
@@ -226,9 +227,11 @@ export const prime2TrackerSelector = atom((get) => {
       temple: templeHints,
       agon: agonHints,
       torvus: torvusHints,
-      sanctuary: sanctuaryHints
+      sanctuary: sanctuaryHints,
     },
     unhintedItems,
-    skyTempleKeys
-  }  
+    skyTempleKeys,
+  };
 });
+
+export const keybearerRoomsState = atom<KeybearerRooms>("both");

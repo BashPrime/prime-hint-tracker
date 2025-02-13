@@ -21,3 +21,7 @@ export const AppConfigSchema = z.object({
   window: z.custom<Rectangle>(),
 });
 export type AppConfig = z.infer<typeof AppConfigSchema>;
+
+export const KeybearerRoomsSchema = z.enum(["aether", "darkAether", "both"]);
+export type KeybearerRoom = z.infer<typeof KeybearerRoomsSchema>;
+

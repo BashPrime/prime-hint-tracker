@@ -1,7 +1,7 @@
 import { ipcMain } from "electron";
 import { IPC_IDS, MENU_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
-import { Action, TrackerConfig } from "../shared/types.js";
+import { Action, KeybearerRoom, TrackerConfig } from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
 import { readTrackerConfigFile, setTrackerState } from "./config.js";
 import { menu } from "./menu.js";
@@ -14,7 +14,7 @@ export function requestRendererState(action: Action) {
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = getMainWindow();
   setTrackerState(config);
-  
+
   if (mainWindow) {
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
@@ -28,6 +28,11 @@ export function resetTracker() {
 export function setLegacyHintsEnabled(enabled: boolean) {
   const window = getMainWindow();
   window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, enabled);
+}
+
+export function setKeybearerRooms(value: KeybearerRoom) {
+  const window = getMainWindow();
+  window?.webContents.send(IPC_IDS.setKeybearerRooms, value)
 }
 
 export function handleRendererInitialization() {

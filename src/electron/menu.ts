@@ -1,9 +1,19 @@
 import { app, Menu, MenuItemConstructorOptions } from "electron";
 import { getMainWindow } from "./window.js";
 import { isDev } from "./util.js";
-import { handleSaveAppConfig, openUserProvidedTrackerFile, saveTrackerFileAs } from "./config.js";
+import {
+  handleSaveAppConfig,
+  openUserProvidedTrackerFile,
+  saveTrackerFileAs,
+} from "./config.js";
 import { MENU_IDS } from "./data.js";
-import { requestRendererState, resetTracker, setLegacyHintsEnabled } from "./ipc.js";
+import {
+  requestRendererState,
+  resetTracker,
+  setKeybearerRooms,
+  setLegacyHintsEnabled,
+} from "./ipc.js";
+import { KeybearerRoom, KeybearerRoomsSchema } from "../shared/types.js";
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
@@ -14,6 +24,10 @@ function toggleAlwaysOnTop(checked: boolean) {
 function toggleLegacyHints(checked: boolean) {
   setLegacyHintsEnabled(checked);
   handleSaveAppConfig();
+}
+
+function toggleKeybearerRooms(value: KeybearerRoom) {
+  setKeybearerRooms(value);
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -45,6 +59,31 @@ const template: MenuItemConstructorOptions[] = [
         click: (item) => {
           toggleLegacyHints(item.checked);
         },
+      },
+      {
+        label: "Prime 2 Keybearer Labels",
+        submenu: [
+          {
+            label: "Aether",
+            type: "radio",
+            checked: false,
+            click: () =>
+              toggleKeybearerRooms(KeybearerRoomsSchema.Values.aether),
+          },
+          {
+            label: "Dark Aether",
+            type: "radio",
+            checked: false,
+            click: () =>
+              toggleKeybearerRooms(KeybearerRoomsSchema.Values.darkAether),
+          },
+          {
+            label: "Both",
+            type: "radio",
+            checked: true,
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.Values.both),
+          },
+        ],
       },
     ],
   },

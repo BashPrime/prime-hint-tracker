@@ -9,5 +9,6 @@ interface Window {
     loadTrackerSession: (
       callback: (config: object, legacyHintsEnabled: boolean) => void
     ) => void;
+    setKeybearerRooms: (callback: (value: string) => void) => void;
   };
 }

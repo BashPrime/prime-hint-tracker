@@ -26,4 +26,8 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
       (_, config: object, legacyHintsEnabled: boolean) =>
         callback(config, legacyHintsEnabled)
     ),
+  setKeybearerRooms: (callback: (value: string) => void) =>
+    ipcRenderer.on("set-keybearer-rooms", (_, value: string) =>
+      callback(value)
+    ),
 });

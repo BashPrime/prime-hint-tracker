@@ -1,18 +1,19 @@
 import "./App.css";
 import LayoutSelector from "./views/LayoutSelector";
 import { useEffect } from "react";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   appLoadingMsgAtom,
   appSessionLoadedState,
   legacyHintsEnabledState,
   selectedGameState,
 } from "./states/App.states";
-import { ActionSchema } from "../shared/types";
+import { ActionSchema, KeybearerRoomsSchema } from "../shared/types";
 import { z } from "zod";
 import useTrackerState from "./hooks/useTrackerState";
 import { LoadingSpinner } from "./components/ui/loading-spinner";
 import { cn } from "./lib/utils";
+import { keybearerRoomsState } from "./states/Prime2.states";
 
 export default function App() {
   // !STATE
@@ -24,6 +25,7 @@ export default function App() {
     appSessionLoadedState
   );
   const [appLoadingMsg, setAppLoadingMsg] = useAtom(appLoadingMsgAtom);
+  const setKeybearerRooms = useSetAtom(keybearerRoomsState);
 
   // !HOOKS
   const trackerState = useTrackerState();
@@ -77,10 +79,22 @@ export default function App() {
         setAppSessionLoaded(true);
       }, 1);
     });
+
+    window.electronApi.setKeybearerRooms((value) => {
+      try {
+        const parsed = KeybearerRoomsSchema.parse(value);
+        setKeybearerRooms(parsed);
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          console.error("cannot parse keybearer room:", err.issues);
+        } else console.error(String(err));
+      }
+    });
   }, [
     currentGame,
     legacyHintsEnabled,
     trackerState,
+    setKeybearerRooms,
     setLegacyHintsEnabled,
     setAppSessionLoaded,
     setAppLoadingMsg,

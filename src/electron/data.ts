@@ -11,6 +11,7 @@ export const IPC_IDS = {
   setLegacyHintsEnabled: "set-legacy-hints-enabled",
   resetSize: "reset-size",
   loadTrackerSession: "load-tracker-session",
+  setKeybearerRooms: "set-keybearer-rooms",
 };
 
 type WindowSize = {
