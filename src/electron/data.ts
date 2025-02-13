@@ -1,6 +1,11 @@
 export const MENU_IDS = {
   alwaysOnTop: "alwaysOnTop",
   legacyHintsEnabled: "legacyHintsEnabled",
+  keybearerRoomLabels: {
+    aether: "aether",
+    darkAether: "darkAether",
+    both: "both",
+  },
 };
 
 export const IPC_IDS = {

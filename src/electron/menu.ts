@@ -10,7 +10,7 @@ import { MENU_IDS } from "./data.js";
 import {
   requestRendererState,
   resetTracker,
-  setKeybearerRooms,
+  setKeybearerRoomLabels,
   setLegacyHintsEnabled,
 } from "./ipc.js";
 import { KeybearerRoom, KeybearerRoomsSchema } from "../shared/types.js";
@@ -27,7 +27,8 @@ function toggleLegacyHints(checked: boolean) {
 }
 
 function toggleKeybearerRooms(value: KeybearerRoom) {
-  setKeybearerRooms(value);
+  setKeybearerRoomLabels(value);
+  handleSaveAppConfig();
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -61,27 +62,30 @@ const template: MenuItemConstructorOptions[] = [
         },
       },
       {
-        label: "Prime 2 Keybearer Labels",
+        label: "Prime 2 Keybearer Room Labels",
         submenu: [
           {
-            label: "Aether",
+            id: MENU_IDS.keybearerRoomLabels.both,
+            label: "Both",
+            type: "radio",
+            checked: true,
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.Values.both),
+          },
+          {
+            id: MENU_IDS.keybearerRoomLabels.aether,
+            label: "Aether only",
             type: "radio",
             checked: false,
             click: () =>
               toggleKeybearerRooms(KeybearerRoomsSchema.Values.aether),
           },
           {
-            label: "Dark Aether",
+            id: MENU_IDS.keybearerRoomLabels.darkAether,
+            label: "Dark Aether only",
             type: "radio",
             checked: false,
             click: () =>
               toggleKeybearerRooms(KeybearerRoomsSchema.Values.darkAether),
-          },
-          {
-            label: "Both",
-            type: "radio",
-            checked: true,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.Values.both),
           },
         ],
       },

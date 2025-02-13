@@ -54,5 +54,6 @@ function setToggle(id: string, checked: boolean) {
 function setToggles(toggles: AppConfig["toggles"], window: BrowserWindow) {
   setToggle(MENU_IDS.alwaysOnTop, toggles.alwaysOnTop);
   setToggle(MENU_IDS.legacyHintsEnabled, toggles.legacyHintsEnabled);
+  setToggle(toggles.keybearerRoomLabels, true);
   window.setAlwaysOnTop(toggles.alwaysOnTop);
 }

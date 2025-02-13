@@ -2,12 +2,17 @@ import { app, dialog } from "electron";
 import path from "path";
 import fs from "fs";
 import { getMainWindow } from "./window.js";
-import { AppConfig, AppConfigSchema, TrackerConfig } from "../shared/types.js";
+import {
+  AppConfig,
+  AppConfigSchema,
+  KeybearerRoomsSchema,
+  TrackerConfig,
+} from "../shared/types.js";
 import { z } from "zod";
 import { menu } from "./menu.js";
 import { getErrorMsg, parseTrackerConfig } from "./util.js";
 import { MENU_IDS } from "./data.js";
-import { loadTrackerSession } from "./ipc.js";
+import { loadTrackerSession, setLegacyHintsEnabled } from "./ipc.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
@@ -80,17 +85,36 @@ export function writeAppConfigFile(config: AppConfig) {
   writeJsonFile(APP_CONFIG_PATH, json);
 }
 
+function getTogglesState(): AppConfig["toggles"] {
+  function getKeybearerRoomsValue() {
+    if (menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.aether)?.checked) {
+      return KeybearerRoomsSchema.Values.aether;
+    }
+
+    if (
+      menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.darkAether)?.checked
+    ) {
+      return KeybearerRoomsSchema.Values.darkAether;
+    }
+
+    return KeybearerRoomsSchema.Values.both;
+  }
+
+  return {
+    alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked ?? false,
+    legacyHintsEnabled:
+      menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked ?? false,
+    keybearerRoomLabels: getKeybearerRoomsValue(),
+  };
+}
+
 export function getAppConfigState() {
   const mainWindow = getMainWindow();
 
   if (mainWindow) {
     try {
       return AppConfigSchema.parse({
-        toggles: {
-          alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked,
-          legacyHintsEnabled: menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)
-            ?.checked,
-        },
+        toggles: getTogglesState(),
         window: mainWindow.getBounds(),
       });
     } catch (err) {

@@ -1,10 +1,13 @@
 import { dialog, ipcMain } from "electron";
-import { IPC_IDS, MENU_IDS } from "./data.js";
+import { IPC_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
 import { Action, KeybearerRoom, TrackerConfig } from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
-import { readTrackerConfigFile, setTrackerState } from "./config.js";
-import { menu } from "./menu.js";
+import {
+  getAppConfigState,
+  readTrackerConfigFile,
+  setTrackerState,
+} from "./config.js";
 
 export function requestRendererState(action: Action) {
   const window = getMainWindow();
@@ -46,15 +49,15 @@ export function setLegacyHintsEnabled(enabled: boolean) {
   window?.webContents.send(IPC_IDS.setLegacyHintsEnabled, enabled);
 }
 
-export function setKeybearerRooms(value: KeybearerRoom) {
+export function setKeybearerRoomLabels(value: KeybearerRoom) {
   const window = getMainWindow();
   window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
 }
 
 export function handleRendererInitialization() {
   ipcMain.handle(IPC_IDS.requestMainState, () => {
-    const mainWindow = getMainWindow();
     const trackerConfig = readTrackerConfigFile();
+    const appConfig = getAppConfigState();
 
     if (trackerConfig) {
       setTrackerState(trackerConfig);
@@ -62,10 +65,11 @@ export function handleRendererInitialization() {
 
     // Send tracker and toggle data to renderer
     loadTrackerSession(trackerConfig);
-    mainWindow?.webContents.send(
-      IPC_IDS.setLegacyHintsEnabled,
-      menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked
-    );
+
+    if (appConfig) {
+      setLegacyHintsEnabled(appConfig.toggles.legacyHintsEnabled);
+      setKeybearerRoomLabels(appConfig.toggles.keybearerRoomLabels);
+    }
   });
 }
 
