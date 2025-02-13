@@ -52,6 +52,6 @@ export const WINDOW_SIZE: WindowSize = {
   },
   default: {
     width: 1366,
-    height: 768,
+    height: 854,
   },
 };
