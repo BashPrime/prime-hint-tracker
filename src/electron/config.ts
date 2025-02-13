@@ -49,7 +49,7 @@ function writeJsonFile(path: string, json: string) {
 
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = getMainWindow();
-  if (config && mainWindow) {
+  if (mainWindow) {
     setTrackerState(config);
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
