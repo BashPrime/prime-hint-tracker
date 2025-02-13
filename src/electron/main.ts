@@ -1,13 +1,8 @@
 import { AboutPanelOptionsOptions, app, BrowserWindow } from "electron";
 import path from "path";
 import { isDev } from "./util.js";
-import { clearMainWindow, closeMainWindow, createMainWindow, getMainWindow } from "./window.js";
-import {
-  getTrackerState,
-  readAppConfigFile,
-  setTrackerState,
-  writeTrackerConfigFile,
-} from "./config.js";
+import { createMainWindow } from "./window.js";
+import { readAppConfigFile } from "./config.js";
 import { AppConfig } from "../shared/types.js";
 import { menu } from "./menu.js";
 import { MENU_IDS } from "./data.js";
@@ -40,24 +35,6 @@ app.on("ready", () => {
 
   if (config) {
     setToggles(config.toggles, mainWindow);
-  }
-});
-
-app.on("before-quit", (event) => {
-  const state = getTrackerState();
-  const mainWindow = getMainWindow();
-
-  // Quit if cleanup done
-  if (!mainWindow) {
-    app.quit();
-  }
-
-  // Run cleanup
-  if (mainWindow && state) {
-    event.preventDefault();
-    writeTrackerConfigFile(state);
-    setTrackerState(null);
-    closeMainWindow();
   }
 });
 

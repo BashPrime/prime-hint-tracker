@@ -13,8 +13,9 @@ export function requestRendererState(action: Action) {
 
 export function loadTrackerSession(config: TrackerConfig | null) {
   const mainWindow = getMainWindow();
+  setTrackerState(config);
+  
   if (mainWindow) {
-    setTrackerState(config);
     mainWindow.webContents.send(IPC_IDS.loadTrackerSession, config);
   }
 }
