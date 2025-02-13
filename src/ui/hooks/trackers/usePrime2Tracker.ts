@@ -26,7 +26,8 @@ export default function usePrime2Tracker() {
   const resetTorvusHints = useResetAtom(torvusHintsState);
   const resetSanctuaryHints = useResetAtom(sanctuaryHintsState);
 
-  // !FUNCTION
+  // !FUNCTIONS
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   function set(data: any) {
     try {
       // Load regional hints

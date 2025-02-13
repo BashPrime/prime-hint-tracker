@@ -1,7 +1,6 @@
 import { z } from "zod";
-import { IPC_IDS, WINDOW_SIZE } from "./data.js";
+import { WINDOW_SIZE } from "./data.js";
 import { GameSchema, TrackerConfigSchema } from "../shared/types.js";
-import { getMainWindow } from "./window.js";
 
 export function isDev(): boolean {
   return process.env.NODE_ENV === "development";

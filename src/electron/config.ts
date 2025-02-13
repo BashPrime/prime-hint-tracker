@@ -12,7 +12,7 @@ import { z } from "zod";
 import { menu } from "./menu.js";
 import { getErrorMsg, parseTrackerConfig } from "./util.js";
 import { MENU_IDS } from "./data.js";
-import { loadTrackerSession, setLegacyHintsEnabled } from "./ipc.js";
+import { loadTrackerSession } from "./ipc.js";
 
 const TRACKER_CONFIG_PATH = path.join(app.getPath("userData"), "tracker.json");
 const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
