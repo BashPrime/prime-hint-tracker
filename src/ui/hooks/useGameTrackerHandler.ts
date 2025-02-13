@@ -9,14 +9,7 @@ export function useGameTrackerHandler() {
   // !HOOKS
   const prime2Tracker = usePrime2Tracker();
 
-  // !FUNCTIONS
-  function getTracker() {
-    switch (currentGame) {
-      case "echoes":
-        return prime2Tracker.get();
-    }
-  }
-  
+  // !FUNCTION
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   function setTracker(data: any) {
     switch (currentGame) {
@@ -35,7 +28,6 @@ export function useGameTrackerHandler() {
   }
 
   return {
-    getTracker,
     setTracker,
     resetTracker,
   };

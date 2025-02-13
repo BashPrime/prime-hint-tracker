@@ -1,11 +1,12 @@
-import { selectedGameState } from "@/states/App.states";
-import { useSetAtom } from "jotai";
+import { selectedGameState, trackerStateSelector } from "@/states/App.states";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useGameTrackerHandler } from "./useGameTrackerHandler";
 import { TrackerConfigSchema } from "../../shared/types";
 import { z } from "zod";
 
 export default function useTrackerState() {
   // !STATE
+  const trackerState = useAtomValue(trackerStateSelector);
   const setGame = useSetAtom(selectedGameState);
 
   // !TRACKER HOOKS
@@ -13,7 +14,7 @@ export default function useTrackerState() {
 
   // !FUNCTIONS
   function get() {
-    return gameTrackerHandler.getTracker();
+    return trackerState;
   }
 
   function set(config: object) {
