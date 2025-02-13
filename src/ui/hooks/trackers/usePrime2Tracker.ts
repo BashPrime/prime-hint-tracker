@@ -1,5 +1,6 @@
 import {
   agonHintsState,
+  prime2TrackerSelector,
   sanctuaryHintsState,
   skyTempleKeyHintsState,
   templeGroundsHintsState,
@@ -7,12 +8,13 @@ import {
   unhintedItemsState,
 } from "@/states/Prime2.states";
 import { RegionHintsSchema } from "@/types/Prime2.types";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
 
 export default function usePrime2Tracker() {
   // !STATE
+  const prime2Tracker = useAtomValue(prime2TrackerSelector);
   const setTempleHints = useSetAtom(templeGroundsHintsState);
   const setAgonHints = useSetAtom(agonHintsState);
   const setTorvusHints = useSetAtom(torvusHintsState);
@@ -26,7 +28,12 @@ export default function usePrime2Tracker() {
   const resetTorvusHints = useResetAtom(torvusHintsState);
   const resetSanctuaryHints = useResetAtom(sanctuaryHintsState);
 
-  // !FUNCTION
+  // !FUNCTIONS
+  function get() {
+    return prime2Tracker;
+  }
+
+  /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   function set(data: any) {
     try {
       // Load regional hints
@@ -56,6 +63,7 @@ export default function usePrime2Tracker() {
   }
 
   return {
+    get,
     set,
     reset,
   };
