@@ -3,8 +3,8 @@ import {
   sanctuaryHintsState,
   templeGroundsHintsState,
   torvusHintsState,
-  unhintedItemOptionsSelector,
-  unhintedLocationOptionsSelector,
+  prime2UnhintedItemOptionsSelector,
+  prime2UnhintedLocationOptionsSelector,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
@@ -14,8 +14,8 @@ import { useAtomValue } from "jotai";
 
 export default function Prime2Layout() {
   // !STATE
-  const unhintedItemOptions = useAtomValue(unhintedItemOptionsSelector);
-  const unhintedLocationOptions = useAtomValue(unhintedLocationOptionsSelector);
+  const unhintedItemOptions = useAtomValue(prime2UnhintedItemOptionsSelector);
+  const unhintedLocationOptions = useAtomValue(prime2UnhintedLocationOptionsSelector);
 
   return (
     <div

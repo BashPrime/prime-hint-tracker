@@ -243,7 +243,7 @@ export const prime2TrackerSelector = atom((get) => {
 
 export const keybearerRoomsState = atom<KeybearerRooms>("both");
 
-export const unhintedItemOptionsSelector = atom<HintOption[]>((get) => {
+export const prime2UnhintedItemOptionsSelector = atom<HintOption[]>((get) => {
   const legacyHintsEnabled = get(legacyHintsEnabledState);
   const itemFeaturalOptions = createOptions(
     [
@@ -264,6 +264,6 @@ export const unhintedItemOptionsSelector = atom<HintOption[]>((get) => {
   return legacyHintsEnabled ? itemLegacyOptions : itemFeaturalOptions;
 });
 
-export const unhintedLocationOptionsSelector = atom<HintOption[]>(
+export const prime2UnhintedLocationOptionsSelector = atom<HintOption[]>(
   createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)
 );

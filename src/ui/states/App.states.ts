@@ -5,7 +5,7 @@ import { atomWithReset } from "jotai/utils";
 import { UnhintedItem } from "@/types/common.types";
 
 export const appSessionLoadedState = atom<boolean>(false);
-export const selectedGameState = atom<Game>("echoes");
+export const selectedGameState = atom<Game>("prime");
 export const legacyHintsEnabledState = atom<boolean>(true);
 
 export const currentGameTrackerSelector = atom((get) => {

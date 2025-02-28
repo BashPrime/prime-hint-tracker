@@ -1,9 +1,4 @@
-import { z } from "zod";
+import { EndgameHint, EndgameHintSchema } from "./common.types";
 
-export const ArtifactHintSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
-});
-export type ArtifactHint = z.infer<typeof ArtifactHintSchema>;
+export const ArtifactHintSchema = EndgameHintSchema;
+export type ArtifactHint = EndgameHint;

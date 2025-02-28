@@ -1,9 +1,8 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import { PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { skyTempleKeyHintsState } from "@/states/Prime2.states";
-import { SkyTempleKeyHint } from "@/types/Prime2.types";
+import { artifactHintsState } from "@/states/Prime1.states";
+import { ArtifactHint } from "@/types/Prime1.types";
 import { useAtom } from "jotai";
 import { Check } from "lucide-react";
 
@@ -13,7 +12,7 @@ type UpdateValue = {
 };
 
 type HintProps = {
-  hint: SkyTempleKeyHint;
+  hint: ArtifactHint;
   onUpdate: (update: UpdateValue) => void;
   className?: string;
 };
@@ -29,7 +28,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       className={cn(
         "px-2 py-1 bg-zinc-800",
         className,
-        hint.checked && "bg-green-900"
+        hint.checked && "bg-yellow-900"
       )}
       onMouseDown={handleRightClick}
     >
@@ -37,15 +36,15 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         <div className="flex flex-row justify-between">
           <p
             className={cn(
-              "uppercase font-bold text-sm text-lime-400 tracking-wide select-none",
-              hint.checked && "text-green-400"
+              "uppercase font-bold text-sm text-cyan-400 tracking-wide select-none",
+              hint.checked && "text-amber-400"
             )}
           >
             {hint.name}
           </p>
           <Check
             className={cn(
-              "flex-none w-3 h-3 text-green-300",
+              "flex-none w-3 h-3 text-amber-300",
               !hint.checked && "opacity-0"
             )}
           />
@@ -56,7 +55,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
           emptyMessage="No location found."
           value={{ label: hint.location, value: hint.location }}
           onInputChange={(value) => onUpdate({ location: value })}
-          options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
+          options={createOptions([])}
           tabIndex={1}
           className="text-[13px]"
         />
@@ -71,11 +70,11 @@ type Props = {
 
 export default function ArtifactHints({ className }: Props) {
   // !JOTAI
-  const [keys, setKeys] = useAtom(skyTempleKeyHintsState);
+  const [artifacts, setArtifacts] = useAtom(artifactHintsState);
 
   // !FUNCTION
   function updateArtifact(id: number, update: UpdateValue) {
-    setKeys((prev) => {
+    setArtifacts((prev) => {
       const newKeys = [...prev];
 
       return newKeys.map((key) => {
@@ -94,8 +93,8 @@ export default function ArtifactHints({ className }: Props) {
   return (
     <div className={className} data-name="artifact-hints">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Artifacts</h2>
-      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col">
-        {keys.map((key, idx) => (
+      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-6 md:grid-cols-2 lg:grid-rows-4 lg:grid-cols-3 grid-flow-col">
+        {artifacts.map((key, idx) => (
           <Hint
             hint={key}
             onUpdate={(update) => updateArtifact(key.id, update)}
