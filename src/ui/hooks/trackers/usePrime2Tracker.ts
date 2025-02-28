@@ -1,10 +1,10 @@
+import { unhintedItemsState } from "@/states/App.states";
 import {
   agonHintsState,
   sanctuaryHintsState,
   skyTempleKeyHintsState,
   templeGroundsHintsState,
   torvusHintsState,
-  unhintedItemsState,
 } from "@/states/Prime2.states";
 import { RegionHintsSchema } from "@/types/Prime2.types";
 import { useSetAtom } from "jotai";

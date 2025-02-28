@@ -1,4 +1,5 @@
 import z from "zod";
+import { EndgameHint, EndgameHintSchema } from "./common.types";
 
 export const BossKeyHintSchema = z.object({
   id: z.number(),
@@ -43,19 +44,5 @@ export const RegionHintsSchema = z.object({
 });
 export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
-export const UnhintedItemSchema = z.object({
-  id: z.string(),
-  item: z.string().default(""),
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
-});
-
-export type UnhintedItem = z.infer<typeof UnhintedItemSchema>;
-
-export const SkyTempleKeyHintSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
-});
-export type SkyTempleKeyHint = z.infer<typeof SkyTempleKeyHintSchema>;
+export const SkyTempleKeyHintSchema = EndgameHintSchema;
+export type SkyTempleKeyHint = EndgameHint;

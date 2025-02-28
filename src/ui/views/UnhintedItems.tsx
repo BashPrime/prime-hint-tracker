@@ -1,18 +1,14 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
 import { Button } from "@/components/ui/button";
-import {
-  PRIME_2_LEGACY_MAJORS_CATEGORIES,
-  PRIME_2_LOCATIONS_WITH_ITEMS,
-  PRIME_2_MAJOR_UPGRADES,
-  PRIME_2_PICKUP_FEATURES,
-  PRIME_2_PROGRESSIVE_MAJORS,
-} from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
-import { cn, createOptions } from "@/lib/utils";
-import { legacyHintsEnabledState } from "@/states/App.states";
-import { unhintedItemsState } from "@/states/Prime2.states";
-import { UnhintedItem, UnhintedItemSchema } from "@/types/Prime2.types";
-import { useAtom, useAtomValue } from "jotai";
+import { cn } from "@/lib/utils";
+import { unhintedItemsState } from "@/states/App.states";
+import {
+  HintOption,
+  UnhintedItem,
+  UnhintedItemSchema,
+} from "@/types/common.types";
+import { useAtom } from "jotai";
 import { Check, Plus, X } from "lucide-react";
 import { useState } from "react";
 import { v4 as uuidV4 } from "uuid";
@@ -26,6 +22,8 @@ type UpdateHintValue = {
 
 type HintInputProps = {
   hint: UnhintedItem;
+  itemOptions: HintOption[];
+  locationOptions: HintOption[];
   openOnCreate: boolean;
   onUpdate: (update: UpdateHintValue) => void;
   onDelete: () => void;
@@ -34,40 +32,16 @@ type HintInputProps = {
 
 export function Hint({
   hint,
+  itemOptions,
+  locationOptions,
   openOnCreate,
   onUpdate,
   onDelete,
   className,
 }: HintInputProps) {
-  // !STATE
-  const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     onUpdate({ checked: !hint.checked })
-  );
-  // !LOCAL
-  const itemFeaturalOptions = createOptions(
-    [
-      ...PRIME_2_MAJOR_UPGRADES,
-      ...PRIME_2_PROGRESSIVE_MAJORS,
-      ...PRIME_2_PICKUP_FEATURES,
-    ],
-    true
-  );
-  const itemLegacyOptions = createOptions(
-    [
-      ...PRIME_2_MAJOR_UPGRADES,
-      ...PRIME_2_PROGRESSIVE_MAJORS,
-      ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
-    ],
-    true
-  );
-  const itemOptions = legacyHintsEnabled
-    ? itemFeaturalOptions
-    : itemLegacyOptions;
-  const locationOptions = createOptions(
-    [...PRIME_2_LOCATIONS_WITH_ITEMS],
-    true
   );
 
   return (
@@ -123,13 +97,19 @@ export function Hint({
 }
 
 type Props = {
+  itemOptions: HintOption[];
+  locationOptions: HintOption[];
   className?: string;
 };
 
-export default function UnhintedItems({ className }: Props) {
+export default function UnhintedItems({
+  itemOptions,
+  locationOptions,
+  className,
+}: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(unhintedItemsState);
-  const [newHintId, setNewHintId] = useState("")
+  const [newHintId, setNewHintId] = useState("");
 
   // !FUNCTION
   function addNewHint() {
@@ -166,11 +146,15 @@ export default function UnhintedItems({ className }: Props) {
       className={cn("flex flex-col md:flex-1", className)}
       data-name="unhinted-items"
     >
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Unhinted Items</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">
+        Unhinted Items
+      </h2>
       <div className="flex flex-col md:flex-[1_0_0] overflow-y-auto gap-2">
         {...hints.map((hint) => (
           <Hint
             hint={hint}
+            itemOptions={itemOptions}
+            locationOptions={locationOptions}
             openOnCreate={hint.id === newHintId}
             onUpdate={(value) => updateHint(hint.id, value)}
             onDelete={() => deleteHint(hint)}

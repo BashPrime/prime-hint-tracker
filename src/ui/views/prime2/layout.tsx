@@ -3,13 +3,20 @@ import {
   sanctuaryHintsState,
   templeGroundsHintsState,
   torvusHintsState,
+  unhintedItemOptionsSelector,
+  unhintedLocationOptionsSelector,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
-import UnhintedItems from "./UnhintedItems";
+import UnhintedItems from "../UnhintedItems";
 import SkyTempleKeyHints from "./SkyTempleKeyHints";
+import { useAtomValue } from "jotai";
 
 export default function Prime2Layout() {
+  // !STATE
+  const unhintedItemOptions = useAtomValue(unhintedItemOptionsSelector);
+  const unhintedLocationOptions = useAtomValue(unhintedLocationOptionsSelector);
+
   return (
     <div
       className={cn(
@@ -19,7 +26,11 @@ export default function Prime2Layout() {
     >
       <div className="flex flex-col" data-name="core-hints">
         <SkyTempleKeyHints className="border-l-2 border-lime-600" />
-        <UnhintedItems className="border-l-2 border-red-600" />
+        <UnhintedItems
+          itemOptions={unhintedItemOptions}
+          locationOptions={unhintedLocationOptions}
+          className="border-l-2 border-red-600"
+        />
       </div>
       <Region
         name="Temple Grounds"

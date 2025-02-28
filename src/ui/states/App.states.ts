@@ -2,6 +2,7 @@ import { atom } from "jotai";
 import { TrackerConfig, Game } from "../../shared/types";
 import { prime2TrackerSelector } from "./Prime2.states";
 import { atomWithReset } from "jotai/utils";
+import { UnhintedItem } from "@/types/common.types";
 
 export const appSessionLoadedState = atom<boolean>(false);
 export const selectedGameState = atom<Game>("echoes");
@@ -30,3 +31,5 @@ export const trackerStateSelector = atom<TrackerConfig>((get) => {
 });
 
 export const appLoadingMsgAtom = atomWithReset<string>("Getting Ready...");
+
+export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
