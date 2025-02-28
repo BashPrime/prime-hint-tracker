@@ -1,4 +1,5 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
+import { PRIME_1_LOCATIONS_WITH_ITEMS } from "@/data/Prime1.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { artifactHintsState } from "@/states/Prime1.states";
@@ -55,7 +56,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
           emptyMessage="No location found."
           value={{ label: hint.location, value: hint.location }}
           onInputChange={(value) => onUpdate({ location: value })}
-          options={createOptions([])}
+          options={createOptions([...PRIME_1_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}
           className="text-[13px]"
         />
