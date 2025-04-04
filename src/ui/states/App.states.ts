@@ -3,6 +3,7 @@ import { TrackerConfig, Game } from "../../shared/types";
 import { prime2TrackerSelector } from "./Prime2.states";
 import { atomWithReset } from "jotai/utils";
 import { UnhintedItem } from "@/types/common.types";
+import { prime1TrackerSelector } from "./Prime1.states";
 
 export const appSessionLoadedState = atom<boolean>(false);
 export const selectedGameState = atom<Game>("prime");
@@ -10,9 +11,12 @@ export const legacyHintsEnabledState = atom<boolean>(true);
 
 export const currentGameTrackerSelector = atom((get) => {
   const game = get(selectedGameState);
+  const prime1TrackerState = get(prime1TrackerSelector);
   const prime2TrackerState = get(prime2TrackerSelector);
 
   switch (game) {
+    case "prime":
+      return prime1TrackerState;
     case "echoes":
       return prime2TrackerState;
   }
