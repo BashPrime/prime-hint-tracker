@@ -3,7 +3,7 @@ import path from "path";
 import { isDev } from "./util.js";
 import { createMainWindow } from "./window.js";
 import { readAppConfigFile } from "./config.js";
-import { AppConfig } from "../shared/types.js";
+import { AppConfig, Game } from "../shared/types.js";
 import { menu } from "./menu.js";
 import { MENU_IDS } from "./data.js";
 import {
@@ -34,6 +34,7 @@ app.on("ready", () => {
   }
 
   if (config) {
+    setGame(config.game, mainWindow);
     setToggles(config.toggles, mainWindow);
   }
 });
@@ -56,4 +57,12 @@ function setToggles(toggles: AppConfig["toggles"], window: BrowserWindow) {
   setToggle(MENU_IDS.legacyHintsEnabled, toggles.legacyHintsEnabled);
   setToggle(toggles.keybearerRoomLabels, true);
   window.setAlwaysOnTop(toggles.alwaysOnTop);
+}
+
+function setGame(game: Game, window: BrowserWindow) {
+  const menuItem = menu.getMenuItemById(game);
+
+  if (menuItem) {
+    menuItem.checked = true;
+  }
 }

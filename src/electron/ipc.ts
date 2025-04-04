@@ -1,7 +1,7 @@
 import { dialog, ipcMain } from "electron";
 import { IPC_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
-import { Action, KeybearerRoom, TrackerConfig } from "../shared/types.js";
+import { Action, Game, KeybearerRoom, TrackerConfig } from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
 import {
   getAppConfigState,
@@ -50,6 +50,11 @@ export function setLegacyHintsEnabled(enabled: boolean) {
 }
 
 export function setKeybearerRoomLabels(value: KeybearerRoom) {
+  const window = getMainWindow();
+  window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
+}
+
+export function setGame(value: Game) {
   const window = getMainWindow();
   window?.webContents.send(IPC_IDS.setKeybearerRooms, value);
 }

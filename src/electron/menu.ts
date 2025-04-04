@@ -10,10 +10,16 @@ import { MENU_IDS } from "./data.js";
 import {
   requestRendererState,
   resetTracker,
+  setGame,
   setKeybearerRoomLabels,
   setLegacyHintsEnabled,
 } from "./ipc.js";
-import { KeybearerRoom, KeybearerRoomsSchema } from "../shared/types.js";
+import {
+  Game,
+  GameSchema,
+  KeybearerRoom,
+  KeybearerRoomsSchema,
+} from "../shared/types.js";
 
 function toggleAlwaysOnTop(checked: boolean) {
   const window = getMainWindow();
@@ -31,6 +37,11 @@ function toggleKeybearerRooms(value: KeybearerRoom) {
   handleSaveAppConfig();
 }
 
+function toggleGame(game: Game) {
+  setGame(game);
+  handleSaveAppConfig();
+}
+
 const template: MenuItemConstructorOptions[] = [
   {
     label: "Tracker",
@@ -40,6 +51,26 @@ const template: MenuItemConstructorOptions[] = [
       { type: "separator" },
       { label: "Open", click: () => openUserProvidedTrackerFile() },
       { label: "Save As...", click: () => saveTrackerFileAs() },
+    ],
+  },
+  {
+    label: "Game",
+    id: MENU_IDS.game,
+    submenu: [
+      {
+        label: "Metroid Prime",
+        id: GameSchema.enum.prime,
+        type: "radio",
+        checked: true,
+        click: () => toggleGame(GameSchema.enum.prime)
+      },
+      {
+        label: "Metroid Prime 2: Echoes",
+        id: GameSchema.enum.echoes,
+        type: "radio",
+        checked: false,
+        click: () => toggleGame(GameSchema.enum.echoes)
+      },
     ],
   },
   {
@@ -69,7 +100,7 @@ const template: MenuItemConstructorOptions[] = [
             label: "Both",
             type: "radio",
             checked: true,
-            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.Values.both),
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.both),
           },
           {
             id: MENU_IDS.keybearerRoomLabels.aether,
@@ -77,7 +108,7 @@ const template: MenuItemConstructorOptions[] = [
             type: "radio",
             checked: false,
             click: () =>
-              toggleKeybearerRooms(KeybearerRoomsSchema.Values.aether),
+              toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
           },
           {
             id: MENU_IDS.keybearerRoomLabels.darkAether,
@@ -85,7 +116,7 @@ const template: MenuItemConstructorOptions[] = [
             type: "radio",
             checked: false,
             click: () =>
-              toggleKeybearerRooms(KeybearerRoomsSchema.Values.darkAether),
+              toggleKeybearerRooms(KeybearerRoomsSchema.enum.darkAether),
           },
         ],
       },

@@ -5,6 +5,8 @@ import { getMainWindow } from "./window.js";
 import {
   AppConfig,
   AppConfigSchema,
+  Game,
+  GameSchema,
   KeybearerRoomsSchema,
   TrackerConfig,
 } from "../shared/types.js";
@@ -85,23 +87,29 @@ export function writeAppConfigFile(config: AppConfig) {
   writeJsonFile(APP_CONFIG_PATH, json);
 }
 
+function getGameState(): Game {
+  for (const game of GameSchema.options) {
+    if (menu.getMenuItemById(game)?.checked) {
+      return game;
+    }
+  }
+
+  return GameSchema.enum.prime;
+}
+
 function getTogglesState(): AppConfig["toggles"] {
   function getKeybearerRoomsValue() {
-    if (menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.aether)?.checked) {
-      return KeybearerRoomsSchema.Values.aether;
+    for (const value of KeybearerRoomsSchema.options) {
+      if (menu.getMenuItemById(value)?.checked) {
+        return value;
+      }
     }
 
-    if (
-      menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.darkAether)?.checked
-    ) {
-      return KeybearerRoomsSchema.Values.darkAether;
-    }
-
-    return KeybearerRoomsSchema.Values.both;
+    return KeybearerRoomsSchema.enum.both;
   }
 
   return {
-    alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked ?? false,
+    alwaysOnTop: menu.getMenuItemById(MENU_IDS.alwaysOnTop)?.checked ?? false,
     legacyHintsEnabled:
       menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked ?? false,
     keybearerRoomLabels: getKeybearerRoomsValue(),
@@ -114,6 +122,7 @@ export function getAppConfigState() {
   if (mainWindow) {
     try {
       return AppConfigSchema.parse({
+        game: getGameState(),
         toggles: getTogglesState(),
         window: mainWindow.getBounds(),
       });
