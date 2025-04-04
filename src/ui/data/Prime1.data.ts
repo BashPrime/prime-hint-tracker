@@ -359,7 +359,7 @@ export const PRIME_1_LOCATIONS_WITH_ITEMS = [
   "Hydro Access Tunnel",
   "Great Tree Chamber",
   "Life Grove Tunnel",
-  "Life Grove (Start) X-Ray Visor",
+  "Life Grove (Start)",
   "Life Grove (Underwater Spinner)",
   "Main Quarry",
   "Security Access A",
