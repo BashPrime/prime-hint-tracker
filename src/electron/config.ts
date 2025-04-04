@@ -21,11 +21,22 @@ const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
 let trackerState: TrackerConfig | null = null;
 
+function setGameMenuItem(game: Game) {
+  const menuItem = menu.getMenuItemById(game);
+
+  if (menuItem) {
+    menuItem.checked = true;
+  }
+}
+
 export function getTrackerState() {
   return trackerState;
 }
 
 export function setTrackerState(state: TrackerConfig | null) {
+  if (state) {
+    setGameMenuItem(state.game)
+  }
   trackerState = state;
 }
 
@@ -87,16 +98,6 @@ export function writeAppConfigFile(config: AppConfig) {
   writeJsonFile(APP_CONFIG_PATH, json);
 }
 
-function getGameState(): Game {
-  for (const game of GameSchema.options) {
-    if (menu.getMenuItemById(game)?.checked) {
-      return game;
-    }
-  }
-
-  return GameSchema.enum.prime;
-}
-
 function getTogglesState(): AppConfig["toggles"] {
   function getKeybearerRoomsValue() {
     for (const value of KeybearerRoomsSchema.options) {
@@ -122,7 +123,6 @@ export function getAppConfigState() {
   if (mainWindow) {
     try {
       return AppConfigSchema.parse({
-        game: getGameState(),
         toggles: getTogglesState(),
         window: mainWindow.getBounds(),
       });

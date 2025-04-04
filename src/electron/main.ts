@@ -57,11 +57,3 @@ function setToggles(toggles: AppConfig["toggles"], window: BrowserWindow) {
   setToggle(toggles.keybearerRoomLabels, true);
   window.setAlwaysOnTop(toggles.alwaysOnTop);
 }
-
-function setGame(game: Game, window: BrowserWindow) {
-  const menuItem = menu.getMenuItemById(game);
-
-  if (menuItem) {
-    menuItem.checked = true;
-  }
-}

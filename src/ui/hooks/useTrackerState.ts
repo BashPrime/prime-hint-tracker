@@ -1,4 +1,4 @@
-import { appSessionLoadedState, selectedGameState, trackerStateSelector } from "@/states/App.states";
+import { appSessionLoadedState, currentGameState, trackerStateSelector } from "@/states/App.states";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useGameTrackerHandler } from "./useGameTrackerHandler";
 import { TrackerConfigSchema } from "../../shared/types";
@@ -9,7 +9,7 @@ export default function useTrackerState() {
   // !STATE
   const trackerState = useAtomValue(trackerStateSelector);
   const appSessionLoaded = useAtomValue(appSessionLoadedState);
-  const setGame = useSetAtom(selectedGameState);
+  const setCurrentGame = useSetAtom(currentGameState);
 
   // !HOOKS
   // Keep tracker state in sync with main process
@@ -30,7 +30,7 @@ export default function useTrackerState() {
   function set(config: object) {
     try {
       const parsed = TrackerConfigSchema.parse(config);
-      setGame(parsed.game);
+      setCurrentGame(parsed.game);
       gameTrackerHandler.setTracker(parsed.tracker);
     } catch (err) {
       if (err instanceof z.ZodError) {

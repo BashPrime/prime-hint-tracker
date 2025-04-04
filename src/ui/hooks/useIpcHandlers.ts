@@ -5,7 +5,7 @@ import {
   appLoadingMsgAtom,
   appSessionLoadedState,
   legacyHintsEnabledState,
-  selectedGameState,
+  currentGameState,
 } from "@/states/App.states";
 import { keybearerRoomsState } from "@/states/Prime2.states";
 import {
@@ -17,7 +17,7 @@ import { z } from "zod";
 
 export default function useIpcHandlers() {
   // !STATE
-  const [currentGame, setCurrentGame] = useAtom(selectedGameState);
+  const [currentGame, setCurrentGame] = useAtom(currentGameState);
   const [legacyHintsEnabled, setLegacyHintsEnabled] = useAtom(
     legacyHintsEnabledState
   );
@@ -89,19 +89,28 @@ export default function useIpcHandlers() {
     });
 
     window.electronApi.setGame((game) => {
-      try {
-        const parsed = GameSchema.parse(game);
-        setCurrentGame(parsed);
-      } catch (err) {
-        if (err instanceof z.ZodError) {
-          console.error("cannot parse game:", err.issues);
-        } else console.error(String(err));
+      if (game !== currentGame) {
+        setAppLoadingMsg("Switching game...");
+        setAppSessionLoaded(false);
+        try {
+          const parsed = GameSchema.parse(game);
+          setCurrentGame(parsed);
+          window.electronApi.resetSize(game, legacyHintsEnabled);
+        } catch (err) {
+          if (err instanceof z.ZodError) {
+            console.error("cannot parse game:", err.issues);
+          } else console.error(String(err));
+        }
+        setTimeout(() => {
+          setAppSessionLoaded(true);
+        }, 1);
       }
     });
   }, [
     currentGame,
     legacyHintsEnabled,
     trackerState,
+    setCurrentGame,
     setKeybearerRooms,
     setLegacyHintsEnabled,
     setAppSessionLoaded,

@@ -6,11 +6,11 @@ import { UnhintedItem } from "@/types/common.types";
 import { prime1TrackerSelector } from "./Prime1.states";
 
 export const appSessionLoadedState = atom<boolean>(false);
-export const selectedGameState = atom<Game>("prime");
+export const currentGameState = atom<Game>("prime");
 export const legacyHintsEnabledState = atom<boolean>(true);
 
 export const currentGameTrackerSelector = atom((get) => {
-  const game = get(selectedGameState);
+  const game = get(currentGameState);
   const prime1TrackerState = get(prime1TrackerSelector);
   const prime2TrackerState = get(prime2TrackerSelector);
 
@@ -23,7 +23,7 @@ export const currentGameTrackerSelector = atom((get) => {
 });
 
 export const trackerStateSelector = atom<TrackerConfig>((get) => {
-  const game = get(selectedGameState);
+  const game = get(currentGameState);
   const legacyHintsEnabled = get(legacyHintsEnabledState);
   const tracker = get(currentGameTrackerSelector);
 

@@ -1,11 +1,11 @@
 import { useAtomValue } from "jotai";
 import usePrime2Tracker from "./trackers/usePrime2Tracker";
-import { selectedGameState } from "@/states/App.states";
+import { currentGameState } from "@/states/App.states";
 import usePrime1Tracker from "./trackers/usePrime1Tracker";
 
 export function useGameTrackerHandler() {
   // !STATE
-  const currentGame = useAtomValue(selectedGameState);
+  const currentGame = useAtomValue(currentGameState);
 
   // !HOOKS
   const prime1Tracker = usePrime1Tracker();
