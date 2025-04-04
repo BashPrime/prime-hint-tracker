@@ -35,10 +35,12 @@ export const phazonSuitHintState = atomWithReset<{
 export const prime1TrackerSelector = atom((get) => {
   const unhintedItems = get(unhintedItemsState);
   const artifacts = get(artifactHintsState);
+  const phazonSuit = get(phazonSuitHintState);
 
   return {
     unhintedItems,
     artifacts,
+    phazonSuit
   };
 });
 
