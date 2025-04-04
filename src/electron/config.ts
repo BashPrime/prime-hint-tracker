@@ -6,7 +6,6 @@ import {
   AppConfig,
   AppConfigSchema,
   Game,
-  GameSchema,
   KeybearerRoomsSchema,
   TrackerConfig,
 } from "../shared/types.js";

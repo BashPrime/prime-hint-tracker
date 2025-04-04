@@ -1,5 +1,5 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import { PRIME_1_ALL_REGIONS, PRIME_1_LOCATIONS_WITH_ITEMS, PRIME_1_REGIONS_WITH_ITEMS } from "@/data/Prime1.data";
+import { PRIME_1_REGIONS_WITH_ITEMS } from "@/data/Prime1.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { phazonSuitHintState } from "@/states/Prime1.states";
@@ -20,10 +20,7 @@ export default function PhazonSuitHint({ className }: Props) {
   );
 
   // !LOCAL
-  const locationOptions = createOptions(
-    [...PRIME_1_REGIONS_WITH_ITEMS],
-    true
-  );
+  const locationOptions = createOptions([...PRIME_1_REGIONS_WITH_ITEMS], true);
 
   return (
     <div
