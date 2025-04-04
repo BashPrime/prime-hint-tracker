@@ -1,7 +1,11 @@
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 import { unhintedItemsState } from "./App.states";
-import { ArtifactHint, ArtifactHintSchema } from "@/types/Prime1.types";
+import {
+  ArtifactHint,
+  ArtifactHintSchema,
+  PhazonSuitHint,
+} from "@/types/Prime1.types";
 import { HintOption } from "@/types/common.types";
 import { createOptions } from "@/lib/utils";
 import {
@@ -24,10 +28,7 @@ export const artifactHintsState = atomWithReset<ArtifactHint[]>([
   ArtifactHintSchema.parse({ id: 12, name: "Newborn" }),
 ]);
 
-export const phazonSuitHintState = atomWithReset<{
-  location: string;
-  checked: boolean;
-}>({
+export const phazonSuitHintState = atomWithReset<PhazonSuitHint>({
   location: "",
   checked: false,
 });
@@ -40,7 +41,7 @@ export const prime1TrackerSelector = atom((get) => {
   return {
     unhintedItems,
     artifacts,
-    phazonSuit
+    phazonSuit,
   };
 });
 
