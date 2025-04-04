@@ -6,6 +6,7 @@ import {
   prime1UnhintedItemOptionsSelector,
   prime1UnhintedLocationOptionsSelector,
 } from "@/states/Prime1.states";
+import PhazonSuitHint from "./PhazonSuitHint";
 
 export default function Prime1Layout() {
   // !STATE
@@ -16,16 +17,19 @@ export default function Prime1Layout() {
 
   return (
     <div
-      className={cn("grid grid-cols-1 bg-[#1f1f1f] h-full")}
-      data-name="prime2-layout"
+      className={cn("grid bg-[#1f1f1f] w-full h-full")}
+      data-name="prime1-layout"
     >
-      <div className="flex flex-col" data-name="core-hints">
-        <ArtifactHints className="border-l-2 border-[#52CDF7]" />
-        <UnhintedItems
-          itemOptions={unhintedItemOptions}
-          locationOptions={unhintedLocationOptions}
-          className="border-l-2 border-red-600"
-        />
+      <div className="flex flex-row grid-cols-2" data-name="core-hints">
+        <ArtifactHints className="flex flex-col border-l-2 border-[#52CDF7] w-1/2" />
+        <div className="flex flex-col w-1/2">
+          <PhazonSuitHint className="border-l-2 border-red-400" />
+          <UnhintedItems
+            itemOptions={unhintedItemOptions}
+            locationOptions={unhintedLocationOptions}
+            className="border-l-2 border-red-600"
+          />
+        </div>
       </div>
     </div>
   );

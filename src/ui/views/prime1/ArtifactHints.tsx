@@ -30,6 +30,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         "px-2 py-1 bg-zinc-800",
         className,
         hint.checked && "bg-yellow-900"
+        
       )}
       onMouseDown={handleRightClick}
     >
@@ -94,12 +95,12 @@ export default function ArtifactHints({ className }: Props) {
   return (
     <div className={className} data-name="artifact-hints">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Artifacts</h2>
-      <div className="md:flex-[0_0_initial] md:grid md:grid-rows-6 md:grid-cols-2 lg:grid-rows-4 lg:grid-cols-3 grid-flow-col">
+      <div className="grid grid-rows-6 grid-cols-2 grid-flow-col flex-1">
         {artifacts.map((key, idx) => (
           <Hint
             hint={key}
             onUpdate={(update) => updateArtifact(key.id, update)}
-            key={`stk-${idx + 1}`}
+            key={`artifact-${idx + 1}`}
             className="border-b md:border-r border-zinc-900"
           />
         ))}

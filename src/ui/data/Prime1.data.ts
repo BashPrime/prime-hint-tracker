@@ -40,6 +40,14 @@ export const PRIME_1_ALL_REGIONS = [
   "Impact Crater",
 ] as const;
 
+export const PRIME_1_REGIONS_WITH_ITEMS = [
+  "Tallon Overworld",
+  "Chozo Ruins",
+  "Magmoor Caverns",
+  "Phendrana Drifts",
+  "Phazon Mines",
+] as const;
+
 // excludes frigate and impact crater
 export const PRIME_1_ALL_LOCATIONS = [
   "Transport to Magmoor Caverns West",
