@@ -30,4 +30,6 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ipcRenderer.on("set-keybearer-rooms", (_, value: string) =>
       callback(value)
     ),
+  setGame: (callback: (game: string) => void) =>
+    ipcRenderer.on("set-game", (_, game: string) => callback(game)),
 });

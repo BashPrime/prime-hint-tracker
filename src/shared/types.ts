@@ -14,7 +14,7 @@ export const TrackerConfigSchema = z.object({
 export type TrackerConfig = z.infer<typeof TrackerConfigSchema>;
 
 export const KeybearerRoomsSchema = z.enum(["aether", "darkAether", "both"]);
-export type KeybearerRoom = z.infer<typeof KeybearerRoomsSchema>;
+export type KeybearerRooms = z.infer<typeof KeybearerRoomsSchema>;
 
 export const TogglesSchema = z.object({
   alwaysOnTop: z.boolean().default(false),
@@ -24,7 +24,6 @@ export const TogglesSchema = z.object({
 export type Toggles = z.infer<typeof TogglesSchema>;
 
 export const AppConfigSchema = z.object({
-  game: GameSchema.default("prime"),
   toggles: TogglesSchema,
   window: z.custom<Rectangle>(),
 });

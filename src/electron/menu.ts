@@ -17,7 +17,7 @@ import {
 import {
   Game,
   GameSchema,
-  KeybearerRoom,
+  KeybearerRooms,
   KeybearerRoomsSchema,
 } from "../shared/types.js";
 
@@ -32,14 +32,13 @@ function toggleLegacyHints(checked: boolean) {
   handleSaveAppConfig();
 }
 
-function toggleKeybearerRooms(value: KeybearerRoom) {
+function toggleKeybearerRooms(value: KeybearerRooms) {
   setKeybearerRoomLabels(value);
   handleSaveAppConfig();
 }
 
 function toggleGame(game: Game) {
   setGame(game);
-  handleSaveAppConfig();
 }
 
 const template: MenuItemConstructorOptions[] = [

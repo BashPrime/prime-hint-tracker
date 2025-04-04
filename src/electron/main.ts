@@ -34,7 +34,6 @@ app.on("ready", () => {
   }
 
   if (config) {
-    setGame(config.game, mainWindow);
     setToggles(config.toggles, mainWindow);
   }
 });

@@ -10,5 +10,6 @@ interface Window {
       callback: (config: object, legacyHintsEnabled: boolean) => void
     ) => void;
     setKeybearerRooms: (callback: (value: string) => void) => void;
+    setGame: (callback: (game: string) => void) => void;
   };
 }

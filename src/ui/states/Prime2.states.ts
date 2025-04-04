@@ -8,7 +8,7 @@ import {
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
-import { KeybearerRoom as KeybearerRooms } from "src/shared/types";
+import { KeybearerRooms } from "src/shared/types";
 import { legacyHintsEnabledState, unhintedItemsState } from "./App.states";
 import { HintOption } from "@/types/common.types";
 import { createOptions } from "@/lib/utils";
