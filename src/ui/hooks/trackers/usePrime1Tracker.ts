@@ -3,7 +3,7 @@ import {
   artifactHintsState,
   phazonSuitHintState,
 } from "@/states/Prime1.states";
-import { ArtifactHintSchema, PhazonSuitHintSchema } from "@/types/Prime1.types";
+import { PhazonSuitHintSchema } from "@/types/Prime1.types";
 import { useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
