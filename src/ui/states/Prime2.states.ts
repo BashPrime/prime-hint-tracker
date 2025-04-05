@@ -5,11 +5,20 @@ import {
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
   TranslatorHintSchema,
-  UnhintedItem,
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
-import { KeybearerRoom as KeybearerRooms } from "src/shared/types";
+import { KeybearerRooms } from "src/shared/types";
+import { legacyHintsEnabledState, unhintedItemsState } from "./App.states";
+import { HintOption } from "@/types/common.types";
+import { createOptions } from "@/lib/utils";
+import {
+  PRIME_2_LEGACY_MAJORS_CATEGORIES,
+  PRIME_2_LOCATIONS_WITH_ITEMS,
+  PRIME_2_MAJOR_UPGRADES,
+  PRIME_2_PICKUP_FEATURES,
+  PRIME_2_PROGRESSIVE_MAJORS,
+} from "@/data/Prime2.data";
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
@@ -200,8 +209,6 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
   ],
 });
 
-export const unhintedItemsState = atomWithReset<UnhintedItem[]>([]);
-
 export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
   SkyTempleKeyHintSchema.parse({ id: 1, name: "Key 1" }),
   SkyTempleKeyHintSchema.parse({ id: 2, name: "Key 2" }),
@@ -235,3 +242,28 @@ export const prime2TrackerSelector = atom((get) => {
 });
 
 export const keybearerRoomsState = atom<KeybearerRooms>("both");
+
+export const prime2UnhintedItemOptionsSelector = atom<HintOption[]>((get) => {
+  const legacyHintsEnabled = get(legacyHintsEnabledState);
+  const itemFeaturalOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_PICKUP_FEATURES,
+    ],
+    true
+  );
+  const itemLegacyOptions = createOptions(
+    [
+      ...PRIME_2_MAJOR_UPGRADES,
+      ...PRIME_2_PROGRESSIVE_MAJORS,
+      ...PRIME_2_LEGACY_MAJORS_CATEGORIES,
+    ],
+    true
+  );
+  return legacyHintsEnabled ? itemLegacyOptions : itemFeaturalOptions;
+});
+
+export const prime2UnhintedLocationOptionsSelector = atom<HintOption[]>(
+  createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)
+);

@@ -1,11 +1,12 @@
 export const MENU_IDS = {
   alwaysOnTop: "alwaysOnTop",
-  legacyHintsEnabled: "legacyHintsEnabled",
+  game: "game",
   keybearerRoomLabels: {
     aether: "aether",
     darkAether: "darkAether",
     both: "both",
   },
+  legacyHintsEnabled: "legacyHintsEnabled",
 };
 
 export const IPC_IDS = {
@@ -17,6 +18,7 @@ export const IPC_IDS = {
   resetSize: "reset-size",
   loadTrackerSession: "load-tracker-session",
   setKeybearerRooms: "set-keybearer-rooms",
+  setGame: "set-game",
 };
 
 type WindowSize = {

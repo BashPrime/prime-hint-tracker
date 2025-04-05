@@ -14,14 +14,17 @@ export const TrackerConfigSchema = z.object({
 export type TrackerConfig = z.infer<typeof TrackerConfigSchema>;
 
 export const KeybearerRoomsSchema = z.enum(["aether", "darkAether", "both"]);
-export type KeybearerRoom = z.infer<typeof KeybearerRoomsSchema>;
+export type KeybearerRooms = z.infer<typeof KeybearerRoomsSchema>;
+
+export const TogglesSchema = z.object({
+  alwaysOnTop: z.boolean().default(false),
+  legacyHintsEnabled: z.boolean().default(false),
+  keybearerRoomLabels: KeybearerRoomsSchema.default("both"),
+});
+export type Toggles = z.infer<typeof TogglesSchema>;
 
 export const AppConfigSchema = z.object({
-  toggles: z.object({
-    alwaysOnTop: z.boolean(),
-    legacyHintsEnabled: z.boolean(),
-    keybearerRoomLabels: KeybearerRoomsSchema,
-  }),
+  toggles: TogglesSchema,
   window: z.custom<Rectangle>(),
 });
 export type AppConfig = z.infer<typeof AppConfigSchema>;

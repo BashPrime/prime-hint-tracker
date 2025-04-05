@@ -5,6 +5,7 @@ import { getMainWindow } from "./window.js";
 import {
   AppConfig,
   AppConfigSchema,
+  Game,
   KeybearerRoomsSchema,
   TrackerConfig,
 } from "../shared/types.js";
@@ -19,11 +20,22 @@ const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
 let trackerState: TrackerConfig | null = null;
 
+function setGameMenuItem(game: Game) {
+  const menuItem = menu.getMenuItemById(game);
+
+  if (menuItem) {
+    menuItem.checked = true;
+  }
+}
+
 export function getTrackerState() {
   return trackerState;
 }
 
 export function setTrackerState(state: TrackerConfig | null) {
+  if (state) {
+    setGameMenuItem(state.game)
+  }
   trackerState = state;
 }
 
@@ -87,21 +99,17 @@ export function writeAppConfigFile(config: AppConfig) {
 
 function getTogglesState(): AppConfig["toggles"] {
   function getKeybearerRoomsValue() {
-    if (menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.aether)?.checked) {
-      return KeybearerRoomsSchema.Values.aether;
+    for (const value of KeybearerRoomsSchema.options) {
+      if (menu.getMenuItemById(value)?.checked) {
+        return value;
+      }
     }
 
-    if (
-      menu.getMenuItemById(MENU_IDS.keybearerRoomLabels.darkAether)?.checked
-    ) {
-      return KeybearerRoomsSchema.Values.darkAether;
-    }
-
-    return KeybearerRoomsSchema.Values.both;
+    return KeybearerRoomsSchema.enum.both;
   }
 
   return {
-    alwaysOnTop: menu.getMenuItemById("alwaysOnTop")?.checked ?? false,
+    alwaysOnTop: menu.getMenuItemById(MENU_IDS.alwaysOnTop)?.checked ?? false,
     legacyHintsEnabled:
       menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked ?? false,
     keybearerRoomLabels: getKeybearerRoomsValue(),
