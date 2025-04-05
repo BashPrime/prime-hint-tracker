@@ -2,26 +2,31 @@ import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_1_LOCATIONS_WITH_ITEMS } from "@/data/Prime1.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { artifactHintsState } from "@/states/Prime1.states";
-import { ArtifactHint } from "@/types/Prime1.types";
-import { useAtom } from "jotai";
+import {
+  artifactHintsArraySelector,
+  updateArtifactHintAtom,
+} from "@/states/Prime1.states";
+import {
+  NewArtifactHint,
+  NewArtifactHints,
+} from "@/types/Prime1.types";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Check } from "lucide-react";
 
-type UpdateValue = {
-  location?: string;
-  checked?: boolean;
-};
-
 type HintProps = {
-  hint: ArtifactHint;
-  onUpdate: (update: UpdateValue) => void;
+  name: string;
+  hint: NewArtifactHint;
   className?: string;
 };
 
-function Hint({ hint, onUpdate, className }: HintProps) {
+function Hint({ name, hint, className }: HintProps) {
+  // !STATE
+  const updateArtifact = useSetAtom(updateArtifactHintAtom);
+  const artKey = name as keyof NewArtifactHints
+
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onUpdate({ checked: !hint.checked })
+    updateArtifact([artKey, {...hint, checked: !hint.checked}])
   );
 
   return (
@@ -30,7 +35,6 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         "px-2 py-1 bg-zinc-800",
         className,
         hint.checked && "bg-yellow-900"
-        
       )}
       onMouseDown={handleRightClick}
     >
@@ -42,7 +46,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
               hint.checked && "text-amber-400"
             )}
           >
-            {hint.name}
+            {name}
           </p>
           <Check
             className={cn(
@@ -56,7 +60,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
           placeholder="Location"
           emptyMessage="No location found."
           value={{ label: hint.location, value: hint.location }}
-          onInputChange={(value) => onUpdate({ location: value })}
+          onInputChange={(value) => updateArtifact([artKey, { ...hint, location: value }])}
           options={createOptions([...PRIME_1_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}
           className="text-[13px]"
@@ -72,35 +76,19 @@ type Props = {
 
 export default function ArtifactHints({ className }: Props) {
   // !JOTAI
-  const [artifacts, setArtifacts] = useAtom(artifactHintsState);
-
-  // !FUNCTION
-  function updateArtifact(id: number, update: UpdateValue) {
-    setArtifacts((prev) => {
-      const newKeys = [...prev];
-
-      return newKeys.map((key) => {
-        if (key.id === id) {
-          return {
-            ...key,
-            ...update,
-          };
-        }
-
-        return { ...key };
-      });
-    });
-  }
+  const artifactsArray = useAtomValue(artifactHintsArraySelector);
 
   return (
     <div className={className} data-name="artifact-hints">
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Artifacts</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">
+        Artifacts
+      </h2>
       <div className="grid grid-rows-6 grid-cols-2 grid-flow-col flex-1">
-        {artifacts.map((key, idx) => (
+        {artifactsArray.map((artifact) => (
           <Hint
-            hint={key}
-            onUpdate={(update) => updateArtifact(key.id, update)}
-            key={`artifact-${idx + 1}`}
+            name={artifact.name}
+            hint={artifact}
+            key={`artifact-${artifact.id}`}
             className="border-b md:border-r border-zinc-900"
           />
         ))}

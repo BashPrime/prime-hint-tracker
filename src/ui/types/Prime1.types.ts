@@ -8,6 +8,29 @@ export const ArtifactHintSchema = z.object({
 });
 export type ArtifactHint = z.infer<typeof ArtifactHintSchema>;
 
+export const NewArtifactHintSchema = z.object({
+  id: z.number(),
+  location: z.string().default(""),
+  checked: z.boolean().default(false),
+});
+export type NewArtifactHint = z.infer<typeof NewArtifactHintSchema>;
+
+export const NewArtifactHintsSchema = z.object({
+  "Truth": NewArtifactHintSchema,
+  "Strength": NewArtifactHintSchema,
+  "Elder": NewArtifactHintSchema,
+  "Wild": NewArtifactHintSchema,
+  "Lifegiver": NewArtifactHintSchema,
+  "Warrior": NewArtifactHintSchema,
+  "Chozo": NewArtifactHintSchema,
+  "Nature": NewArtifactHintSchema,
+  "Sun": NewArtifactHintSchema,
+  "World": NewArtifactHintSchema,
+  "Spirit": NewArtifactHintSchema,
+  "Newborn": NewArtifactHintSchema,
+})
+export type NewArtifactHints = z.infer<typeof NewArtifactHintsSchema>
+
 export const ArtifactHintsSchema = z.tuple([
   z.object({
     id: ArtifactHintSchema.shape.id,
