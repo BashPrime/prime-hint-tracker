@@ -5,10 +5,6 @@ import {
   ArtifactHint,
   ArtifactHints,
   ArtifactHintsSchema,
-  NewArtifactHint,
-  NewArtifactHints,
-  NewArtifactHintSchema,
-  NewArtifactHintsSchema,
   PhazonSuitHint,
 } from "@/types/Prime1.types";
 import { HintOption } from "@/types/common.types";
@@ -18,8 +14,8 @@ import {
   PRIME_1_MAJOR_UPGRADES,
 } from "@/data/Prime1.data";
 
-export const newArtifactHintsState = atomWithReset<NewArtifactHints>(
-  NewArtifactHintsSchema.parse({
+export const newArtifactHintsState = atomWithReset<ArtifactHints>(
+  ArtifactHintsSchema.parse({
     Truth: { id: 1 },
     Strength: { id: 2 },
     Elder: { id: 3 },
@@ -37,7 +33,7 @@ export const newArtifactHintsState = atomWithReset<NewArtifactHints>(
 
 export const updateArtifactHintAtom = atom(
   (get) => get(newArtifactHintsState),
-  (get, set, update: [keyof NewArtifactHints, NewArtifactHint]) => {
+  (get, set, update: [keyof ArtifactHints, ArtifactHint]) => {
     const [key, value] = update;
     const updated = { ...get(newArtifactHintsState) };
     updated[key] = value;
@@ -45,42 +41,15 @@ export const updateArtifactHintAtom = atom(
   }
 );
 
-export const artifactHintsState = atomWithReset<ArtifactHints>(
-  ArtifactHintsSchema.parse([
-    { id: 1 },
-    { id: 2 },
-    { id: 3 },
-    { id: 4 },
-    { id: 5 },
-    { id: 6 },
-    { id: 7 },
-    { id: 8 },
-    { id: 9 },
-    { id: 10 },
-    { id: 11 },
-    { id: 12 },
-  ])
-);
-
-export const artifactHintsArraySelector = atom<ArtifactHint[]>((get) => {
+export const artifactHintsArraySelector = atom((get) => {
   const artifactHints = get(newArtifactHintsState);
   const arr = [];
   const sortedEntries = Object.entries(artifactHints).sort(
-    ([, valueA], [, valueB]) => {
-      if (valueA.id < valueB.id) {
-        return -1;
-      } else if (valueA.id > valueB.id) {
-        return 1;
-      }
-      return 0;
-    }
+    ([, valueA], [, valueB]) => valueA.id - valueB.id
   );
 
   for (const [key, artifact] of sortedEntries) {
-    arr.push({
-      ...artifact,
-      name: key,
-    });
+    arr.push({ key, value: artifact });
   }
 
   return arr;
@@ -93,7 +62,7 @@ export const phazonSuitHintState = atomWithReset<PhazonSuitHint>({
 
 export const prime1TrackerSelector = atom((get) => {
   const unhintedItems = get(unhintedItemsState);
-  const artifacts = get(artifactHintsState);
+  const artifacts = get(newArtifactHintsState);
   const phazonSuit = get(phazonSuitHintState);
 
   return {
