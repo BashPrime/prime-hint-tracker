@@ -133,6 +133,7 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(atom);
   const names = useAtomValue(keybearerHintsNamesAtom);
+  const keybearerRooms = useAtomValue(keybearerRoomsState);
 
   // !FUNCTION
   function buildHintsEntries(hints: NewRegionKeybearerHints) {
@@ -149,7 +150,13 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
       });
     }
 
-    return final;
+    return final.sort((a, b) => {
+      if (keybearerRooms === "darkAether") {
+        return a.darkWorld < b.darkWorld ? -1 : 1;
+      }
+
+      return a.lightWorld < b.lightWorld ? -1 : 1;
+    });
   }
 
   // !LOCAL
