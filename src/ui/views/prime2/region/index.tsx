@@ -1,19 +1,17 @@
-import { PrimitiveAtom, useAtomValue, WritableAtom } from "jotai";
+import { PrimitiveAtom, WritableAtom } from "jotai";
 import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
 import {
   BossHints as BossHintsType,
-  BossHintsNoKeys,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
-  RegionHints,
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
 
 type Props = {
   name: string;
-  atom: PrimitiveAtom<RegionHints>;
-  bossHintsAtom: PrimitiveAtom<BossHintsType | BossHintsNoKeys>;
+  variant: string;
+  bossHintsAtom: PrimitiveAtom<BossHintsType>;
   keybearerHintsAtom: WritableAtom<
     NewRegionKeybearerHints,
     [update: KeybearerHintsUpdate],
@@ -24,18 +22,11 @@ type Props = {
 
 export default function Region({
   name,
-  atom,
+  variant,
   bossHintsAtom,
   keybearerHintsAtom,
   className,
 }: Props) {
-  // !STATE
-  const { variant } = useAtomValue(atom);
-  // const bossHintsAtom = focusAtom(atom, (optic) => optic.prop("bossHints"));
-  // const translatorHintsAtom = focusAtom(atom, (optic) =>
-  //   optic.prop("translatorHints")
-  // );
-
   return (
     <div className={cn("flex flex-col", className)} data-name="region">
       <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">

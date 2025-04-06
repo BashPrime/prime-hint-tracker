@@ -16,6 +16,7 @@ import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
 import { Check } from "lucide-react";
 import useRightClick from "@/hooks/useRightClick";
+import { useEffect, useState } from "react";
 
 type HintProps = {
   name: string;
@@ -78,30 +79,39 @@ type Props = {
 export function BossHints({ atom, variant, className }: Props) {
   // !JOTAI & STATE
   const [bossHints, setBossHints] = useAtom(atom);
-  // const [random, setRandom] = useState<number>(-1);
+  const [random, setRandom] = useState<number>(-1);
 
   // !LOCAL
+
   const DEAD_STR = "Dead";
   const isBossDead = bossHints.item === DEAD_STR;
-  // const isChykkaDead = isBossDead && bossHints.name === "Chykka";
-  // const displayChykkaEasterEgg = isChykkaDead && random === 0;
-  let imgSrc: string;
+
+  let imgSrc = "";
+  let bossName = "";
+  let isChykka = false;
   switch (variant) {
     case "temple":
       imgSrc = umosImg;
+      bossName = "U-Mos Reward";
       break;
     case "agon":
       imgSrc = amorbisImg;
+      bossName = "Amorbis";
       break;
     case "torvus":
       imgSrc = chykkaImg;
+      bossName = "Chykka";
+      isChykka = true;
       break;
     case "sanctuary":
       imgSrc = quadraxisImg;
+      bossName = "Quadraxis";
       break;
     default:
       imgSrc = "https://picsum.photos/200";
   }
+  const isChykkaDead = isChykka && isBossDead;
+  const displayChykkaEasterEgg = isChykkaDead && random === 0;
 
   // !FUNCTION
   function buildKeysArray(hints: BossHintsType) {
@@ -133,13 +143,13 @@ export function BossHints({ atom, variant, className }: Props) {
     setBossHints((prev) => ({ ...prev, checked: !prev.checked }))
   );
 
-  // useEffect(() => {
-  //   if (isChykkaDead) {
-  //     setRandom(Math.floor(Math.random() * 1024));
-  //   } else {
-  //     setRandom(-1);
-  //   }
-  // }, [isChykkaDead, setRandom]);
+  useEffect(() => {
+    if (isChykkaDead) {
+      setRandom(Math.floor(Math.random() * 1024));
+    } else {
+      setRandom(-1);
+    }
+  }, [isChykkaDead, setRandom]);
 
   // !LOCAL
   const bossKeys = buildKeysArray(bossHints);
@@ -158,7 +168,7 @@ export function BossHints({ atom, variant, className }: Props) {
         data-name="boss-item-container"
       >
         <div className="w-24 select-none" data-name="boss-img">
-          {/* <img src={imgSrc} title={bossHints.name} alt={bossHints.name} /> */}
+          <img src={imgSrc} title={bossName} alt={bossName} />
         </div>
         <div className="flex flex-row justify-between">
           <p
@@ -168,8 +178,8 @@ export function BossHints({ atom, variant, className }: Props) {
             )}
             data-name="boss-name"
           >
-            {/* {bossHints.name} */}Name
-            {/* {displayChykkaEasterEgg && "'s"} */}
+            {bossName}
+            {displayChykkaEasterEgg && "'s"}
           </p>
           <Check
             className={cn(
@@ -180,9 +190,9 @@ export function BossHints({ atom, variant, className }: Props) {
         </div>
         <div data-name="boss-item">
           <div
-          // className={cn(
-          //   displayChykkaEasterEgg && "flex flex-row items-center gap-2"
-          // )}
+            className={cn(
+              displayChykkaEasterEgg && "flex flex-row items-center gap-2"
+            )}
           >
             <AutoComplete
               placeholder="Item"
@@ -198,7 +208,7 @@ export function BossHints({ atom, variant, className }: Props) {
               tabIndex={1}
               className={cn("m-0", isBossDead && "text-red-200 italic")}
             />
-            {/* {displayChykkaEasterEgg && <p className="text-xs">Nice!</p>} */}
+            {displayChykkaEasterEgg && <p className="text-xs">Nice!</p>}
           </div>
         </div>
       </div>

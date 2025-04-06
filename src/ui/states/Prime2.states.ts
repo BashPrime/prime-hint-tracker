@@ -23,9 +23,18 @@ import {
   templeBossHintsState,
   templeKeybearerHintsState,
 } from "./prime2/Temple.states";
-import { agonBossHintsState, agonKeybearerHintsState } from "./prime2/Agon.states";
-import { torvusBossHintsState, torvusKeybearerHintsState } from "./prime2/Torvus.states";
-import { sanctuaryBossHintsState, sanctuaryKeybearerHintsState } from "./prime2/Sanctuary.states";
+import {
+  agonBossHintsState,
+  agonKeybearerHintsState,
+} from "./prime2/Agon.states";
+import {
+  torvusBossHintsState,
+  torvusKeybearerHintsState,
+} from "./prime2/Torvus.states";
+import {
+  sanctuaryBossHintsState,
+  sanctuaryKeybearerHintsState,
+} from "./prime2/Sanctuary.states";
 
 export const keybearerHintsNamesAtom = atom({
   industrialSite: {
@@ -68,18 +77,26 @@ export const keybearerHintsNamesAtom = atom({
 
 export const regionHintsAtomsSelector = atom({
   templeGrounds: {
+    name: "Temple Grounds",
+    variant: "temple",
     bossHints: templeBossHintsState,
     keybearerHints: templeKeybearerHintsState,
   },
   agonWastes: {
+    name: "Agon Wastes",
+    variant: "agon",
     bossHints: agonBossHintsState,
     keybearerHints: agonKeybearerHintsState,
   },
   torvusBog: {
+    name: "Torvus Bog",
+    variant: "torvus",
     bossHints: torvusBossHintsState,
     keybearerHints: torvusKeybearerHintsState,
   },
   sanctuaryFortress: {
+    name: "Sanctuary Fortress",
+    variant: "sanctuary",
     bossHints: sanctuaryBossHintsState,
     keybearerHints: sanctuaryKeybearerHintsState,
   },

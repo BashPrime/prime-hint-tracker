@@ -38,31 +38,31 @@ export default function Prime2Layout() {
         />
       </div>
       <Region
-        name="Temple Grounds"
+        name={templeGrounds.name}
+        variant={templeGrounds.variant}
         bossHintsAtom={templeGrounds.bossHints}
         keybearerHintsAtom={templeGrounds.keybearerHints}
-        atom={templeGroundsHintsState}
         className="border-l-2 border-violet-600"
       />
       <Region
-        name="Agon Wastes"
+        name={agonWastes.name}
+        variant={agonWastes.variant}
         bossHintsAtom={agonWastes.bossHints}
         keybearerHintsAtom={agonWastes.keybearerHints}
-        atom={agonHintsState}
         className="border-l-2 border-amber-600"
       />
       <Region
-        name="Torvus Bog"
+        name={torvusBog.name}
+        variant={torvusBog.variant}
         bossHintsAtom={torvusBog.bossHints}
         keybearerHintsAtom={torvusBog.keybearerHints}
-        atom={torvusHintsState}
         className="border-l-2 border-emerald-600"
       />
       <Region
-        name="Sanctuary Fortress"
+        name={sanctuaryFortress.name}
+        variant={sanctuaryFortress.variant}
         bossHintsAtom={sanctuaryFortress.bossHints}
         keybearerHintsAtom={sanctuaryFortress.keybearerHints}
-        atom={sanctuaryHintsState}
         className="border-l-2 border-sky-600"
       />
     </div>
