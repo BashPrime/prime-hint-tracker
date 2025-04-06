@@ -24,15 +24,10 @@ type HintProps = {
   className?: string;
 };
 
-function Hint({
-  name,
-  value,
-  onKeyHintChange: onKeyChange,
-  className,
-}: HintProps) {
+function Hint({ name, value, onKeyHintChange, className }: HintProps) {
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onKeyChange({ ...value, checked: !value.checked })
+    onKeyHintChange({ ...value, checked: !value.checked })
   );
 
   return (
@@ -64,7 +59,9 @@ function Hint({
         placeholder="Region"
         emptyMessage="No region found."
         value={{ label: value.location, value: value.location }}
-        onInputChange={(update) => onKeyChange({ ...value, location: update })}
+        onInputChange={(update) =>
+          onKeyHintChange({ ...value, location: update })
+        }
         options={createOptions([...PRIME_2_REGION_OPTIONS], true)}
         tabIndex={1}
       />
@@ -125,12 +122,9 @@ export function BossHints({ atom, variant, className }: Props) {
 
   function updateBossKey(key: string, update: NewBossKeyHint) {
     if (bossHints.keys !== undefined) {
-      setBossHints((prev) => {
-        const newKeys = { ...prev.keys };
-        newKeys[key as keyof typeof newKeys] = update;
-
-        return { ...prev, ...newKeys };
-      });
+      const newKeys = { ...bossHints.keys };
+      newKeys[key as keyof typeof newKeys] = update;
+      setBossHints({ ...bossHints, keys: newKeys });
     }
   }
 
