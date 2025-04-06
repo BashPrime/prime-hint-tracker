@@ -2,15 +2,12 @@ import { PrimitiveAtom, useAtomValue, WritableAtom } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
-import TranslatorHints from "./TranslatorHints";
 import {
   KeybearerHintsUpdate,
-  NewRegionHints,
   NewRegionKeybearerHints,
   RegionHints,
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
-import { regionHintsState } from "@/states/Prime2.states";
 
 type Props = {
   name: string;

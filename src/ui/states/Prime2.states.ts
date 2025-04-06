@@ -123,31 +123,6 @@ export const regionHintsAtomsSelector = atom({
   },
 });
 
-export const regionHintsState = atomWithReset<NewRegionHints>(
-  NewRegionHintsSchema.parse({
-    "Temple Grounds": {
-      boss: {
-        name: "U-Mos Reward",
-        keys: undefined,
-      },
-      keybearerHints: {
-        industrialSite: {
-          lightWorldLocation: "Industrial Site",
-          darkWorldLocation: "Accursed Lake",
-        },
-        landingSite: {
-          lightWorldLocation: "Landing Site",
-          darkWorldLocation: "Defiled Shrine",
-        },
-        storageCavernA: {
-          lightWorldLocation: "Storage Cavern A",
-          darkWorldLocation: "Ing Reliquary",
-        },
-      },
-    },
-  })
-);
-
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
   bossHints: BossHintsSchema.parse({
