@@ -9,6 +9,7 @@ import {
   AgonBossHintsSchema,
   AgonKeybearerHints,
   AgonKeybearerHintsSchema,
+  AgonTranslatorHintsSchema,
 } from "@/types/prime2/Agon.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
@@ -19,7 +20,7 @@ export const agonBossHintsState = atomWithReset<AgonBossHints>(
       "Key 1": NewBossKeyHintSchema.parse({}),
       "Key 2": NewBossKeyHintSchema.parse({}),
       "Key 3": NewBossKeyHintSchema.parse({}),
-    }
+    },
   })
 );
 
@@ -42,4 +43,8 @@ export const agonKeybearerHintsState = atom<
     updated[key as keyof AgonKeybearerHints] = value;
     set(_agonKeybearerHintsState, updated);
   }
+);
+
+export const agonTranslatorHintsState = atomWithReset(
+  AgonTranslatorHintsSchema.parse({})
 );

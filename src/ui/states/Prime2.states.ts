@@ -22,10 +22,12 @@ import {
 import {
   templeBossHintsState,
   templeKeybearerHintsState,
+  templeTranslatorHintsState,
 } from "./prime2/Temple.states";
 import {
   agonBossHintsState,
   agonKeybearerHintsState,
+  agonTranslatorHintsState,
 } from "./prime2/Agon.states";
 import {
   torvusBossHintsState,
@@ -75,18 +77,45 @@ export const keybearerHintsNamesAtom = atom({
   },
 });
 
+export const translatorHintsNamesAtom = atom({
+  mainEnergyController: "Main Energy Controller",
+  transportToAgonWastes: "Transport to Agon Wastes",
+  fortressTransportAccess: "Fortress Transport Access",
+  meetingGrounds: "Meeting Grounds",
+  pathOfEyes: "Path of Eyes",
+  agonEnergyController: "Agon Energy Controller",
+  miningPlaza: "Mining Plaza",
+  portalTerminal: "Portal Terminal",
+  miningStationA: "Mining Station A",
+  miningStationB: "Mining Station B",
+  torvusEnergyController: "Torvus Energy Controller",
+  pathOfRoots: "Path of Roots",
+  undergroundTunnel: "Underground Tunnel",
+  catacombs: "Catacombs",
+  gatheringHall: "Gathering Hall",
+  trainingChamber: "Training Chamber",
+  sancEnergyController: "Sanctuary Energy Controller",
+  sancEntrance: "Sanctuary Entrance",
+  hallOfCombatMastery: "Hall of Combat Mastery",
+  mainGyroChamber: "Main Gyro Chamber",
+  mainResearch: "Main Research",
+  watchStation: "Watch Station",
+});
+
 export const regionHintsAtomsSelector = atom({
   templeGrounds: {
     name: "Temple Grounds",
     variant: "temple",
     bossHints: templeBossHintsState,
     keybearerHints: templeKeybearerHintsState,
+    translatorHints: templeTranslatorHintsState
   },
   agonWastes: {
     name: "Agon Wastes",
     variant: "agon",
     bossHints: agonBossHintsState,
     keybearerHints: agonKeybearerHintsState,
+    translatorHints: agonTranslatorHintsState
   },
   torvusBog: {
     name: "Torvus Bog",

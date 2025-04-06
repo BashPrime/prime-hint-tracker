@@ -1,9 +1,14 @@
 import z from "zod";
-import { EndgameHint, EndgameHintSchema } from "./common.types";
+import {
+  CheckedSchema,
+  EmptyStringSchema,
+  EndgameHint,
+  EndgameHintSchema,
+} from "./common.types";
 
 export const NewBossKeyHintSchema = z.object({
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
+  location: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type NewBossKeyHint = z.infer<typeof NewBossKeyHintSchema>;
 
@@ -15,16 +20,16 @@ export const BossKeyHintsSchema = z.object({
 
 export const NewBossHintSchema = z.object({
   name: z.string(),
-  item: z.string().default(""),
-  checked: z.boolean().default(false),
+  item: EmptyStringSchema,
+  checked: CheckedSchema,
   keys: BossKeyHintsSchema.optional(),
 });
 
 export const BossKeyHintSchema = z.object({
   id: z.number(),
   name: z.string(),
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
+  location: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
@@ -36,18 +41,34 @@ export const BossHintsSchema = z.object({
 export type BossHints = z.infer<typeof BossHintsSchema>;
 
 export const KeybearerHintSchema = z.object({
-  item: z.string().default(""),
-  checked: z.boolean().default(false),
+  item: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type KeybearerHint = z.infer<typeof KeybearerHintSchema>;
+
+export const NewTranslatorHintSchema = z.object({
+  firstValue: EmptyStringSchema,
+  secondValue: EmptyStringSchema,
+  proximity: EmptyStringSchema,
+  checked: CheckedSchema,
+});
+export type NewTranslatorHint = z.infer<typeof NewTranslatorHintSchema>
+
+export const NewRegionTranslatorHintsSchema = z.record(
+  z.string(),
+  NewTranslatorHintSchema
+);
+export type NewRegionTranslatorHints = z.infer<
+  typeof NewRegionTranslatorHintsSchema
+>;
 
 export const TranslatorHintSchema = z.object({
   id: z.number(),
   name: z.string(),
-  firstValue: z.string().default(""),
-  secondValue: z.string().default(""),
-  proximity: z.string().default(""),
-  checked: z.boolean().default(false),
+  firstValue: EmptyStringSchema,
+  secondValue: EmptyStringSchema,
+  proximity: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 

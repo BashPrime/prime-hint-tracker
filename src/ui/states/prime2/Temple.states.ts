@@ -2,12 +2,14 @@ import {
   KeybearerHint,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
+  NewTranslatorHintSchema,
 } from "@/types/Prime2.types";
 import {
   TempleBossHints,
   TempleBossHintsSchema,
   TempleKeybearerHints,
   TempleKeybearerHintsSchema,
+  TempleTranslatorHintsSchema,
 } from "@/types/prime2/Temple.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
@@ -36,4 +38,8 @@ export const templeKeybearerHintsState = atom<
     updated[key as keyof TempleKeybearerHints] = value;
     set(_templeKeybearerHintsState, updated);
   }
+);
+
+export const templeTranslatorHintsState = atomWithReset(
+  TempleTranslatorHintsSchema.parse({})
 );

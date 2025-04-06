@@ -5,8 +5,10 @@ import {
   BossHints as BossHintsType,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
+  NewRegionTranslatorHints,
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
+import TranslatorHints from "./TranslatorHints";
 
 type Props = {
   name: string;
@@ -17,6 +19,7 @@ type Props = {
     [update: KeybearerHintsUpdate],
     void
   >;
+  translatorHintsAtom: PrimitiveAtom<NewRegionTranslatorHints>;
   className?: string;
 };
 
@@ -25,6 +28,7 @@ export default function Region({
   variant,
   bossHintsAtom,
   keybearerHintsAtom,
+  translatorHintsAtom,
   className,
 }: Props) {
   return (
@@ -35,7 +39,11 @@ export default function Region({
       <div className="flex flex-col gap-2 h-full flex-1">
         <BossHints atom={bossHintsAtom} variant={variant} />
         <KeybearerHints atom={keybearerHintsAtom} variant={variant} />
-        {/* <TranslatorHints atom={translatorHintsAtom} variant={variant} className="flex-1" /> */}
+        <TranslatorHints
+          atom={translatorHintsAtom}
+          variant={variant}
+          className="flex-1"
+        />
       </div>
     </div>
   );
