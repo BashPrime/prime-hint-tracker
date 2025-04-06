@@ -1,28 +1,12 @@
 import {
-  AgonKeybearerHints,
-  AgonKeybearerHintsSchema,
   BossHintsSchema,
-  BossKeyHintsSchema,
-  KeybearerHint,
   KeybearerHintSchema,
-  KeybearerHintsUpdate,
-  KeybearerHintsUpdateSchema,
-  KeybearerHintsWithNames,
-  NewRegionHints,
-  NewRegionHintsSchema,
-  NewRegionKeybearerHints,
   RegionHints,
-  SanctuaryKeybearerHints,
-  SanctuaryKeybearerHintsSchema,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
-  TempleKeybearerHints,
-  TempleKeybearerHintsSchema,
-  TorvusKeybearerHints,
-  TorvusKeybearerHintsSchema,
   TranslatorHintSchema,
 } from "@/types/Prime2.types";
-import { atom, WritableAtom } from "jotai";
+import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 import { KeybearerRooms } from "src/shared/types";
 import { legacyHintsEnabledState, unhintedItemsState } from "./App.states";
@@ -35,6 +19,10 @@ import {
   PRIME_2_PICKUP_FEATURES,
   PRIME_2_PROGRESSIVE_MAJORS,
 } from "@/data/Prime2.data";
+import { templeKeybearerHintsState } from "./prime2/Temple.states";
+import { agonKeybearerHintsState } from "./prime2/Agon.states";
+import { torvusKeybearerHintsState } from "./prime2/Torvus.states";
+import { sanctuaryKeybearerHintsState } from "./prime2/Sanctuary.states";
 
 export const keybearerHintsNamesAtom = atom({
   industrialSite: {
@@ -75,103 +63,18 @@ export const keybearerHintsNamesAtom = atom({
   },
 });
 
-export const _templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
-  TempleKeybearerHintsSchema.parse({
-    industrialSite: {},
-    landingSite: {},
-    storageCavernA: {},
-  })
-);
-
-export const templeKeybearerHintsAtom = atom<
-  NewRegionKeybearerHints,
-  [update: KeybearerHintsUpdate],
-  void
->(
-  (get) => get(_templeKeybearerHintsState),
-  (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(_templeKeybearerHintsState) };
-    const [key, value] = update;
-    updated[key as keyof TempleKeybearerHints] = value;
-    set(_templeKeybearerHintsState, updated);
-  }
-);
-
-export const _agonKeybearerHintsState = atomWithReset<AgonKeybearerHints>(
-  AgonKeybearerHintsSchema.parse({
-    centralMiningStation: {},
-    mainReactor: {},
-  })
-);
-
-export const agonKeybearerHintsAtom = atom<
-  NewRegionKeybearerHints,
-  [update: KeybearerHintsUpdate],
-  void
->(
-  (get) => get(_agonKeybearerHintsState),
-  (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(_agonKeybearerHintsState) };
-    const [key, value] = update;
-    updated[key as keyof AgonKeybearerHints] = value;
-    set(_agonKeybearerHintsState, updated);
-  }
-);
-
-export const _torvusKeybearerHintsState = atomWithReset<TorvusKeybearerHints>(
-  TorvusKeybearerHintsSchema.parse({
-    torvusLagoon: {},
-    catacombs: {},
-  })
-);
-
-export const torvusKeybearerHintsAtom = atom<
-  NewRegionKeybearerHints,
-  [update: KeybearerHintsUpdate],
-  void
->(
-  (get) => get(_torvusKeybearerHintsState),
-  (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(_torvusKeybearerHintsState) };
-    const [key, value] = update;
-    updated[key as keyof TorvusKeybearerHints] = value;
-    set(_torvusKeybearerHintsState, updated);
-  }
-);
-
-export const _sanctuaryKeybearerHintsState = atomWithReset<SanctuaryKeybearerHints>(
-  SanctuaryKeybearerHintsSchema.parse({
-    sancEntrance: {},
-    dynamoWorks: {},
-  })
-);
-
-export const sanctuaryKeybearerHintsAtom = atom<
-  NewRegionKeybearerHints,
-  [update: KeybearerHintsUpdate],
-  void
->(
-  (get) => get(_sanctuaryKeybearerHintsState),
-  (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(_sanctuaryKeybearerHintsState) };
-    const [key, value] = update;
-    updated[key as keyof SanctuaryKeybearerHints] = value;
-    set(_sanctuaryKeybearerHintsState, updated);
-  }
-);
-
 export const regionHintsAtomsSelector = atom({
   templeGrounds: {
-    keybearerHints: templeKeybearerHintsAtom,
+    keybearerHints: templeKeybearerHintsState,
   },
   agonWastes: {
-    keybearerHints: agonKeybearerHintsAtom,
+    keybearerHints: agonKeybearerHintsState,
   },
   torvusBog: {
-    keybearerHints: torvusKeybearerHintsAtom,
+    keybearerHints: torvusKeybearerHintsState,
   },
   sanctuaryFortress: {
-    keybearerHints: sanctuaryKeybearerHintsAtom,
+    keybearerHints: sanctuaryKeybearerHintsState,
   },
 });
 

@@ -1,6 +1,5 @@
 import z from "zod";
 import { EndgameHint, EndgameHintSchema } from "./common.types";
-import { PrimitiveAtom } from "jotai";
 
 export const NewBossKeyHintSchema = z.object({
   id: z.number(),
@@ -85,7 +84,9 @@ export const SanctuaryKeybearerHintsSchema = z.object({
   sancEntrance: KeybearerHintSchema,
   dynamoWorks: KeybearerHintSchema,
 });
-export type SanctuaryKeybearerHints = z.infer<typeof SanctuaryKeybearerHintsSchema>;
+export type SanctuaryKeybearerHints = z.infer<
+  typeof SanctuaryKeybearerHintsSchema
+>;
 
 export const KeybearerHintsWithNamesSchema = z.object({
   hints: NewRegionKeybearerHintsSchema,
