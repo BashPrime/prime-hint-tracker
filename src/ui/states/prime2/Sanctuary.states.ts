@@ -1,20 +1,20 @@
 import {
-  BossHints,
-  BossHintsSchema,
   KeybearerHint,
   KeybearerHintsUpdate,
   NewBossKeyHintSchema,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
 import {
+  SanctuaryBossHints,
+  SanctuaryBossHintsSchema,
   SanctuaryKeybearerHints,
   SanctuaryKeybearerHintsSchema,
 } from "@/types/prime2/Sanctuary.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-export const sanctuaryBossHintsState = atomWithReset<BossHints>(
-  BossHintsSchema.parse({
+export const sanctuaryBossHintsState = atomWithReset<SanctuaryBossHints>(
+  SanctuaryBossHintsSchema.parse({
     keys: {
       "Key 1": NewBossKeyHintSchema.parse({}),
       "Key 2": NewBossKeyHintSchema.parse({}),

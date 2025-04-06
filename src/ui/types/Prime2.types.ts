@@ -31,16 +31,9 @@ export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 export const BossHintsSchema = z.object({
   item: NewBossHintSchema.shape.item,
   checked: NewBossHintSchema.shape.checked,
-  keys: BossKeyHintsSchema,
+  keys: BossKeyHintsSchema.optional(),
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
-
-export const BossHintsNoKeysSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
-  keys: z.undefined(),
-});
-export type BossHintsNoKeys = z.infer<typeof BossHintsNoKeysSchema>;
 
 export const KeybearerHintSchema = z.object({
   item: z.string().default(""),

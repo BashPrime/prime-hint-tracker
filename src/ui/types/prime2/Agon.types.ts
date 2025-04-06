@@ -10,6 +10,7 @@ export const AgonBossHintsSchema = z.object({
   checked: NewBossHintSchema.shape.checked,
   keys: BossKeyHintsSchema,
 });
+export type AgonBossHints = z.infer<typeof AgonBossHintsSchema>;
 
 export const AgonKeybearerHintsSchema = z.object({
   centralMiningStation: KeybearerHintSchema,

@@ -6,6 +6,7 @@ export const TempleBossHintsSchema = z.object({
   checked: NewBossHintSchema.shape.checked,
   keys: z.literal(undefined),
 });
+export type TempleBossHints = z.infer<typeof TempleBossHintsSchema>
 
 export const TempleKeybearerHintsSchema = z.object({
   industrialSite: KeybearerHintSchema,

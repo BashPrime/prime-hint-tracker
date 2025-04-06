@@ -1,21 +1,20 @@
 import {
-  BossHints,
-  BossHintsSchema,
-  BossKeyHintsSchema,
   KeybearerHint,
   KeybearerHintsUpdate,
   NewBossKeyHintSchema,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
 import {
+  TorvusBossHints,
+  TorvusBossHintsSchema,
   TorvusKeybearerHints,
   TorvusKeybearerHintsSchema,
 } from "@/types/prime2/Torvus.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-export const torvusBossHintsState = atomWithReset<BossHints>(
-  BossHintsSchema.parse({
+export const torvusBossHintsState = atomWithReset<TorvusBossHints>(
+  TorvusBossHintsSchema.parse({
     keys: {
       "Key 1": NewBossKeyHintSchema.parse({}),
       "Key 2": NewBossKeyHintSchema.parse({}),

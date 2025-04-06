@@ -5,9 +5,7 @@ import {
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
 import {
-  BossHintsNoKeys,
   BossHints as BossHintsType,
-  BossKeyHint,
   NewBossKeyHint,
 } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
@@ -75,7 +73,7 @@ function Hint({
 }
 
 type Props = {
-  atom: PrimitiveAtom<BossHintsType | BossHintsNoKeys>;
+  atom: PrimitiveAtom<BossHintsType>;
   variant: string;
   className?: string;
 };
@@ -109,7 +107,7 @@ export function BossHints({ atom, variant, className }: Props) {
   }
 
   // !FUNCTION
-  function buildKeysArray(hints: BossHintsType | BossHintsNoKeys) {
+  function buildKeysArray(hints: BossHintsType) {
     if (hints.keys === undefined) {
       return [];
     }

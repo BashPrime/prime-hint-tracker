@@ -1,21 +1,20 @@
 import {
-  BossHints,
-  BossHintsSchema,
-  BossKeyHintsSchema,
   KeybearerHint,
   KeybearerHintsUpdate,
   NewBossKeyHintSchema,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
 import {
+  AgonBossHints,
+  AgonBossHintsSchema,
   AgonKeybearerHints,
   AgonKeybearerHintsSchema,
 } from "@/types/prime2/Agon.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
-export const agonBossHintsState = atomWithReset<BossHints>(
-  BossHintsSchema.parse({
+export const agonBossHintsState = atomWithReset<AgonBossHints>(
+  AgonBossHintsSchema.parse({
     keys: {
       "Key 1": NewBossKeyHintSchema.parse({}),
       "Key 2": NewBossKeyHintSchema.parse({}),
