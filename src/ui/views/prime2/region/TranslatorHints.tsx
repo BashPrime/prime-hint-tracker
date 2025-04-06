@@ -16,14 +16,17 @@ import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { legacyHintsEnabledState } from "@/states/App.states";
 import { translatorHintsNamesAtom } from "@/states/Prime2.states";
-import { NewRegionTranslatorHints, NewTranslatorHint, TranslatorHint } from "@/types/Prime2.types";
+import {
+  NewRegionTranslatorHints,
+  NewTranslatorHint,
+} from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type TranslatorHintProps = {
   name: string;
-  value: NewTranslatorHint
+  value: NewTranslatorHint;
   onHintUpdate: (update: NewTranslatorHint) => void;
   headerColor?: string;
   className?: string;
@@ -85,7 +88,9 @@ function Hint({
     true
   );
   const locationLegacyOptions = createOptions([
-    ...(!value.proximity ? PRIME_2_LOCATIONS_WITH_ITEMS : PRIME_2_ALL_LOCATIONS),
+    ...(!value.proximity
+      ? PRIME_2_LOCATIONS_WITH_ITEMS
+      : PRIME_2_ALL_LOCATIONS),
     ...(!value.proximity ? [] : PRIME_2_ALL_MAJOR_ITEMS),
     ...PRIME_2_REGION_OPTIONS,
     ...BOSSES,
@@ -97,7 +102,9 @@ function Hint({
   const isBossKeyHint = BOSS_KEY_HINTS.includes(value.firstValue);
   const isBossItemHint = BOSS_ITEM_HINTS.includes(value.firstValue);
   const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
-  const proximityPlaceholder = !BOSSES.includes(value.secondValue) ? "in" : "on";
+  const proximityPlaceholder = !BOSSES.includes(value.secondValue)
+    ? "in"
+    : "on";
   const secondValuePlaceholder =
     legacyHintsEnabled && value.proximity ? "Location or Item" : "Location";
   const secondValueEmptyStr =
@@ -147,7 +154,9 @@ function Hint({
           placeholder="Item"
           emptyMessage="No item found."
           value={{ label: value.firstValue, value: value.firstValue }}
-          onInputChange={(update) => onHintUpdate({ ...value, firstValue: update })}
+          onInputChange={(update) =>
+            onHintUpdate({ ...value, firstValue: update })
+          }
           options={firstValueOptions}
           tabIndex={1}
           className={cn(
@@ -174,7 +183,9 @@ function Hint({
               placeholder={secondValuePlaceholder}
               emptyMessage={secondValueEmptyStr}
               value={{ label: value.secondValue, value: value.secondValue }}
-              onInputChange={(update) => onHintUpdate({ ...value, secondValue: update })}
+              onInputChange={(update) =>
+                onHintUpdate({ ...value, secondValue: update })
+              }
               options={secondValueOptions}
               tabIndex={1}
               data-name="second-value"
@@ -195,30 +206,28 @@ type Props = {
 export default function TranslatorHints({ atom, variant, className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(atom);
-  const names = useAtomValue(translatorHintsNamesAtom)
+  const names = useAtomValue(translatorHintsNamesAtom);
 
   // !FUNCTION
   function buildHintsEntries(hints: NewRegionTranslatorHints) {
-      const final = [];
-      const entries = Object.entries(hints);
-  
-      for (const [key, value] of entries) {
-        const namesMatch = names[key as keyof typeof names];
-        final.push({
-          key,
-          name: namesMatch,
-          value,
-        });
-      }
-  
-      return final.sort((a, b) => {
-        return a.name < b.name ? -1 : 
+    const final = [];
+    const entries = Object.entries(hints);
+
+    for (const [key, value] of entries) {
+      const namesMatch = names[key as keyof typeof names];
+      final.push({
+        key,
+        name: namesMatch,
+        value,
       });
     }
 
+    return final.sort((a, b) => (a.name < b.name ? -1 : 1));
+  }
+
   function updateHint(key: string, update: NewTranslatorHint) {
     const newHints = { ...hints };
-    newHints[key as keyof typeof newHints] = update
+    newHints[key as keyof typeof newHints] = update;
     setHints(newHints);
   }
 
