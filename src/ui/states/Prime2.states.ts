@@ -12,10 +12,14 @@ import {
   NewRegionHintsSchema,
   NewRegionKeybearerHints,
   RegionHints,
+  SanctuaryKeybearerHints,
+  SanctuaryKeybearerHintsSchema,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
   TempleKeybearerHints,
   TempleKeybearerHintsSchema,
+  TorvusKeybearerHints,
+  TorvusKeybearerHintsSchema,
   TranslatorHintSchema,
 } from "@/types/Prime2.types";
 import { atom, WritableAtom } from "jotai";
@@ -114,12 +118,60 @@ export const agonKeybearerHintsAtom = atom<
   }
 );
 
+export const _torvusKeybearerHintsState = atomWithReset<TorvusKeybearerHints>(
+  TorvusKeybearerHintsSchema.parse({
+    torvusLagoon: {},
+    catacombs: {},
+  })
+);
+
+export const torvusKeybearerHintsAtom = atom<
+  NewRegionKeybearerHints,
+  [update: KeybearerHintsUpdate],
+  void
+>(
+  (get) => get(_torvusKeybearerHintsState),
+  (get, set, update: [string, KeybearerHint]) => {
+    const updated = { ...get(_torvusKeybearerHintsState) };
+    const [key, value] = update;
+    updated[key as keyof TorvusKeybearerHints] = value;
+    set(_torvusKeybearerHintsState, updated);
+  }
+);
+
+export const _sanctuaryKeybearerHintsState = atomWithReset<SanctuaryKeybearerHints>(
+  SanctuaryKeybearerHintsSchema.parse({
+    sancEntrance: {},
+    dynamoWorks: {},
+  })
+);
+
+export const sanctuaryKeybearerHintsAtom = atom<
+  NewRegionKeybearerHints,
+  [update: KeybearerHintsUpdate],
+  void
+>(
+  (get) => get(_sanctuaryKeybearerHintsState),
+  (get, set, update: [string, KeybearerHint]) => {
+    const updated = { ...get(_sanctuaryKeybearerHintsState) };
+    const [key, value] = update;
+    updated[key as keyof SanctuaryKeybearerHints] = value;
+    set(_sanctuaryKeybearerHintsState, updated);
+  }
+);
+
 export const regionHintsAtomsSelector = atom({
   templeGrounds: {
     keybearerHints: templeKeybearerHintsAtom,
   },
   agonWastes: {
     keybearerHints: agonKeybearerHintsAtom,
+  },
+  torvusBog: {
+    keybearerHints: torvusKeybearerHintsAtom,
+  },
+  sanctuaryFortress: {
+    keybearerHints: sanctuaryKeybearerHintsAtom,
   },
 });
 

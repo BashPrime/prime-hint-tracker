@@ -75,6 +75,18 @@ export const AgonKeybearerHintsSchema = z.object({
 });
 export type AgonKeybearerHints = z.infer<typeof AgonKeybearerHintsSchema>;
 
+export const TorvusKeybearerHintsSchema = z.object({
+  torvusLagoon: KeybearerHintSchema,
+  catacombs: KeybearerHintSchema,
+});
+export type TorvusKeybearerHints = z.infer<typeof TorvusKeybearerHintsSchema>;
+
+export const SanctuaryKeybearerHintsSchema = z.object({
+  sancEntrance: KeybearerHintSchema,
+  dynamoWorks: KeybearerHintSchema,
+});
+export type SanctuaryKeybearerHints = z.infer<typeof SanctuaryKeybearerHintsSchema>;
+
 export const KeybearerHintsWithNamesSchema = z.object({
   hints: NewRegionKeybearerHintsSchema,
   names: z.record(
