@@ -1,4 +1,6 @@
 import {
+  AgonKeybearerHints,
+  AgonKeybearerHintsSchema,
   BossHintsSchema,
   BossKeyHintsSchema,
   KeybearerHint,
@@ -43,9 +45,33 @@ export const keybearerHintsNamesAtom = atom({
     lightWorld: "Storage Cavern A",
     darkWorld: "Ing Reliquary",
   },
+  centralMiningStation: {
+    lightWorld: "Central Mining Station",
+    darkWorld: "Battleground",
+  },
+  mainReactor: {
+    lightWorld: "Main Reactor",
+    darkWorld: "Dark Oasis",
+  },
+  catacombs: {
+    lightWorld: "Catacombs",
+    darkWorld: "Dungeon",
+  },
+  torvusLagoon: {
+    lightWorld: "Torvus Lagoon",
+    darkWorld: "Poisoned Bog",
+  },
+  dynamoWorks: {
+    lightWorld: "Dynamo Works",
+    darkWorld: "Hive Dynamo Works",
+  },
+  sancEntrance: {
+    lightWorld: "Sanctuary Entrance",
+    darkWorld: "Hive Entrance",
+  },
 });
 
-export const templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
+export const _templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
   TempleKeybearerHintsSchema.parse({
     industrialSite: {},
     landingSite: {},
@@ -53,19 +79,49 @@ export const templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
   })
 );
 
-export const readWriteTempleKeybearerHintsAtom = atom<
+export const templeKeybearerHintsAtom = atom<
   NewRegionKeybearerHints,
   [update: KeybearerHintsUpdate],
   void
 >(
-  (get) => get(templeKeybearerHintsState),
+  (get) => get(_templeKeybearerHintsState),
   (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(templeKeybearerHintsState) };
+    const updated = { ...get(_templeKeybearerHintsState) };
     const [key, value] = update;
     updated[key as keyof TempleKeybearerHints] = value;
-    set(templeKeybearerHintsState, updated);
+    set(_templeKeybearerHintsState, updated);
   }
 );
+
+export const _agonKeybearerHintsState = atomWithReset<AgonKeybearerHints>(
+  AgonKeybearerHintsSchema.parse({
+    centralMiningStation: {},
+    mainReactor: {},
+  })
+);
+
+export const agonKeybearerHintsAtom = atom<
+  NewRegionKeybearerHints,
+  [update: KeybearerHintsUpdate],
+  void
+>(
+  (get) => get(_agonKeybearerHintsState),
+  (get, set, update: [string, KeybearerHint]) => {
+    const updated = { ...get(_agonKeybearerHintsState) };
+    const [key, value] = update;
+    updated[key as keyof AgonKeybearerHints] = value;
+    set(_agonKeybearerHintsState, updated);
+  }
+);
+
+export const regionHintsAtomsSelector = atom({
+  templeGrounds: {
+    keybearerHints: templeKeybearerHintsAtom,
+  },
+  agonWastes: {
+    keybearerHints: agonKeybearerHintsAtom,
+  },
+});
 
 export const regionHintsState = atomWithReset<NewRegionHints>(
   NewRegionHintsSchema.parse({

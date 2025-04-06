@@ -69,6 +69,12 @@ export const TempleKeybearerHintsSchema = z.object({
 });
 export type TempleKeybearerHints = z.infer<typeof TempleKeybearerHintsSchema>;
 
+export const AgonKeybearerHintsSchema = z.object({
+  centralMiningStation: KeybearerHintSchema,
+  mainReactor: KeybearerHintSchema,
+});
+export type AgonKeybearerHints = z.infer<typeof AgonKeybearerHintsSchema>;
+
 export const KeybearerHintsWithNamesSchema = z.object({
   hints: NewRegionKeybearerHintsSchema,
   names: z.record(

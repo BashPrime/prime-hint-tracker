@@ -1,13 +1,9 @@
 import {
-  agonHintsState,
-  sanctuaryHintsState,
   templeGroundsHintsState,
-  torvusHintsState,
   prime2UnhintedItemOptionsSelector,
   prime2UnhintedLocationOptionsSelector,
-  regionHintsState,
-  templeKeybearerHintsState,
-  readWriteTempleKeybearerHintsAtom,
+  regionHintsAtomsSelector,
+  agonHintsState,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
@@ -17,9 +13,11 @@ import { useAtomValue } from "jotai";
 
 export default function Prime2Layout() {
   // !STATE
-  const regionHints = useAtomValue(regionHintsState)
+  const { templeGrounds, agonWastes } = useAtomValue(regionHintsAtomsSelector);
   const unhintedItemOptions = useAtomValue(prime2UnhintedItemOptionsSelector);
-  const unhintedLocationOptions = useAtomValue(prime2UnhintedLocationOptionsSelector);
+  const unhintedLocationOptions = useAtomValue(
+    prime2UnhintedLocationOptionsSelector
+  );
 
   return (
     <div
@@ -38,16 +36,17 @@ export default function Prime2Layout() {
       </div>
       <Region
         name="Temple Grounds"
-        keybearerHintsAtom={readWriteTempleKeybearerHintsAtom}
+        keybearerHintsAtom={templeGrounds.keybearerHints}
         atom={templeGroundsHintsState}
         className="border-l-2 border-violet-600"
       />
-      {/* <Region
+      <Region
         name="Agon Wastes"
+        keybearerHintsAtom={agonWastes.keybearerHints}
         atom={agonHintsState}
         className="border-l-2 border-amber-600"
       />
-      <Region
+      {/* <Region
         name="Torvus Bog"
         atom={torvusHintsState}
         className="border-l-2 border-emerald-600"
