@@ -1,8 +1,9 @@
 import { PrimitiveAtom, useAtomValue, WritableAtom } from "jotai";
-import { focusAtom } from "jotai-optics";
 import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
 import {
+  BossHints as BossHintsType,
+  BossHintsNoKeys,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
   RegionHints,
@@ -12,6 +13,7 @@ import { cn } from "@/lib/utils";
 type Props = {
   name: string;
   atom: PrimitiveAtom<RegionHints>;
+  bossHintsAtom: PrimitiveAtom<BossHintsType | BossHintsNoKeys>;
   keybearerHintsAtom: WritableAtom<
     NewRegionKeybearerHints,
     [update: KeybearerHintsUpdate],
@@ -23,12 +25,13 @@ type Props = {
 export default function Region({
   name,
   atom,
+  bossHintsAtom,
   keybearerHintsAtom,
   className,
 }: Props) {
   // !STATE
   const { variant } = useAtomValue(atom);
-  const bossHintsAtom = focusAtom(atom, (optic) => optic.prop("bossHints"));
+  // const bossHintsAtom = focusAtom(atom, (optic) => optic.prop("bossHints"));
   // const translatorHintsAtom = focusAtom(atom, (optic) =>
   //   optic.prop("translatorHints")
   // );

@@ -87,23 +87,6 @@ export const regionHintsAtomsSelector = atom({
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
-  bossHints: BossHintsSchema.parse({
-    name: "U-Mos Reward",
-  }),
-  keybearerHints: [
-    KeybearerHintSchema.parse({
-      lightWorldLocation: "Industrial Site",
-      darkWorldLocation: "Accursed Lake",
-    }),
-    KeybearerHintSchema.parse({
-      lightWorldLocation: "Landing Site",
-      darkWorldLocation: "Defiled Shrine",
-    }),
-    KeybearerHintSchema.parse({
-      lightWorldLocation: "Storage Cavern A",
-      darkWorldLocation: "Ing Reliquary",
-    }),
-  ],
   translatorHints: [
     TranslatorHintSchema.parse({
       id: 1,
@@ -129,26 +112,6 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
 });
 export const agonHintsState = atomWithReset<RegionHints>({
   variant: "agon",
-  bossHints: BossHintsSchema.parse({
-    name: "Amorbis",
-    keys: [
-      { id: 1, name: "Key 1" },
-      { id: 2, name: "Key 2" },
-      { id: 3, name: "Key 3" },
-    ],
-  }),
-  keybearerHints: [
-    KeybearerHintSchema.parse({
-      id: 1,
-      lightWorldLocation: "Central Mining Station",
-      darkWorldLocation: "Battleground",
-    }),
-    KeybearerHintSchema.parse({
-      id: 2,
-      lightWorldLocation: "Main Reactor",
-      darkWorldLocation: "Dark Oasis",
-    }),
-  ],
   translatorHints: [
     TranslatorHintSchema.parse({
       id: 1,
@@ -174,26 +137,6 @@ export const agonHintsState = atomWithReset<RegionHints>({
 });
 export const torvusHintsState = atomWithReset<RegionHints>({
   variant: "torvus",
-  bossHints: BossHintsSchema.parse({
-    name: "Chykka",
-    keys: [
-      { id: 1, name: "Key 1" },
-      { id: 2, name: "Key 2" },
-      { id: 3, name: "Key 3" },
-    ],
-  }),
-  keybearerHints: [
-    KeybearerHintSchema.parse({
-      id: 1,
-      lightWorldLocation: "Torvus Lagoon",
-      darkWorldLocation: "Poisoned Bog",
-    }),
-    KeybearerHintSchema.parse({
-      id: 2,
-      lightWorldLocation: "Catacombs",
-      darkWorldLocation: "Dungeon",
-    }),
-  ],
   translatorHints: [
     TranslatorHintSchema.parse({
       id: 1,
@@ -223,26 +166,6 @@ export const torvusHintsState = atomWithReset<RegionHints>({
 });
 export const sanctuaryHintsState = atomWithReset<RegionHints>({
   variant: "sanctuary",
-  bossHints: BossHintsSchema.parse({
-    name: "Quadraxis",
-    keys: [
-      { id: 1, name: "Key 1" },
-      { id: 2, name: "Key 2" },
-      { id: 3, name: "Key 3" },
-    ],
-  }),
-  keybearerHints: [
-    KeybearerHintSchema.parse({
-      id: 1,
-      lightWorldLocation: "Dynamo Works",
-      darkWorldLocation: "Hive Dynamo Works",
-    }),
-    KeybearerHintSchema.parse({
-      id: 2,
-      lightWorldLocation: "Sanctuary Entrance",
-      darkWorldLocation: "Hive Entrance",
-    }),
-  ],
   translatorHints: [
     TranslatorHintSchema.parse({
       id: 1,

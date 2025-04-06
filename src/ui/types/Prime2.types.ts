@@ -2,11 +2,10 @@ import z from "zod";
 import { EndgameHint, EndgameHintSchema } from "./common.types";
 
 export const NewBossKeyHintSchema = z.object({
-  id: z.number(),
   location: z.string().default(""),
   checked: z.boolean().default(false),
 });
-export type NewBossKeyHint = z.infer<typeof BossKeyHintSchema>;
+export type NewBossKeyHint = z.infer<typeof NewBossKeyHintSchema>;
 
 export const BossKeyHintsSchema = z.object({
   "Key 1": NewBossKeyHintSchema,
@@ -39,6 +38,7 @@ export type BossHints = z.infer<typeof BossHintsSchema>;
 export const BossHintsNoKeysSchema = z.object({
   item: NewBossHintSchema.shape.item,
   checked: NewBossHintSchema.shape.checked,
+  keys: z.undefined(),
 });
 export type BossHintsNoKeys = z.infer<typeof BossHintsNoKeysSchema>;
 
@@ -136,8 +136,6 @@ export type NewRegionHints = z.infer<typeof NewRegionHintsSchema>;
 
 export const RegionHintsSchema = z.object({
   variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
-  bossHints: BossHintsSchema,
-  keybearerHints: z.array(KeybearerHintSchema),
   translatorHints: z.array(TranslatorHintSchema),
 });
 export type RegionHints = z.infer<typeof RegionHintsSchema>;

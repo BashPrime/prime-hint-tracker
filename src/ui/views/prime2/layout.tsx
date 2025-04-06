@@ -39,11 +39,12 @@ export default function Prime2Layout() {
       </div>
       <Region
         name="Temple Grounds"
+        bossHintsAtom={templeGrounds.bossHints}
         keybearerHintsAtom={templeGrounds.keybearerHints}
         atom={templeGroundsHintsState}
         className="border-l-2 border-violet-600"
       />
-      <Region
+      {/* <Region
         name="Agon Wastes"
         keybearerHintsAtom={agonWastes.keybearerHints}
         atom={agonHintsState}
@@ -60,7 +61,7 @@ export default function Prime2Layout() {
         keybearerHintsAtom={sanctuaryFortress.keybearerHints}
         atom={sanctuaryHintsState}
         className="border-l-2 border-sky-600"
-      />
+      /> */}
     </div>
   );
 }

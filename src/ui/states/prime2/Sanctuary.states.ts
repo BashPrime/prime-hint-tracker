@@ -3,6 +3,7 @@ import {
   BossHintsSchema,
   KeybearerHint,
   KeybearerHintsUpdate,
+  NewBossKeyHintSchema,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
 import {
@@ -13,7 +14,13 @@ import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 export const sanctuaryBossHintsState = atomWithReset<BossHints>(
-  BossHintsSchema.parse({})
+  BossHintsSchema.parse({
+    keys: {
+      "Key 1": NewBossKeyHintSchema.parse({}),
+      "Key 2": NewBossKeyHintSchema.parse({}),
+      "Key 3": NewBossKeyHintSchema.parse({}),
+    },
+  })
 );
 
 const _sanctuaryKeybearerHintsState = atomWithReset<SanctuaryKeybearerHints>(
