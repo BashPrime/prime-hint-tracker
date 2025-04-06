@@ -41,5 +41,11 @@ export const templeKeybearerHintsState = atom<
 );
 
 export const templeTranslatorHintsState = atomWithReset(
-  TempleTranslatorHintsSchema.parse({})
+  TempleTranslatorHintsSchema.parse({
+    mainEnergyController: {},
+    transportToAgonWastes: {},
+    fortressTransportAccess: {},
+    meetingGrounds: {},
+    pathOfEyes: {},
+  })
 );

@@ -9,6 +9,7 @@ import {
   TorvusBossHintsSchema,
   TorvusKeybearerHints,
   TorvusKeybearerHintsSchema,
+  TorvusTranslatorHintsSchema,
 } from "@/types/prime2/Torvus.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
@@ -42,4 +43,15 @@ export const torvusKeybearerHintsState = atom<
     updated[key as keyof TorvusKeybearerHints] = value;
     set(_torvusKeybearerHintsState, updated);
   }
+);
+
+export const torvusTranslatorHintsState = atomWithReset(
+  TorvusTranslatorHintsSchema.parse({
+    torvusEnergyController: {},
+    pathOfRoots: {},
+    undergroundTunnel: {},
+    catacombs: {},
+    gatheringHall: {},
+    trainingChamber: {},
+  })
 );

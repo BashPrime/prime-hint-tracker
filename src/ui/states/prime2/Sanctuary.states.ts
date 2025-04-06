@@ -9,6 +9,7 @@ import {
   SanctuaryBossHintsSchema,
   SanctuaryKeybearerHints,
   SanctuaryKeybearerHintsSchema,
+  SanctuaryTranslatorHintsSchema,
 } from "@/types/prime2/Sanctuary.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
@@ -25,7 +26,7 @@ export const sanctuaryBossHintsState = atomWithReset<SanctuaryBossHints>(
 
 const _sanctuaryKeybearerHintsState = atomWithReset<SanctuaryKeybearerHints>(
   SanctuaryKeybearerHintsSchema.parse({
-    sancEntrance: {},
+    sanctuaryEntrance: {},
     dynamoWorks: {},
   })
 );
@@ -42,4 +43,15 @@ export const sanctuaryKeybearerHintsState = atom<
     updated[key as keyof SanctuaryKeybearerHints] = value;
     set(_sanctuaryKeybearerHintsState, updated);
   }
+);
+
+export const sanctuaryTranslatorHintsState = atomWithReset(
+  SanctuaryTranslatorHintsSchema.parse({
+    sanctuaryEnergyController: {},
+    sanctuaryEntrance: {},
+    hallOfCombatMastery: {},
+    mainGyroChamber: {},
+    mainResearch: {},
+    watchStation: {},
+  })
 );

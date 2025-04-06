@@ -46,5 +46,11 @@ export const agonKeybearerHintsState = atom<
 );
 
 export const agonTranslatorHintsState = atomWithReset(
-  AgonTranslatorHintsSchema.parse({})
+  AgonTranslatorHintsSchema.parse({
+    agonEnergyController: {},
+    miningPlaza: {},
+    portalTerminal: {},
+    miningStationA: {},
+    miningStationB: {},
+  })
 );

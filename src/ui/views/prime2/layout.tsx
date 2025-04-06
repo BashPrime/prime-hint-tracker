@@ -1,11 +1,7 @@
 import {
-  templeGroundsHintsState,
   prime2UnhintedItemOptionsSelector,
   prime2UnhintedLocationOptionsSelector,
   regionHintsAtomsSelector,
-  agonHintsState,
-  torvusHintsState,
-  sanctuaryHintsState,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
@@ -42,6 +38,7 @@ export default function Prime2Layout() {
         variant={templeGrounds.variant}
         bossHintsAtom={templeGrounds.bossHints}
         keybearerHintsAtom={templeGrounds.keybearerHints}
+        translatorHintsAtom={templeGrounds.translatorHints}
         className="border-l-2 border-violet-600"
       />
       <Region
@@ -49,6 +46,7 @@ export default function Prime2Layout() {
         variant={agonWastes.variant}
         bossHintsAtom={agonWastes.bossHints}
         keybearerHintsAtom={agonWastes.keybearerHints}
+        translatorHintsAtom={agonWastes.translatorHints}
         className="border-l-2 border-amber-600"
       />
       <Region
@@ -56,6 +54,7 @@ export default function Prime2Layout() {
         variant={torvusBog.variant}
         bossHintsAtom={torvusBog.bossHints}
         keybearerHintsAtom={torvusBog.keybearerHints}
+        translatorHintsAtom={torvusBog.translatorHints}
         className="border-l-2 border-emerald-600"
       />
       <Region
@@ -63,6 +62,7 @@ export default function Prime2Layout() {
         variant={sanctuaryFortress.variant}
         bossHintsAtom={sanctuaryFortress.bossHints}
         keybearerHintsAtom={sanctuaryFortress.keybearerHints}
+        translatorHintsAtom={sanctuaryFortress.translatorHints}
         className="border-l-2 border-sky-600"
       />
     </div>

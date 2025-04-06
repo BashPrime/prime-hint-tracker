@@ -32,10 +32,12 @@ import {
 import {
   torvusBossHintsState,
   torvusKeybearerHintsState,
+  torvusTranslatorHintsState,
 } from "./prime2/Torvus.states";
 import {
   sanctuaryBossHintsState,
   sanctuaryKeybearerHintsState,
+  sanctuaryTranslatorHintsState,
 } from "./prime2/Sanctuary.states";
 
 export const keybearerHintsNamesAtom = atom({
@@ -71,7 +73,7 @@ export const keybearerHintsNamesAtom = atom({
     lightWorld: "Dynamo Works",
     darkWorld: "Hive Dynamo Works",
   },
-  sancEntrance: {
+  sanctuaryEntrance: {
     lightWorld: "Sanctuary Entrance",
     darkWorld: "Hive Entrance",
   },
@@ -94,8 +96,8 @@ export const translatorHintsNamesAtom = atom({
   catacombs: "Catacombs",
   gatheringHall: "Gathering Hall",
   trainingChamber: "Training Chamber",
-  sancEnergyController: "Sanctuary Energy Controller",
-  sancEntrance: "Sanctuary Entrance",
+  sanctuaryEnergyController: "Sanctuary Energy Controller",
+  sanctuaryEntrance: "Sanctuary Entrance",
   hallOfCombatMastery: "Hall of Combat Mastery",
   mainGyroChamber: "Main Gyro Chamber",
   mainResearch: "Main Research",
@@ -108,26 +110,28 @@ export const regionHintsAtomsSelector = atom({
     variant: "temple",
     bossHints: templeBossHintsState,
     keybearerHints: templeKeybearerHintsState,
-    translatorHints: templeTranslatorHintsState
+    translatorHints: templeTranslatorHintsState,
   },
   agonWastes: {
     name: "Agon Wastes",
     variant: "agon",
     bossHints: agonBossHintsState,
     keybearerHints: agonKeybearerHintsState,
-    translatorHints: agonTranslatorHintsState
+    translatorHints: agonTranslatorHintsState,
   },
   torvusBog: {
     name: "Torvus Bog",
     variant: "torvus",
     bossHints: torvusBossHintsState,
     keybearerHints: torvusKeybearerHintsState,
+    translatorHints: torvusTranslatorHintsState,
   },
   sanctuaryFortress: {
     name: "Sanctuary Fortress",
     variant: "sanctuary",
     bossHints: sanctuaryBossHintsState,
     keybearerHints: sanctuaryKeybearerHintsState,
+    translatorHints: sanctuaryTranslatorHintsState,
   },
 });
 

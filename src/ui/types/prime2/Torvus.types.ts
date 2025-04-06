@@ -3,6 +3,7 @@ import {
   BossKeyHintsSchema,
   KeybearerHintSchema,
   NewBossHintSchema,
+  NewTranslatorHintSchema,
 } from "../Prime2.types";
 
 export const TorvusBossHintsSchema = z.object({
@@ -17,3 +18,13 @@ export const TorvusKeybearerHintsSchema = z.object({
   catacombs: KeybearerHintSchema,
 });
 export type TorvusKeybearerHints = z.infer<typeof TorvusKeybearerHintsSchema>;
+
+export const TorvusTranslatorHintsSchema = z.object({
+  torvusEnergyController: NewTranslatorHintSchema,
+  pathOfRoots: NewTranslatorHintSchema,
+  undergroundTunnel: NewTranslatorHintSchema,
+  catacombs: NewTranslatorHintSchema,
+  gatheringHall: NewTranslatorHintSchema,
+  trainingChamber: NewTranslatorHintSchema,
+});
+export type TorvusTranslatorHints = z.infer<typeof TorvusTranslatorHintsSchema>;
