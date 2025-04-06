@@ -1,6 +1,4 @@
 import {
-  BossHintsSchema,
-  KeybearerHintSchema,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,

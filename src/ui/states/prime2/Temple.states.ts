@@ -2,7 +2,6 @@ import {
   KeybearerHint,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
-  NewTranslatorHintSchema,
 } from "@/types/Prime2.types";
 import {
   TempleBossHints,
