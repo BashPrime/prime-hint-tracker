@@ -5,6 +5,9 @@ import {
   torvusHintsState,
   prime2UnhintedItemOptionsSelector,
   prime2UnhintedLocationOptionsSelector,
+  regionHintsState,
+  templeKeybearerHintsState,
+  readWriteTempleKeybearerHintsAtom,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
@@ -14,6 +17,7 @@ import { useAtomValue } from "jotai";
 
 export default function Prime2Layout() {
   // !STATE
+  const regionHints = useAtomValue(regionHintsState)
   const unhintedItemOptions = useAtomValue(prime2UnhintedItemOptionsSelector);
   const unhintedLocationOptions = useAtomValue(prime2UnhintedLocationOptionsSelector);
 
@@ -34,10 +38,11 @@ export default function Prime2Layout() {
       </div>
       <Region
         name="Temple Grounds"
+        keybearerHintsAtom={readWriteTempleKeybearerHintsAtom}
         atom={templeGroundsHintsState}
         className="border-l-2 border-violet-600"
       />
-      <Region
+      {/* <Region
         name="Agon Wastes"
         atom={agonHintsState}
         className="border-l-2 border-amber-600"
@@ -51,7 +56,7 @@ export default function Prime2Layout() {
         name="Sanctuary Fortress"
         atom={sanctuaryHintsState}
         className="border-l-2 border-sky-600"
-      />
+      /> */}
     </div>
   );
 }

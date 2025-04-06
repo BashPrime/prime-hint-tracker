@@ -11,30 +11,40 @@ import {
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { legacyHintsEnabledState } from "@/states/App.states";
-import { keybearerRoomsState } from "@/states/Prime2.states";
-import { KeybearerHint } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
+import {
+  keybearerHintsNamesAtom,
+  keybearerRoomsState,
+} from "@/states/Prime2.states";
+import {
+  KeybearerHint,
+  KeybearerHintsUpdate,
+  NewRegionKeybearerHints,
+} from "@/types/Prime2.types";
+import { useAtom, useAtomValue, WritableAtom } from "jotai";
 import { Check } from "lucide-react";
 
-type UpdateValue = {
-  value?: string;
-  checked?: boolean;
-};
-
 type HintProps = {
-  hint: KeybearerHint;
-  onUpdate: (update: UpdateValue) => void;
+  value: KeybearerHint;
+  onUpdate: (update: KeybearerHint) => void;
+  lightWorldName?: string;
+  darkWorldName?: string;
   className?: string;
 };
 
-function Hint({ hint, onUpdate, className }: HintProps) {
+function Hint({
+  value,
+  onUpdate,
+  lightWorldName,
+  darkWorldName,
+  className,
+}: HintProps) {
   // !STATE
   const legacyHintsEnabled = useAtomValue(legacyHintsEnabledState);
   const keybearerRooms = useAtomValue(keybearerRoomsState);
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onUpdate({ checked: !hint.checked })
+    onUpdate({ ...value, checked: !value.checked })
   );
 
   // !LOCAL
@@ -60,7 +70,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       className={cn(
         "bg-zinc-800 p-2",
         className,
-        hint.checked && "bg-green-900"
+        value.checked && "bg-green-900"
       )}
     >
       <div className="flex flex-row justify-between">
@@ -71,34 +81,37 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         >
           {(keybearerRooms === "aether" || keybearerRooms === "both") && (
             <p
-              className={cn("text-[#4fa0ff]", hint.checked && "text-green-400")}
+              className={cn(
+                "text-[#4fa0ff]",
+                value.checked && "text-green-400"
+              )}
             >
-              {hint.lightWorldLocation}
+              {lightWorldName}
             </p>
           )}
           {(keybearerRooms === "darkAether" || keybearerRooms === "both") && (
             <p
               className={cn(
                 "text-violet-400",
-                hint.checked && "text-indigo-200"
+                value.checked && "text-indigo-200"
               )}
             >
-              {hint.darkWorldLocation}
+              {darkWorldName}
             </p>
           )}
         </div>
         <Check
           className={cn(
             "flex-none w-3 h-3 text-green-300",
-            !hint.checked && "opacity-0"
+            !value.checked && "opacity-0"
           )}
         />
       </div>
       <AutoComplete
         placeholder="Item"
         emptyMessage="No item found."
-        value={{ label: hint.value, value: hint.value }}
-        onInputChange={(value) => onUpdate({ value })}
+        value={{ label: value.item, value: value.item }}
+        onInputChange={(item) => onUpdate({ ...value, item })}
         options={optionsToUse}
         tabIndex={1}
       />
@@ -107,7 +120,11 @@ function Hint({ hint, onUpdate, className }: HintProps) {
 }
 
 type Props = {
-  atom: PrimitiveAtom<KeybearerHint[]>;
+  atom: WritableAtom<
+    NewRegionKeybearerHints,
+    [update: KeybearerHintsUpdate],
+    void
+  >;
   variant: string;
   className?: string;
 };
@@ -115,37 +132,46 @@ type Props = {
 export default function KeybearerHints({ atom, variant, className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(atom);
+  const names = useAtomValue(keybearerHintsNamesAtom);
 
   // !FUNCTION
-  function updateHint(id: number, update: UpdateValue) {
-    setHints((prev) => {
-      const newHints = [...prev];
-      return newHints.map((hint) => {
-        if (hint.id === id) {
-          return {
-            ...hint,
-            ...update,
-          };
-        }
+  function buildHintsEntries(hints: NewRegionKeybearerHints) {
+    const final = [];
+    const entries = Object.entries(hints);
 
-        return { ...hint };
+    for (const [key, value] of entries) {
+      const namesMatch = names[key as keyof typeof names];
+      final.push({
+        key,
+        value,
+        lightWorld: namesMatch.lightWorld,
+        darkWorld: namesMatch.darkWorld,
       });
-    });
+    }
+
+    return final;
   }
+
+  // !LOCAL
+  const hintsEntries = buildHintsEntries(hints);
 
   return (
     <div
       className={cn("sm:grid sm:grid-cols-none md:grid-cols-2", className)}
       data-name="flying-ing-cache-hints"
     >
-      {hints.map((hint, idx) => (
-        <Hint
-          hint={hint}
-          onUpdate={(update) => updateHint(hint.id, update)}
-          key={`${variant}-cache-${idx}`}
-          className="border-b md:border-r border-zinc-900"
-        />
-      ))}
+      {hintsEntries.map((hint, idx) => {
+        return (
+          <Hint
+            lightWorldName={hint.lightWorld}
+            darkWorldName={hint.darkWorld}
+            value={hint.value}
+            onUpdate={(update) => setHints([hint.key, update])}
+            key={`${variant}-cache-${idx}`}
+            className="border-b md:border-r border-zinc-900"
+          />
+        );
+      })}
     </div>
   );
 }

@@ -1,12 +1,22 @@
 import {
   BossHintsSchema,
+  BossKeyHintsSchema,
+  KeybearerHint,
   KeybearerHintSchema,
+  KeybearerHintsUpdate,
+  KeybearerHintsUpdateSchema,
+  KeybearerHintsWithNames,
+  NewRegionHints,
+  NewRegionHintsSchema,
+  NewRegionKeybearerHints,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
+  TempleKeybearerHints,
+  TempleKeybearerHintsSchema,
   TranslatorHintSchema,
 } from "@/types/Prime2.types";
-import { atom } from "jotai";
+import { atom, WritableAtom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 import { KeybearerRooms } from "src/shared/types";
 import { legacyHintsEnabledState, unhintedItemsState } from "./App.states";
@@ -20,6 +30,68 @@ import {
   PRIME_2_PROGRESSIVE_MAJORS,
 } from "@/data/Prime2.data";
 
+export const keybearerHintsNamesAtom = atom({
+  industrialSite: {
+    lightWorld: "Industrial Site",
+    darkWorld: "Accursed Lake",
+  },
+  landingSite: {
+    lightWorld: "Landing Site",
+    darkWorld: "Defiled Shrine",
+  },
+  storageCavernA: {
+    lightWorld: "Storage Cavern A",
+    darkWorld: "Ing Reliquary",
+  },
+});
+
+export const templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
+  TempleKeybearerHintsSchema.parse({
+    industrialSite: {},
+    landingSite: {},
+    storageCavernA: {},
+  })
+);
+
+export const readWriteTempleKeybearerHintsAtom = atom<
+  NewRegionKeybearerHints,
+  [update: KeybearerHintsUpdate],
+  void
+>(
+  (get) => get(templeKeybearerHintsState),
+  (get, set, update: [string, KeybearerHint]) => {
+    const updated = { ...get(templeKeybearerHintsState) };
+    const [key, value] = update;
+    updated[key as keyof TempleKeybearerHints] = value;
+    set(templeKeybearerHintsState, updated);
+  }
+);
+
+export const regionHintsState = atomWithReset<NewRegionHints>(
+  NewRegionHintsSchema.parse({
+    "Temple Grounds": {
+      boss: {
+        name: "U-Mos Reward",
+        keys: undefined,
+      },
+      keybearerHints: {
+        industrialSite: {
+          lightWorldLocation: "Industrial Site",
+          darkWorldLocation: "Accursed Lake",
+        },
+        landingSite: {
+          lightWorldLocation: "Landing Site",
+          darkWorldLocation: "Defiled Shrine",
+        },
+        storageCavernA: {
+          lightWorldLocation: "Storage Cavern A",
+          darkWorldLocation: "Ing Reliquary",
+        },
+      },
+    },
+  })
+);
+
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
   bossHints: BossHintsSchema.parse({
@@ -27,17 +99,14 @@ export const templeGroundsHintsState = atomWithReset<RegionHints>({
   }),
   keybearerHints: [
     KeybearerHintSchema.parse({
-      id: 1,
       lightWorldLocation: "Industrial Site",
       darkWorldLocation: "Accursed Lake",
     }),
     KeybearerHintSchema.parse({
-      id: 2,
       lightWorldLocation: "Landing Site",
       darkWorldLocation: "Defiled Shrine",
     }),
     KeybearerHintSchema.parse({
-      id: 3,
       lightWorldLocation: "Storage Cavern A",
       darkWorldLocation: "Ing Reliquary",
     }),
