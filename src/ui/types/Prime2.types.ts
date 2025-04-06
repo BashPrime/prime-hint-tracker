@@ -30,12 +30,17 @@ export const BossKeyHintSchema = z.object({
 export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
 export const BossHintsSchema = z.object({
-  name: z.string(),
-  item: z.string().default(""),
-  checked: z.boolean().default(false),
-  keys: z.array(BossKeyHintSchema).default([]),
+  item: NewBossHintSchema.shape.item,
+  checked: NewBossHintSchema.shape.checked,
+  keys: BossKeyHintsSchema,
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
+
+export const BossHintsNoKeysSchema = z.object({
+  item: NewBossHintSchema.shape.item,
+  checked: NewBossHintSchema.shape.checked,
+});
+export type BossHintsNoKeys = z.infer<typeof BossHintsNoKeysSchema>;
 
 export const KeybearerHintSchema = z.object({
   item: z.string().default(""),
@@ -53,53 +58,18 @@ export const TranslatorHintSchema = z.object({
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
+export const BossHintsUpdateSchema = z.tuple([
+  z.string(),
+  z.union([BossHintsSchema, BossHintsNoKeysSchema]),
+]);
+export type BossHintsUpdate = z.infer<typeof BossHintsUpdateSchema>;
+
 export const NewRegionKeybearerHintsSchema = z.record(
   z.string(),
   KeybearerHintSchema
 );
 export type NewRegionKeybearerHints = z.infer<
   typeof NewRegionKeybearerHintsSchema
->;
-
-export const TempleKeybearerHintsSchema = z.object({
-  industrialSite: KeybearerHintSchema,
-  landingSite: KeybearerHintSchema,
-  storageCavernA: KeybearerHintSchema,
-});
-export type TempleKeybearerHints = z.infer<typeof TempleKeybearerHintsSchema>;
-
-export const AgonKeybearerHintsSchema = z.object({
-  centralMiningStation: KeybearerHintSchema,
-  mainReactor: KeybearerHintSchema,
-});
-export type AgonKeybearerHints = z.infer<typeof AgonKeybearerHintsSchema>;
-
-export const TorvusKeybearerHintsSchema = z.object({
-  torvusLagoon: KeybearerHintSchema,
-  catacombs: KeybearerHintSchema,
-});
-export type TorvusKeybearerHints = z.infer<typeof TorvusKeybearerHintsSchema>;
-
-export const SanctuaryKeybearerHintsSchema = z.object({
-  sancEntrance: KeybearerHintSchema,
-  dynamoWorks: KeybearerHintSchema,
-});
-export type SanctuaryKeybearerHints = z.infer<
-  typeof SanctuaryKeybearerHintsSchema
->;
-
-export const KeybearerHintsWithNamesSchema = z.object({
-  hints: NewRegionKeybearerHintsSchema,
-  names: z.record(
-    z.string(),
-    z.object({
-      lightWorld: z.string(),
-      darkWorld: z.string(),
-    })
-  ),
-});
-export type KeybearerHintsWithNames = z.infer<
-  typeof KeybearerHintsWithNamesSchema
 >;
 
 export const KeybearerHintsUpdateSchema = z.tuple([

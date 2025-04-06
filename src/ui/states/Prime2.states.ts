@@ -19,10 +19,13 @@ import {
   PRIME_2_PICKUP_FEATURES,
   PRIME_2_PROGRESSIVE_MAJORS,
 } from "@/data/Prime2.data";
-import { templeKeybearerHintsState } from "./prime2/Temple.states";
-import { agonKeybearerHintsState } from "./prime2/Agon.states";
-import { torvusKeybearerHintsState } from "./prime2/Torvus.states";
-import { sanctuaryKeybearerHintsState } from "./prime2/Sanctuary.states";
+import {
+  templeBossHintsState,
+  templeKeybearerHintsState,
+} from "./prime2/Temple.states";
+import { agonBossHintsState, agonKeybearerHintsState } from "./prime2/Agon.states";
+import { torvusBossHintsState, torvusKeybearerHintsState } from "./prime2/Torvus.states";
+import { sanctuaryBossHintsState, sanctuaryKeybearerHintsState } from "./prime2/Sanctuary.states";
 
 export const keybearerHintsNamesAtom = atom({
   industrialSite: {
@@ -65,15 +68,19 @@ export const keybearerHintsNamesAtom = atom({
 
 export const regionHintsAtomsSelector = atom({
   templeGrounds: {
+    bossHints: templeBossHintsState,
     keybearerHints: templeKeybearerHintsState,
   },
   agonWastes: {
+    bossHints: agonBossHintsState,
     keybearerHints: agonKeybearerHintsState,
   },
   torvusBog: {
+    bossHints: torvusBossHintsState,
     keybearerHints: torvusKeybearerHintsState,
   },
   sanctuaryFortress: {
+    bossHints: sanctuaryBossHintsState,
     keybearerHints: sanctuaryKeybearerHintsState,
   },
 });

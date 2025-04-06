@@ -1,12 +1,20 @@
 import {
+  BossHintsNoKeys,
+  BossHintsNoKeysSchema,
   KeybearerHint,
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
+} from "@/types/Prime2.types";
+import {
   TempleKeybearerHints,
   TempleKeybearerHintsSchema,
-} from "@/types/Prime2.types";
+} from "@/types/prime2/Temple.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
+
+export const templeBossHintsState = atomWithReset<BossHintsNoKeys>(
+  BossHintsNoKeysSchema.parse({})
+);
 
 const _templeKeybearerHintsState = atomWithReset<TempleKeybearerHints>(
   TempleKeybearerHintsSchema.parse({
