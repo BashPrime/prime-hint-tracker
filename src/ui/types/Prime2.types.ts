@@ -51,12 +51,6 @@ export const TranslatorHintSchema = z.object({
 });
 export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
-export const BossHintsUpdateSchema = z.tuple([
-  z.string(),
-  z.union([BossHintsSchema, BossHintsNoKeysSchema]),
-]);
-export type BossHintsUpdate = z.infer<typeof BossHintsUpdateSchema>;
-
 export const NewRegionKeybearerHintsSchema = z.record(
   z.string(),
   KeybearerHintSchema
