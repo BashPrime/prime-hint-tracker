@@ -99,5 +99,25 @@ export const RegionHintsSchema = z.object({
 });
 export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
+export const NewSkyTempleKeyHintSchema = z.object({
+  id: z.number(),
+  location: EmptyStringSchema,
+  checked: CheckedSchema,
+});
+export type NewSkyTempleKeyHint = z.infer<typeof NewSkyTempleKeyHintSchema>;
+
+export const NewSkyTempleKeyHintsSchema = z.object({
+  "Key 1": NewSkyTempleKeyHintSchema,
+  "Key 2": NewSkyTempleKeyHintSchema,
+  "Key 3": NewSkyTempleKeyHintSchema,
+  "Key 4": NewSkyTempleKeyHintSchema,
+  "Key 5": NewSkyTempleKeyHintSchema,
+  "Key 6": NewSkyTempleKeyHintSchema,
+  "Key 7": NewSkyTempleKeyHintSchema,
+  "Key 8": NewSkyTempleKeyHintSchema,
+  "Key 9": NewSkyTempleKeyHintSchema,
+});
+export type NewSkyTempleKeyHints = z.infer<typeof NewSkyTempleKeyHintsSchema>;
+
 export const SkyTempleKeyHintSchema = EndgameHintSchema;
 export type SkyTempleKeyHint = EndgameHint;
