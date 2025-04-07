@@ -1,6 +1,5 @@
 import {
   NewRegionHints,
-  NewRegionHints,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
@@ -399,10 +398,10 @@ export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
 ]);
 
 export const prime2TrackerSelector = atom((get) => {
-  const templeHints = get(templeGroundsHintsState);
-  const agonHints = get(agonHintsState);
-  const torvusHints = get(torvusHintsState);
-  const sanctuaryHints = get(sanctuaryHintsState);
+  const templeHints = get(templeHintsSelector);
+  const agonHints = get(agonHintsSelector);
+  const torvusHints = get(torvusHintsSelector);
+  const sanctuaryHints = get(sanctuaryHintsSelector);
   const unhintedItems = get(unhintedItemsState);
   const skyTempleKeys = get(skyTempleKeyHintsState);
 
