@@ -37,7 +37,7 @@ export function useGameTrackerHandler() {
       case "echoes":
         prime2Tracker.reset();
         break;
-      case "echoes":
+      case "corruption":
         prime3Tracker.reset();
         break;
     }
