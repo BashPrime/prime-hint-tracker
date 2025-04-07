@@ -1,5 +1,6 @@
 import {
   NewRegionHints,
+  NewRegionHints,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
@@ -38,7 +39,27 @@ import {
   sanctuaryKeybearerHintsState,
   sanctuaryTranslatorHintsState,
 } from "./prime2/Sanctuary.states";
-import { TempleBossHints, TempleBossHintsSchema, TempleKeybearerHintsSchema, TempleTranslatorHintsSchema } from "@/types/prime2/Temple.types";
+import {
+  TempleBossHints,
+  TempleBossHintsSchema,
+  TempleKeybearerHintsSchema,
+  TempleTranslatorHintsSchema,
+} from "@/types/prime2/Temple.types";
+import {
+  AgonBossHintsSchema,
+  AgonKeybearerHintsSchema,
+  AgonTranslatorHintsSchema,
+} from "@/types/prime2/Agon.types";
+import {
+  TorvusBossHintsSchema,
+  TorvusKeybearerHintsSchema,
+  TorvusTranslatorHintsSchema,
+} from "@/types/prime2/Torvus.types";
+import {
+  SanctuaryBossHintsSchema,
+  SanctuaryKeybearerHintsSchema,
+  SanctuaryTranslatorHintsSchema,
+} from "@/types/prime2/Sanctuary.types";
 
 export const keybearerRoomsState = atom<KeybearerRooms>("both");
 
@@ -138,9 +159,9 @@ export const regionHintsAtomsSelector = atom({
 });
 
 export const templeHintsSelector = atom<
-  NewRegionHints
-  // [update: NewRegionHints],
-  // void
+  NewRegionHints,
+  [update: NewRegionHints],
+  void
 >(
   (get) => {
     const bossHints = get(templeBossHintsState);
@@ -153,48 +174,108 @@ export const templeHintsSelector = atom<
       translatorHints: translatorHints,
     };
   },
-  // (get, set, update: NewRegionHints) => {
-  //   set(templeBossHintsState, TempleBossHintsSchema.parse(update.bossHints));
-  //   set(templeKeybearerHintsState, TempleKeybearerHintsSchema.parse(update.keybearerHints));
-  //   set(templeTranslatorHintsState, TempleTranslatorHintsSchema.parse(update.translatorHints));
-  // }
+  (_, set, update: NewRegionHints) => {
+    set(templeBossHintsState, TempleBossHintsSchema.parse(update.bossHints));
+    set(
+      templeKeybearerHintsState,
+      TempleKeybearerHintsSchema.parse(update.keybearerHints)
+    );
+    set(
+      templeTranslatorHintsState,
+      TempleTranslatorHintsSchema.parse(update.translatorHints)
+    );
+  }
 );
 
-export const agonHintsSelector = atom<NewRegionHints>((get) => {
-  const bossHints = get(agonBossHintsState);
-  const keybearerHints = get(agonKeybearerHintsState);
-  const translatorHints = get(agonTranslatorHintsState);
+export const agonHintsSelector = atom<
+  NewRegionHints,
+  [update: NewRegionHints],
+  void
+>(
+  (get) => {
+    const bossHints = get(agonBossHintsState);
+    const keybearerHints = get(agonKeybearerHintsState);
+    const translatorHints = get(agonTranslatorHintsState);
 
-  return {
-    bossHints: bossHints,
-    keybearerHints: keybearerHints,
-    translatorHints: translatorHints,
-  };
-});
+    return {
+      bossHints: bossHints,
+      keybearerHints: keybearerHints,
+      translatorHints: translatorHints,
+    };
+  },
+  (_, set, update: NewRegionHints) => {
+    set(agonBossHintsState, AgonBossHintsSchema.parse(update.bossHints));
+    set(
+      agonKeybearerHintsState,
+      AgonKeybearerHintsSchema.parse(update.keybearerHints)
+    );
+    set(
+      agonTranslatorHintsState,
+      AgonTranslatorHintsSchema.parse(update.translatorHints)
+    );
+  }
+);
 
-export const torvusHintsSelector = atom<NewRegionHints>((get) => {
-  const bossHints = get(torvusBossHintsState);
-  const keybearerHints = get(torvusKeybearerHintsState);
-  const translatorHints = get(torvusTranslatorHintsState);
+export const torvusHintsSelector = atom<
+  NewRegionHints,
+  [update: NewRegionHints],
+  void
+>(
+  (get) => {
+    const bossHints = get(torvusBossHintsState);
+    const keybearerHints = get(torvusKeybearerHintsState);
+    const translatorHints = get(torvusTranslatorHintsState);
 
-  return {
-    bossHints: bossHints,
-    keybearerHints: keybearerHints,
-    translatorHints: translatorHints,
-  };
-});
+    return {
+      bossHints: bossHints,
+      keybearerHints: keybearerHints,
+      translatorHints: translatorHints,
+    };
+  },
+  (_, set, update: NewRegionHints) => {
+    set(torvusBossHintsState, TorvusBossHintsSchema.parse(update.bossHints));
+    set(
+      torvusKeybearerHintsState,
+      TorvusKeybearerHintsSchema.parse(update.keybearerHints)
+    );
+    set(
+      torvusTranslatorHintsState,
+      TorvusTranslatorHintsSchema.parse(update.translatorHints)
+    );
+  }
+);
 
-export const sanctuaryHintsSelector = atom<NewRegionHints>((get) => {
-  const bossHints = get(sanctuaryBossHintsState);
-  const keybearerHints = get(sanctuaryKeybearerHintsState);
-  const translatorHints = get(sanctuaryTranslatorHintsState);
+export const sanctuaryHintsSelector = atom<
+  NewRegionHints,
+  [update: NewRegionHints],
+  void
+>(
+  (get) => {
+    const bossHints = get(sanctuaryBossHintsState);
+    const keybearerHints = get(sanctuaryKeybearerHintsState);
+    const translatorHints = get(sanctuaryTranslatorHintsState);
 
-  return {
-    bossHints: bossHints,
-    keybearerHints: keybearerHints,
-    translatorHints: translatorHints,
-  };
-});
+    return {
+      bossHints: bossHints,
+      keybearerHints: keybearerHints,
+      translatorHints: translatorHints,
+    };
+  },
+  (_, set, update: NewRegionHints) => {
+    set(
+      sanctuaryBossHintsState,
+      SanctuaryBossHintsSchema.parse(update.bossHints)
+    );
+    set(
+      sanctuaryKeybearerHintsState,
+      SanctuaryKeybearerHintsSchema.parse(update.keybearerHints)
+    );
+    set(
+      sanctuaryTranslatorHintsState,
+      SanctuaryTranslatorHintsSchema.parse(update.translatorHints)
+    );
+  }
+);
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
   variant: "temple",
