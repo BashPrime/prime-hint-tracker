@@ -79,6 +79,13 @@ const template: MenuItemConstructorOptions[] = [
         checked: false,
         click: () => toggleGame(GameSchema.enum.echoes),
       },
+      {
+        label: "Metroid Prime 3: Corruption",
+        id: GameSchema.enum.corruption,
+        type: "radio",
+        checked: false,
+        click: () => toggleGame(GameSchema.enum.corruption),
+      },
     ],
   },
   {
