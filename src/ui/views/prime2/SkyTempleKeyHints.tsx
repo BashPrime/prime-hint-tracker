@@ -7,22 +7,22 @@ import {
   updateSkyTempleKeyHintAtom,
 } from "@/states/Prime2.states";
 import {
-  NewSkyTempleKeyHint,
-  NewSkyTempleKeyHints,
+  SkyTempleKeyHint,
+  SkyTempleKeyHints as SkyTempleKeyHintsType,
 } from "@/types/Prime2.types";
 import { useAtomValue, useSetAtom } from "jotai";
 import { Check } from "lucide-react";
 
 type HintProps = {
   name: string;
-  value: NewSkyTempleKeyHint;
+  value: SkyTempleKeyHint;
   className?: string;
 };
 
 function Hint({ name, value, className }: HintProps) {
   // !STATE
   const updateSkyTempleKey = useSetAtom(updateSkyTempleKeyHintAtom);
-  const stkKey = name as keyof NewSkyTempleKeyHints;
+  const stkKey = name as keyof SkyTempleKeyHintsType;
   // !HOOKS
   const handleRightClick = useRightClick(() =>
     updateSkyTempleKey([stkKey, { ...value, checked: !value.checked }])
@@ -89,7 +89,7 @@ export default function SkyTempleKeyHints({ className }: Props) {
           <Hint
             name={stkHint.key}
             value={stkHint.value}
-            key={`stk-${stkHint.value.id}`}
+            key={`stk-${stkHint.id}`}
             className="border-b md:border-r border-zinc-900"
           />
         ))}

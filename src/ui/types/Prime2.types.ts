@@ -99,24 +99,21 @@ export const RegionHintsSchema = z.object({
 });
 export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
-export const NewSkyTempleKeyHintSchema = z.object({
+export const SkyTempleKeyHintSchema = z.object({
   location: EmptyStringSchema,
   checked: CheckedSchema,
 });
-export type NewSkyTempleKeyHint = z.infer<typeof NewSkyTempleKeyHintSchema>;
+export type SkyTempleKeyHint = z.infer<typeof SkyTempleKeyHintSchema>;
 
-export const NewSkyTempleKeyHintsSchema = z.object({
-  "Key 1": NewSkyTempleKeyHintSchema,
-  "Key 2": NewSkyTempleKeyHintSchema,
-  "Key 3": NewSkyTempleKeyHintSchema,
-  "Key 4": NewSkyTempleKeyHintSchema,
-  "Key 5": NewSkyTempleKeyHintSchema,
-  "Key 6": NewSkyTempleKeyHintSchema,
-  "Key 7": NewSkyTempleKeyHintSchema,
-  "Key 8": NewSkyTempleKeyHintSchema,
-  "Key 9": NewSkyTempleKeyHintSchema,
+export const SkyTempleKeyHintsSchema = z.object({
+  "Key 1": SkyTempleKeyHintSchema,
+  "Key 2": SkyTempleKeyHintSchema,
+  "Key 3": SkyTempleKeyHintSchema,
+  "Key 4": SkyTempleKeyHintSchema,
+  "Key 5": SkyTempleKeyHintSchema,
+  "Key 6": SkyTempleKeyHintSchema,
+  "Key 7": SkyTempleKeyHintSchema,
+  "Key 8": SkyTempleKeyHintSchema,
+  "Key 9": SkyTempleKeyHintSchema,
 });
-export type NewSkyTempleKeyHints = z.infer<typeof NewSkyTempleKeyHintsSchema>;
-
-export const SkyTempleKeyHintSchema = EndgameHintSchema;
-export type SkyTempleKeyHint = EndgameHint;
+export type SkyTempleKeyHints = z.infer<typeof SkyTempleKeyHintsSchema>;

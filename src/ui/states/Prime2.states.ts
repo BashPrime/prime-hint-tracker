@@ -1,11 +1,9 @@
 import {
   NewRegionHints,
-  NewSkyTempleKeyHint,
-  NewSkyTempleKeyHints,
-  NewSkyTempleKeyHintsSchema,
-  RegionHints,
   SkyTempleKeyHint,
-  SkyTempleKeyHintSchema,
+  SkyTempleKeyHints,
+  SkyTempleKeyHintsSchema,
+  RegionHints,
   TranslatorHintSchema,
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
@@ -388,8 +386,8 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
   ],
 });
 
-export const newSkyTempleKeyHintsState = atomWithReset<NewSkyTempleKeyHints>(
-  NewSkyTempleKeyHintsSchema.parse({
+export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHints>(
+  SkyTempleKeyHintsSchema.parse({
     "Key 1": {},
     "Key 2": {},
     "Key 3": {},
@@ -403,17 +401,17 @@ export const newSkyTempleKeyHintsState = atomWithReset<NewSkyTempleKeyHints>(
 );
 
 export const updateSkyTempleKeyHintAtom = atom(
-  (get) => get(newSkyTempleKeyHintsState),
-  (get, set, update: [keyof NewSkyTempleKeyHints, NewSkyTempleKeyHint]) => {
+  (get) => get(skyTempleKeyHintsState),
+  (get, set, update: [keyof SkyTempleKeyHints, SkyTempleKeyHint]) => {
     const [key, value] = update;
-    const updated = { ...get(newSkyTempleKeyHintsState) };
+    const updated = { ...get(skyTempleKeyHintsState) };
     updated[key] = value;
-    set(newSkyTempleKeyHintsState, updated);
+    set(skyTempleKeyHintsState, updated);
   }
 );
 
 export const skyTempleKeyHintsArraySelector = atom((get) => {
-  const stkHints = get(newSkyTempleKeyHintsState);
+  const stkHints = get(skyTempleKeyHintsState);
   return Object.entries(stkHints)
     .map(([key, value], idx) => ({
       key,
@@ -423,25 +421,13 @@ export const skyTempleKeyHintsArraySelector = atom((get) => {
     .sort((a, b) => a.id - b.id);
 });
 
-export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([
-  SkyTempleKeyHintSchema.parse({ id: 1, name: "Key 1" }),
-  SkyTempleKeyHintSchema.parse({ id: 2, name: "Key 2" }),
-  SkyTempleKeyHintSchema.parse({ id: 3, name: "Key 3" }),
-  SkyTempleKeyHintSchema.parse({ id: 4, name: "Key 4" }),
-  SkyTempleKeyHintSchema.parse({ id: 5, name: "Key 5" }),
-  SkyTempleKeyHintSchema.parse({ id: 6, name: "Key 6" }),
-  SkyTempleKeyHintSchema.parse({ id: 7, name: "Key 7" }),
-  SkyTempleKeyHintSchema.parse({ id: 8, name: "Key 8" }),
-  SkyTempleKeyHintSchema.parse({ id: 9, name: "Key 9" }),
-]);
-
 export const prime2TrackerSelector = atom((get) => {
   const templeHints = get(templeHintsSelector);
   const agonHints = get(agonHintsSelector);
   const torvusHints = get(torvusHintsSelector);
   const sanctuaryHints = get(sanctuaryHintsSelector);
   const unhintedItems = get(unhintedItemsState);
-  const skyTempleKeys = get(newSkyTempleKeyHintsState);
+  const skyTempleKeys = get(skyTempleKeyHintsState);
 
   return {
     regions: {
