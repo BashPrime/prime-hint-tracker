@@ -116,7 +116,7 @@ const template: MenuItemConstructorOptions[] = [
             label: "Room Name",
             type: "radio",
             checked: false,
-            click: (e) =>
+            click: () =>
               togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
           },
         ],

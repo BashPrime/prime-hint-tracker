@@ -3,7 +3,7 @@ import path from "path";
 import { isDev } from "./util.js";
 import { createMainWindow } from "./window.js";
 import { readAppConfigFile } from "./config.js";
-import { AppConfig, Toggles } from "../shared/types.js";
+import { Toggles } from "../shared/types.js";
 import { menu } from "./menu.js";
 import { MENU_IDS } from "./data.js";
 import {
