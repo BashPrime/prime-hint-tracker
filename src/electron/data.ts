@@ -50,8 +50,8 @@ export const WINDOW_SIZE: WindowSize = {
     height: 600,
   },
   corruption: {
-    width: 1024,
-    height: 768,
+    width: 640,
+    height: 600,
   },
   default: {
     width: 640,
