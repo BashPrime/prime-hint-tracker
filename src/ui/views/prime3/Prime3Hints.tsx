@@ -1,8 +1,5 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import {
-  PRIME_3_ALL_REGIONS,
-  PRIME_3_LOCATIONS_WITH_ITEMS,
-} from "@/data/Prime3.data";
+import { PRIME_3_ALL_REGIONS } from "@/data/Prime3.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import {
