@@ -1,30 +1,29 @@
 import { unhintedItemsState } from "@/states/App.states";
 import {
-  artifactHintsState,
-  phazonSuitHintState,
-} from "@/states/Prime1.states";
+  hyperGrappleHintState,
+  hyperMissileHintState,
+} from "@/states/Prime3.states";
 import { ItemHintSchema } from "@/types/common.types";
-import { ArtifactHintsSchema } from "@/types/Prime1.types";
 import { useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
 
-export default function usePrime1Tracker() {
+export default function usePrime3Tracker() {
   // !STATE
-  const setArtifactHints = useSetAtom(artifactHintsState);
+  const setHyperMissileHint = useSetAtom(hyperMissileHintState);
+  const setHyperGrappleHint = useSetAtom(hyperGrappleHintState);
   const setUnhintedItems = useSetAtom(unhintedItemsState);
-  const setPhazonSuitHint = useSetAtom(phazonSuitHintState);
-  const resetArtifactHints = useResetAtom(artifactHintsState);
+  const resetHyperMissileHint = useResetAtom(hyperMissileHintState);
+  const resetHyperGrappleHint = useResetAtom(hyperGrappleHintState);
   const resetUnhinted = useResetAtom(unhintedItemsState);
-  const resetPhazonSuitHint = useResetAtom(phazonSuitHintState);
 
   // !FUNCTIONS
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   function set(data: any) {
     try {
       // Load regional hints
-      setArtifactHints(ArtifactHintsSchema.parse(data.artifacts));
-      setPhazonSuitHint(ItemHintSchema.parse(data.phazonSuit));
+      setHyperMissileHint(ItemHintSchema.parse(data.hyperMissile));
+      setHyperGrappleHint(ItemHintSchema.parse(data.hyperGrapple));
       setUnhintedItems(data.unhintedItems);
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -38,8 +37,8 @@ export default function usePrime1Tracker() {
 
   function reset() {
     resetUnhinted();
-    resetArtifactHints();
-    resetPhazonSuitHint();
+    resetHyperMissileHint();
+    resetHyperGrappleHint();
   }
 
   return {

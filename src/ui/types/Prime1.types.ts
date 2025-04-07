@@ -22,9 +22,3 @@ export const ArtifactHintsSchema = z.object({
   Newborn: ArtifactHintSchema,
 });
 export type ArtifactHints = z.infer<typeof ArtifactHintsSchema>;
-
-export const PhazonSuitHintSchema = z.object({
-  location: EmptyStringSchema,
-  checked: CheckedSchema,
-});
-export type PhazonSuitHint = z.infer<typeof PhazonSuitHintSchema>;

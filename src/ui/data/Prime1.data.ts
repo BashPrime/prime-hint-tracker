@@ -30,22 +30,18 @@ export const PRIME_1_EXPANSIONS = [
   "Power Bomb Expansion",
 ] as const;
 
-export const PRIME_1_ALL_REGIONS = [
-  "Frigate Orpheon",
-  "Tallon Overworld",
-  "Chozo Ruins",
-  "Magmoor Caverns",
-  "Phendrana Drifts",
-  "Phazon Mines",
-  "Impact Crater",
-] as const;
-
 export const PRIME_1_REGIONS_WITH_ITEMS = [
   "Tallon Overworld",
   "Chozo Ruins",
   "Magmoor Caverns",
   "Phendrana Drifts",
   "Phazon Mines",
+] as const;
+
+export const PRIME_1_ALL_REGIONS = [
+  "Frigate Orpheon",
+  ...PRIME_1_REGIONS_WITH_ITEMS,
+  "Impact Crater",
 ] as const;
 
 // excludes frigate and impact crater
