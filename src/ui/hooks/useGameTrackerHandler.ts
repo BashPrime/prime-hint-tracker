@@ -2,6 +2,7 @@ import { useAtomValue } from "jotai";
 import usePrime2Tracker from "./trackers/usePrime2Tracker";
 import { currentGameState } from "@/states/App.states";
 import usePrime1Tracker from "./trackers/usePrime1Tracker";
+import usePrime3Tracker from "./trackers/usePrime3Tracker";
 
 export function useGameTrackerHandler() {
   // !STATE
@@ -10,6 +11,7 @@ export function useGameTrackerHandler() {
   // !HOOKS
   const prime1Tracker = usePrime1Tracker();
   const prime2Tracker = usePrime2Tracker();
+  const prime3Tracker = usePrime3Tracker();
 
   // !FUNCTION
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
@@ -21,6 +23,9 @@ export function useGameTrackerHandler() {
       case "echoes":
         prime2Tracker.set(data);
         break;
+      case "corruption":
+        prime3Tracker.set(data);
+        break;
     }
   }
 
@@ -31,6 +36,9 @@ export function useGameTrackerHandler() {
         break;
       case "echoes":
         prime2Tracker.reset();
+        break;
+      case "echoes":
+        prime3Tracker.reset();
         break;
     }
   }

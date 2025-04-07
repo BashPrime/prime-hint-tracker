@@ -6,9 +6,27 @@ import {
 import { createOptions } from "@/lib/utils";
 import { HintOption, ItemHint, ItemHintSchema } from "@/types/common.types";
 import { atom } from "jotai";
+import { atomWithReset } from "jotai/utils";
+import { unhintedItemsState } from "./App.states";
 
-export const hyperMissileHintState = atom<ItemHint>(ItemHintSchema.parse({}));
-export const hyperGrappleHintState = atom<ItemHint>(ItemHintSchema.parse({}));
+export const hyperMissileHintState = atomWithReset<ItemHint>(
+  ItemHintSchema.parse({})
+);
+export const hyperGrappleHintState = atomWithReset<ItemHint>(
+  ItemHintSchema.parse({})
+);
+
+export const prime3TrackerSelector = atom((get) => {
+  const hyperMissile = get(hyperMissileHintState);
+  const hyperGrapple = get(hyperGrappleHintState);
+  const unhintedItems = get(unhintedItemsState);
+
+  return {
+    hyperMissile,
+    hyperGrapple,
+    unhintedItems,
+  };
+});
 
 export const prime3UnhintedItemOptionsSelector = atom<HintOption[]>(
   createOptions(
