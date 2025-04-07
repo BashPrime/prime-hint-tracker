@@ -1,5 +1,8 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import { PRIME_3_LOCATIONS_WITH_ITEMS } from "@/data/Prime3.data";
+import {
+  PRIME_3_ALL_REGIONS,
+  PRIME_3_LOCATIONS_WITH_ITEMS,
+} from "@/data/Prime3.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import {
@@ -18,10 +21,7 @@ type HintProps = {
 };
 export function Hint({ name, value, onUpdate, className }: HintProps) {
   // !LOCAL
-  const locationOptions = createOptions(
-    [...PRIME_3_LOCATIONS_WITH_ITEMS],
-    true
-  );
+  const locationOptions = createOptions([...PRIME_3_ALL_REGIONS], true);
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
