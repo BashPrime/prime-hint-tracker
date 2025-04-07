@@ -1,10 +1,7 @@
 import {
-  agonHintsState,
-  sanctuaryHintsState,
-  templeGroundsHintsState,
-  torvusHintsState,
   prime2UnhintedItemOptionsSelector,
   prime2UnhintedLocationOptionsSelector,
+  regionHintsAtomsSelector,
 } from "@/states/Prime2.states";
 import { cn } from "../../lib/utils";
 import Region from "./region";
@@ -14,8 +11,12 @@ import { useAtomValue } from "jotai";
 
 export default function Prime2Layout() {
   // !STATE
+  const { templeGrounds, agonWastes, torvusBog, sanctuaryFortress } =
+    useAtomValue(regionHintsAtomsSelector);
   const unhintedItemOptions = useAtomValue(prime2UnhintedItemOptionsSelector);
-  const unhintedLocationOptions = useAtomValue(prime2UnhintedLocationOptionsSelector);
+  const unhintedLocationOptions = useAtomValue(
+    prime2UnhintedLocationOptionsSelector
+  );
 
   return (
     <div
@@ -33,23 +34,35 @@ export default function Prime2Layout() {
         />
       </div>
       <Region
-        name="Temple Grounds"
-        atom={templeGroundsHintsState}
+        name={templeGrounds.name}
+        variant={templeGrounds.variant}
+        bossHintsAtom={templeGrounds.bossHints}
+        keybearerHintsAtom={templeGrounds.keybearerHints}
+        translatorHintsAtom={templeGrounds.translatorHints}
         className="border-l-2 border-violet-600"
       />
       <Region
-        name="Agon Wastes"
-        atom={agonHintsState}
+        name={agonWastes.name}
+        variant={agonWastes.variant}
+        bossHintsAtom={agonWastes.bossHints}
+        keybearerHintsAtom={agonWastes.keybearerHints}
+        translatorHintsAtom={agonWastes.translatorHints}
         className="border-l-2 border-amber-600"
       />
       <Region
-        name="Torvus Bog"
-        atom={torvusHintsState}
+        name={torvusBog.name}
+        variant={torvusBog.variant}
+        bossHintsAtom={torvusBog.bossHints}
+        keybearerHintsAtom={torvusBog.keybearerHints}
+        translatorHintsAtom={torvusBog.translatorHints}
         className="border-l-2 border-emerald-600"
       />
       <Region
-        name="Sanctuary Fortress"
-        atom={sanctuaryHintsState}
+        name={sanctuaryFortress.name}
+        variant={sanctuaryFortress.variant}
+        bossHintsAtom={sanctuaryFortress.bossHints}
+        keybearerHintsAtom={sanctuaryFortress.keybearerHints}
+        translatorHintsAtom={sanctuaryFortress.translatorHints}
         className="border-l-2 border-sky-600"
       />
     </div>

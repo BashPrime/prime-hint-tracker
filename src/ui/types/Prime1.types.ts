@@ -1,9 +1,9 @@
 import { z } from "zod";
+import { CheckedSchema, EmptyStringSchema } from "./common.types";
 
 export const ArtifactHintSchema = z.object({
-  id: z.number(),
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
+  location: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type ArtifactHint = z.infer<typeof ArtifactHintSchema>;
 
@@ -24,7 +24,7 @@ export const ArtifactHintsSchema = z.object({
 export type ArtifactHints = z.infer<typeof ArtifactHintsSchema>;
 
 export const PhazonSuitHintSchema = z.object({
-  location: z.string().default(""),
-  checked: z.boolean().default(false),
+  location: EmptyStringSchema,
+  checked: CheckedSchema,
 });
 export type PhazonSuitHint = z.infer<typeof PhazonSuitHintSchema>;

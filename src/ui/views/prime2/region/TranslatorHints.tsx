@@ -15,27 +15,26 @@ import {
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
 import { legacyHintsEnabledState } from "@/states/App.states";
-import { TranslatorHint } from "@/types/Prime2.types";
+import { translatorHintsNamesAtom } from "@/states/Prime2.states";
+import {
+  RegionTranslatorHints,
+  TranslatorHint,
+} from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
 import { useEffect, useState } from "react";
 
-type HintUpdate = {
-  firstValue?: string;
-  secondValue?: string;
-  proximity?: string;
-  checked?: boolean;
-};
-
 type TranslatorHintProps = {
-  hint: TranslatorHint;
-  onHintUpdate: (update: HintUpdate) => void;
+  name: string;
+  value: TranslatorHint;
+  onHintUpdate: (update: TranslatorHint) => void;
   headerColor?: string;
   className?: string;
 };
 
 function Hint({
-  hint,
+  name,
+  value,
   onHintUpdate,
   headerColor,
   className,
@@ -89,41 +88,45 @@ function Hint({
     true
   );
   const locationLegacyOptions = createOptions([
-    ...(!hint.proximity ? PRIME_2_LOCATIONS_WITH_ITEMS : PRIME_2_ALL_LOCATIONS),
-    ...(!hint.proximity ? [] : PRIME_2_ALL_MAJOR_ITEMS),
+    ...(!value.proximity
+      ? PRIME_2_LOCATIONS_WITH_ITEMS
+      : PRIME_2_ALL_LOCATIONS),
+    ...(!value.proximity ? [] : PRIME_2_ALL_MAJOR_ITEMS),
     ...PRIME_2_REGION_OPTIONS,
     ...BOSSES,
   ]);
   const secondValueOptions = legacyHintsEnabled
     ? locationLegacyOptions
     : locationFeaturalOptions;
-  const isJokeHint = hint.firstValue === JOKE_HINT_STR;
-  const isBossKeyHint = BOSS_KEY_HINTS.includes(hint.firstValue);
-  const isBossItemHint = BOSS_ITEM_HINTS.includes(hint.firstValue);
+  const isJokeHint = value.firstValue === JOKE_HINT_STR;
+  const isBossKeyHint = BOSS_KEY_HINTS.includes(value.firstValue);
+  const isBossItemHint = BOSS_ITEM_HINTS.includes(value.firstValue);
   const hideSecondary = isJokeHint || isBossItemHint || isBossKeyHint;
-  const proximityPlaceholder = !BOSSES.includes(hint.secondValue) ? "in" : "on";
+  const proximityPlaceholder = !BOSSES.includes(value.secondValue)
+    ? "in"
+    : "on";
   const secondValuePlaceholder =
-    legacyHintsEnabled && hint.proximity ? "Location or Item" : "Location";
+    legacyHintsEnabled && value.proximity ? "Location or Item" : "Location";
   const secondValueEmptyStr =
-    legacyHintsEnabled && hint.proximity
+    legacyHintsEnabled && value.proximity
       ? "No value found."
       : "No location found.";
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onHintUpdate({ checked: !hint.checked })
+    onHintUpdate({ ...value, checked: !value.checked })
   );
 
   useEffect(() => {
-    setProximity(hint.proximity ?? "");
-  }, [hint.proximity]);
+    setProximity(value.proximity ?? "");
+  }, [value.proximity]);
 
   return (
     <div
       className={cn(
         "bg-zinc-800 p-2",
         className,
-        hint.checked && "bg-green-900"
+        value.checked && "bg-green-900"
       )}
       onMouseDown={handleRightClick}
       data-name="translator-hint"
@@ -133,15 +136,15 @@ function Hint({
           className={cn(
             "uppercase font-bold text-xs tracking-wide select-none",
             headerColor,
-            hint.checked && "text-green-400"
+            value.checked && "text-green-400"
           )}
         >
-          {hint.name}
+          {name}
         </p>
         <Check
           className={cn(
             "flex-none w-3 h-3 text-green-300",
-            !hint.checked && "opacity-0"
+            !value.checked && "opacity-0"
           )}
         />
       </div>
@@ -150,8 +153,10 @@ function Hint({
         <AutoComplete
           placeholder="Item"
           emptyMessage="No item found."
-          value={{ label: hint.firstValue, value: hint.firstValue }}
-          onInputChange={(value) => onHintUpdate({ firstValue: value })}
+          value={{ label: value.firstValue, value: value.firstValue }}
+          onInputChange={(update) =>
+            onHintUpdate({ ...value, firstValue: update })
+          }
           options={firstValueOptions}
           tabIndex={1}
           className={cn(
@@ -168,7 +173,7 @@ function Hint({
                 placeholder={proximityPlaceholder}
                 value={proximity}
                 onChange={(e) => setProximity(e.target.value)}
-                onBlur={() => onHintUpdate({ proximity })}
+                onBlur={() => onHintUpdate({ ...value, proximity })}
                 data-name="proximity"
                 tabIndex={-1}
                 className="-my-2"
@@ -177,8 +182,10 @@ function Hint({
             <AutoComplete
               placeholder={secondValuePlaceholder}
               emptyMessage={secondValueEmptyStr}
-              value={{ label: hint.secondValue, value: hint.secondValue }}
-              onInputChange={(value) => onHintUpdate({ secondValue: value })}
+              value={{ label: value.secondValue, value: value.secondValue }}
+              onInputChange={(update) =>
+                onHintUpdate({ ...value, secondValue: update })
+              }
               options={secondValueOptions}
               tabIndex={1}
               data-name="second-value"
@@ -191,7 +198,7 @@ function Hint({
 }
 
 type Props = {
-  atom: PrimitiveAtom<TranslatorHint[]>;
+  atom: PrimitiveAtom<RegionTranslatorHints>;
   variant: string;
   className?: string;
 };
@@ -199,8 +206,33 @@ type Props = {
 export default function TranslatorHints({ atom, variant, className }: Props) {
   // !JOTAI
   const [hints, setHints] = useAtom(atom);
+  const names = useAtomValue(translatorHintsNamesAtom);
+
+  // !FUNCTION
+  function buildHintsEntries(hints: RegionTranslatorHints) {
+    const final = [];
+    const entries = Object.entries(hints);
+
+    for (const [key, value] of entries) {
+      const namesMatch = names[key as keyof typeof names];
+      final.push({
+        key,
+        name: namesMatch,
+        value,
+      });
+    }
+
+    return final.sort((a, b) => (a.name < b.name ? -1 : 1));
+  }
+
+  function updateHint(key: string, update: TranslatorHint) {
+    const newHints = { ...hints };
+    newHints[key] = update;
+    setHints(newHints);
+  }
 
   // !LOCAL
+  const hintsEntries = buildHintsEntries(hints);
   let headerColor: string | undefined;
 
   switch (variant) {
@@ -219,23 +251,6 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
     default:
   }
 
-  // !FUNCTION
-  function updateHint(id: number, update: HintUpdate) {
-    setHints((prev) => {
-      const newHints = [...prev];
-      return newHints.map((hint) => {
-        if (hint.id === id) {
-          return {
-            ...hint,
-            ...update,
-          };
-        }
-
-        return { ...hint };
-      });
-    });
-  }
-
   return (
     <div
       className={cn(
@@ -244,12 +259,13 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
       )}
       data-name="translator-hints"
     >
-      {hints.map((hint) => (
+      {hintsEntries.map((hint, idx) => (
         <Hint
-          hint={hint}
-          onHintUpdate={(update) => updateHint(hint.id, update)}
+          name={hint.name}
+          value={hint.value}
+          onHintUpdate={(update) => updateHint(hint.key, update)}
           headerColor={headerColor}
-          key={`${variant}-hint-${hint.id}`}
+          key={`${variant}-hint-${idx}`}
           className="border-b md:border-r border-zinc-900"
         />
       ))}

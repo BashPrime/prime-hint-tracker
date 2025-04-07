@@ -4,27 +4,31 @@ import {
   PRIME_2_REGION_OPTIONS,
 } from "@/data/Prime2.data";
 import { cn, createOptions } from "@/lib/utils";
-import { BossHints as BossHintsType, BossKeyHint } from "@/types/Prime2.types";
+import {
+  BossHints as BossHintsType,
+  BossKeyHint,
+} from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 
 import umosImg from "@/assets/prime2/u-mos.jpg";
 import amorbisImg from "@/assets/prime2/amorbis.jpg";
 import chykkaImg from "@/assets/prime2/chykka.jpg";
 import quadraxisImg from "@/assets/prime2/quadraxis.jpg";
-import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import useRightClick from "@/hooks/useRightClick";
+import { useEffect, useState } from "react";
 
 type HintProps = {
-  keyHint: BossKeyHint;
-  onKeyChange: (key: BossKeyHint) => void;
+  name: string;
+  value: BossKeyHint;
+  onKeyHintChange: (update: BossKeyHint) => void;
   className?: string;
 };
 
-function Hint({ keyHint, onKeyChange, className }: HintProps) {
+function Hint({ name, value, onKeyHintChange, className }: HintProps) {
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onKeyChange({ ...keyHint, checked: !keyHint.checked })
+    onKeyHintChange({ ...value, checked: !value.checked })
   );
 
   return (
@@ -32,7 +36,7 @@ function Hint({ keyHint, onKeyChange, className }: HintProps) {
       className={cn(
         "border-zinc-900 p-2",
         className,
-        keyHint.checked && "bg-green-900"
+        value.checked && "bg-green-900"
       )}
       onMouseDown={handleRightClick}
     >
@@ -40,23 +44,25 @@ function Hint({ keyHint, onKeyChange, className }: HintProps) {
         <p
           className={cn(
             "uppercase font-bold text-[13px] text-red-500 select-none",
-            keyHint.checked && "text-green-400"
+            value.checked && "text-green-400"
           )}
         >
-          {keyHint.name}
+          {name}
         </p>
         <Check
           className={cn(
             "flex-none w-3 h-3 text-green-300 mt-1",
-            !keyHint.checked && "opacity-0"
+            !value.checked && "opacity-0"
           )}
         />
       </div>
       <AutoComplete
         placeholder="Region"
         emptyMessage="No region found."
-        value={{ label: keyHint.location, value: keyHint.location }}
-        onInputChange={(value) => onKeyChange({ ...keyHint, location: value })}
+        value={{ label: value.location, value: value.location }}
+        onInputChange={(update) =>
+          onKeyHintChange({ ...value, location: update })
+        }
         options={createOptions([...PRIME_2_REGION_OPTIONS], true)}
         tabIndex={1}
       />
@@ -76,37 +82,60 @@ export function BossHints({ atom, variant, className }: Props) {
   const [random, setRandom] = useState<number>(-1);
 
   // !LOCAL
+
   const DEAD_STR = "Dead";
   const isBossDead = bossHints.item === DEAD_STR;
-  const isChykkaDead = isBossDead && bossHints.name === "Chykka";
-  const displayChykkaEasterEgg = isChykkaDead && random === 0;
-  let imgSrc: string;
+
+  let imgSrc = "";
+  let bossName = "";
+  let isChykka = false;
   switch (variant) {
     case "temple":
       imgSrc = umosImg;
+      bossName = "U-Mos Reward";
       break;
     case "agon":
       imgSrc = amorbisImg;
+      bossName = "Amorbis";
       break;
     case "torvus":
       imgSrc = chykkaImg;
+      bossName = "Chykka";
+      isChykka = true;
       break;
     case "sanctuary":
       imgSrc = quadraxisImg;
+      bossName = "Quadraxis";
       break;
     default:
       imgSrc = "https://picsum.photos/200";
   }
+  const isChykkaDead = isChykka && isBossDead;
+  const displayChykkaEasterEgg = isChykkaDead && random === 0;
 
   // !FUNCTION
-  function updateBossKey(key: BossKeyHint) {
-    setBossHints((prev) => {
-      const newKeys = [...prev.keys];
-      const index = newKeys.findIndex((elem) => elem.id === key.id);
-      newKeys[index] = key;
+  function buildKeysArray(hints: BossHintsType) {
+    if (hints.keys === undefined) {
+      return [];
+    }
 
-      return { ...prev, keys: newKeys };
-    });
+    const final = [];
+    for (const [key, value] of Object.entries(hints.keys)) {
+      final.push({
+        key,
+        value,
+      });
+    }
+
+    return final;
+  }
+
+  function updateBossKey(key: string, update: BossKeyHint) {
+    if (bossHints.keys !== undefined) {
+      const newKeys = { ...bossHints.keys };
+      newKeys[key as keyof typeof newKeys] = update;
+      setBossHints({ ...bossHints, keys: newKeys });
+    }
   }
 
   // !HOOKS
@@ -122,6 +151,9 @@ export function BossHints({ atom, variant, className }: Props) {
     }
   }, [isChykkaDead, setRandom]);
 
+  // !LOCAL
+  const bossKeys = buildKeysArray(bossHints);
+
   return (
     <div
       className={cn("flex flex-row bg-zinc-800", className)}
@@ -136,7 +168,7 @@ export function BossHints({ atom, variant, className }: Props) {
         data-name="boss-item-container"
       >
         <div className="w-24 select-none" data-name="boss-img">
-          <img src={imgSrc} title={bossHints.name} alt={bossHints.name} />
+          <img src={imgSrc} title={bossName} alt={bossName} />
         </div>
         <div className="flex flex-row justify-between">
           <p
@@ -146,7 +178,7 @@ export function BossHints({ atom, variant, className }: Props) {
             )}
             data-name="boss-name"
           >
-            {bossHints.name}
+            {bossName}
             {displayChykkaEasterEgg && "'s"}
           </p>
           <Check
@@ -180,12 +212,13 @@ export function BossHints({ atom, variant, className }: Props) {
           </div>
         </div>
       </div>
-      {bossHints.keys.length > 0 && (
+      {bossKeys.length > 0 && (
         <div className="grid grid-rows-3 flex-1" data-name="boss-keys">
-          {bossHints.keys.map((keyHint, idx) => (
+          {bossKeys.map((keyHint, idx) => (
             <Hint
-              keyHint={keyHint}
-              onKeyChange={(key) => updateBossKey(key)}
+              name={keyHint.key}
+              value={keyHint.value}
+              onKeyHintChange={(update) => updateBossKey(keyHint.key, update)}
               key={`boss-key-${idx + 1}`}
               className="border-b last:border-0 border-zinc-900"
             />

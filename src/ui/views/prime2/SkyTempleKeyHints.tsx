@@ -2,26 +2,30 @@ import { AutoComplete } from "@/components/ui/autocomplete";
 import { PRIME_2_LOCATIONS_WITH_ITEMS } from "@/data/Prime2.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { skyTempleKeyHintsState } from "@/states/Prime2.states";
-import { SkyTempleKeyHint } from "@/types/Prime2.types";
-import { useAtom } from "jotai";
+import {
+  skyTempleKeyHintsArraySelector,
+  updateSkyTempleKeyHintAtom,
+} from "@/states/Prime2.states";
+import {
+  SkyTempleKeyHint,
+  SkyTempleKeyHints as SkyTempleKeyHintsType,
+} from "@/types/Prime2.types";
+import { useAtomValue, useSetAtom } from "jotai";
 import { Check } from "lucide-react";
 
-type UpdateValue = {
-  location?: string;
-  checked?: boolean;
-};
-
 type HintProps = {
-  hint: SkyTempleKeyHint;
-  onUpdate: (update: UpdateValue) => void;
+  name: string;
+  value: SkyTempleKeyHint;
   className?: string;
 };
 
-function Hint({ hint, onUpdate, className }: HintProps) {
+function Hint({ name, value, className }: HintProps) {
+  // !STATE
+  const updateSkyTempleKey = useSetAtom(updateSkyTempleKeyHintAtom);
+  const stkKey = name as keyof SkyTempleKeyHintsType;
   // !HOOKS
   const handleRightClick = useRightClick(() =>
-    onUpdate({ checked: !hint.checked })
+    updateSkyTempleKey([stkKey, { ...value, checked: !value.checked }])
   );
 
   return (
@@ -29,7 +33,7 @@ function Hint({ hint, onUpdate, className }: HintProps) {
       className={cn(
         "px-2 py-1 bg-zinc-800",
         className,
-        hint.checked && "bg-green-900"
+        value.checked && "bg-green-900"
       )}
       onMouseDown={handleRightClick}
     >
@@ -38,15 +42,15 @@ function Hint({ hint, onUpdate, className }: HintProps) {
           <p
             className={cn(
               "uppercase font-bold text-sm text-lime-400 tracking-wide select-none",
-              hint.checked && "text-green-400"
+              value.checked && "text-green-400"
             )}
           >
-            {hint.name}
+            {name}
           </p>
           <Check
             className={cn(
               "flex-none w-3 h-3 text-green-300",
-              !hint.checked && "opacity-0"
+              !value.checked && "opacity-0"
             )}
           />
         </div>
@@ -54,8 +58,10 @@ function Hint({ hint, onUpdate, className }: HintProps) {
         <AutoComplete
           placeholder="Location"
           emptyMessage="No location found."
-          value={{ label: hint.location, value: hint.location }}
-          onInputChange={(value) => onUpdate({ location: value })}
+          value={{ label: value.location, value: value.location }}
+          onInputChange={(location) =>
+            updateSkyTempleKey([stkKey, { ...value, location }])
+          }
           options={createOptions([...PRIME_2_LOCATIONS_WITH_ITEMS], true)}
           tabIndex={1}
           className="text-[13px]"
@@ -71,35 +77,19 @@ type Props = {
 
 export default function SkyTempleKeyHints({ className }: Props) {
   // !JOTAI
-  const [keys, setKeys] = useAtom(skyTempleKeyHintsState);
-
-  // !FUNCTION
-  function updateKey(id: number, update: UpdateValue) {
-    setKeys((prev) => {
-      const newKeys = [...prev];
-
-      return newKeys.map((key) => {
-        if (key.id === id) {
-          return {
-            ...key,
-            ...update,
-          };
-        }
-
-        return { ...key };
-      });
-    });
-  }
+  const stkHints = useAtomValue(skyTempleKeyHintsArraySelector);
 
   return (
     <div className={className} data-name="stkHints">
-      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">Sky Temple Keys</h2>
+      <h2 className="font-bold px-2 bg-zinc-900 uppercase select-none">
+        Sky Temple Keys
+      </h2>
       <div className="md:flex-[0_0_initial] md:grid md:grid-rows-5 md:grid-cols-2 md:grid-flow-col">
-        {keys.map((key, idx) => (
+        {stkHints.map((stkHint) => (
           <Hint
-            hint={key}
-            onUpdate={(update) => updateKey(key.id, update)}
-            key={`stk-${idx + 1}`}
+            name={stkHint.key}
+            value={stkHint.value}
+            key={`stk-${stkHint.id}`}
             className="border-b md:border-r border-zinc-900"
           />
         ))}

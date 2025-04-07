@@ -14,45 +14,42 @@ import {
   PRIME_1_MAJOR_UPGRADES,
 } from "@/data/Prime1.data";
 
-export const newArtifactHintsState = atomWithReset<ArtifactHints>(
+export const artifactHintsState = atomWithReset<ArtifactHints>(
   ArtifactHintsSchema.parse({
-    Truth: { id: 1 },
-    Strength: { id: 2 },
-    Elder: { id: 3 },
-    Wild: { id: 4 },
-    Lifegiver: { id: 5 },
-    Warrior: { id: 6 },
-    Chozo: { id: 7 },
-    Nature: { id: 8 },
-    Sun: { id: 9 },
-    World: { id: 10 },
-    Spirit: { id: 11 },
-    Newborn: { id: 12 },
+    Truth: {},
+    Strength: {},
+    Elder: {},
+    Wild: {},
+    Lifegiver: {},
+    Warrior: {},
+    Chozo: {},
+    Nature: {},
+    Sun: {},
+    World: {},
+    Spirit: {},
+    Newborn: {},
   })
 );
 
 export const updateArtifactHintAtom = atom(
-  (get) => get(newArtifactHintsState),
+  (get) => get(artifactHintsState),
   (get, set, update: [keyof ArtifactHints, ArtifactHint]) => {
     const [key, value] = update;
-    const updated = { ...get(newArtifactHintsState) };
+    const updated = { ...get(artifactHintsState) };
     updated[key] = value;
-    set(newArtifactHintsState, updated);
+    set(artifactHintsState, updated);
   }
 );
 
 export const artifactHintsArraySelector = atom((get) => {
-  const artifactHints = get(newArtifactHintsState);
-  const arr = [];
-  const sortedEntries = Object.entries(artifactHints).sort(
-    ([, valueA], [, valueB]) => valueA.id - valueB.id
-  );
-
-  for (const [key, artifact] of sortedEntries) {
-    arr.push({ key, value: artifact });
-  }
-
-  return arr;
+  const artifactHints = get(artifactHintsState);
+  return Object.entries(artifactHints)
+    .map(([key, value], idx) => ({
+      key,
+      value,
+      id: idx + 1,
+    }))
+    .sort((a, b) => a.id - b.id);
 });
 
 export const phazonSuitHintState = atomWithReset<PhazonSuitHint>({
@@ -62,7 +59,7 @@ export const phazonSuitHintState = atomWithReset<PhazonSuitHint>({
 
 export const prime1TrackerSelector = atom((get) => {
   const unhintedItems = get(unhintedItemsState);
-  const artifacts = get(newArtifactHintsState);
+  const artifacts = get(artifactHintsState);
   const phazonSuit = get(phazonSuitHintState);
 
   return {

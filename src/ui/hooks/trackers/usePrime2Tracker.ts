@@ -1,30 +1,49 @@
 import { unhintedItemsState } from "@/states/App.states";
 import {
-  agonHintsState,
-  sanctuaryHintsState,
+  agonHintsSelector,
   skyTempleKeyHintsState,
-  templeGroundsHintsState,
-  torvusHintsState,
+  regionHintsAtomsSelector,
+  sanctuaryHintsSelector,
+  templeHintsSelector,
+  torvusHintsSelector,
 } from "@/states/Prime2.states";
-import { RegionHintsSchema } from "@/types/Prime2.types";
-import { useSetAtom } from "jotai";
+import { RegionHintsSchema, SkyTempleKeyHintsSchema } from "@/types/Prime2.types";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
 
 export default function usePrime2Tracker() {
   // !STATE
-  const setTempleHints = useSetAtom(templeGroundsHintsState);
-  const setAgonHints = useSetAtom(agonHintsState);
-  const setTorvusHints = useSetAtom(torvusHintsState);
-  const setSancHints = useSetAtom(sanctuaryHintsState);
+  const { templeGrounds, agonWastes, torvusBog, sanctuaryFortress } =
+    useAtomValue(regionHintsAtomsSelector);
+  // Setters
+  const setTempleHints = useSetAtom(templeHintsSelector);
+  const setAgonHints = useSetAtom(agonHintsSelector);
+  const setTorvusHints = useSetAtom(torvusHintsSelector);
+  const setSancHints = useSetAtom(sanctuaryHintsSelector);
   const setUnhintedItems = useSetAtom(unhintedItemsState);
   const setStkHints = useSetAtom(skyTempleKeyHintsState);
+  // Resetters
   const resetUnhinted = useResetAtom(unhintedItemsState);
   const resetStkHints = useResetAtom(skyTempleKeyHintsState);
-  const resetTempleGroundsHints = useResetAtom(templeGroundsHintsState);
-  const resetAgonHints = useResetAtom(agonHintsState);
-  const resetTorvusHints = useResetAtom(torvusHintsState);
-  const resetSanctuaryHints = useResetAtom(sanctuaryHintsState);
+  const resetTempleBossHints = useResetAtom(templeGrounds.bossHints);
+  const resetTempleKeybearerHints = useResetAtom(templeGrounds.keybearerHints);
+  const resetTempleTranslatorHints = useResetAtom(
+    templeGrounds.translatorHints
+  );
+  const resetAgonBossHints = useResetAtom(agonWastes.bossHints);
+  const resetAgonKeybearerHints = useResetAtom(agonWastes.keybearerHints);
+  const resetAgonTranslatorHints = useResetAtom(agonWastes.translatorHints);
+  const resetTorvusBossHints = useResetAtom(torvusBog.bossHints);
+  const resetTorvusKeybearerHints = useResetAtom(torvusBog.keybearerHints);
+  const resetTorvusTranslatorHints = useResetAtom(torvusBog.translatorHints);
+  const resetSanctuaryBossHints = useResetAtom(sanctuaryFortress.bossHints);
+  const resetSanctuaryKeybearerHints = useResetAtom(
+    sanctuaryFortress.keybearerHints
+  );
+  const resetSanctuaryTranslatorHints = useResetAtom(
+    sanctuaryFortress.translatorHints
+  );
 
   // !FUNCTIONS
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
@@ -36,7 +55,7 @@ export default function usePrime2Tracker() {
       setTorvusHints(RegionHintsSchema.parse(data.regions.torvus));
       setSancHints(RegionHintsSchema.parse(data.regions.sanctuary));
       setUnhintedItems(data.unhintedItems);
-      setStkHints(data.skyTempleKeys);
+      setStkHints(SkyTempleKeyHintsSchema.parse(data.skyTempleKeys));
     } catch (err) {
       if (err instanceof z.ZodError) {
         console.error(
@@ -50,10 +69,18 @@ export default function usePrime2Tracker() {
   function reset() {
     resetUnhinted();
     resetStkHints();
-    resetTempleGroundsHints();
-    resetAgonHints();
-    resetTorvusHints();
-    resetSanctuaryHints();
+    resetTempleBossHints();
+    resetTempleKeybearerHints();
+    resetTempleTranslatorHints();
+    resetAgonBossHints();
+    resetAgonKeybearerHints();
+    resetAgonTranslatorHints();
+    resetTorvusBossHints();
+    resetTorvusKeybearerHints();
+    resetTorvusTranslatorHints();
+    resetSanctuaryBossHints();
+    resetSanctuaryKeybearerHints();
+    resetSanctuaryTranslatorHints();
   }
 
   return {
