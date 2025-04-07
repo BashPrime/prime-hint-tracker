@@ -19,6 +19,7 @@ export const IPC_IDS = {
   loadTrackerSession: "load-tracker-session",
   setKeybearerRooms: "set-keybearer-rooms",
   setGame: "set-game",
+  setPhazonSuitHint: "set-phazon-suit-hint",
 };
 
 type WindowSize = {
@@ -45,15 +46,15 @@ export const WINDOW_SIZE: WindowSize = {
     height: 862,
   },
   prime: {
-    width: 1024,
-    height: 768,
+    width: 640,
+    height: 600,
   },
   corruption: {
     width: 1024,
     height: 768,
   },
   default: {
-    width: 1366,
-    height: 854,
+    width: 640,
+    height: 480,
   },
 };

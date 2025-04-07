@@ -7,6 +7,8 @@ import {
   AppConfigSchema,
   Game,
   KeybearerRoomsSchema,
+  PhazonSuitHintSchema,
+  Toggles,
   TrackerConfig,
 } from "../shared/types.js";
 import { z } from "zod";
@@ -20,7 +22,7 @@ const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
 let trackerState: TrackerConfig | null = null;
 
-function setGameMenuItem(game: Game) {
+export function setGameMenuItem(game: Game) {
   const menuItem = menu.getMenuItemById(game);
 
   if (menuItem) {
@@ -34,7 +36,7 @@ export function getTrackerState() {
 
 export function setTrackerState(state: TrackerConfig | null) {
   if (state) {
-    setGameMenuItem(state.game)
+    setGameMenuItem(state.game);
   }
   trackerState = state;
 }
@@ -97,7 +99,7 @@ export function writeAppConfigFile(config: AppConfig) {
   writeJsonFile(APP_CONFIG_PATH, json);
 }
 
-function getTogglesState(): AppConfig["toggles"] {
+function getTogglesState(): Toggles {
   function getKeybearerRoomsValue() {
     for (const value of KeybearerRoomsSchema.options) {
       if (menu.getMenuItemById(value)?.checked) {
@@ -108,11 +110,22 @@ function getTogglesState(): AppConfig["toggles"] {
     return KeybearerRoomsSchema.enum.both;
   }
 
+  function getPhazonSuitHintValue() {
+    for (const value of PhazonSuitHintSchema.options) {
+      if (menu.getMenuItemById(value)?.checked) {
+        return value;
+      }
+    }
+
+    return PhazonSuitHintSchema.enum.areaName;
+  }
+
   return {
     alwaysOnTop: menu.getMenuItemById(MENU_IDS.alwaysOnTop)?.checked ?? false,
     legacyHintsEnabled:
       menu.getMenuItemById(MENU_IDS.legacyHintsEnabled)?.checked ?? false,
     keybearerRoomLabels: getKeybearerRoomsValue(),
+    phazonSuitHint: getPhazonSuitHintValue(),
   };
 }
 

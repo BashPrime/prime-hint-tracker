@@ -1,10 +1,17 @@
 import { AutoComplete } from "@/components/ui/autocomplete";
-import { PRIME_1_REGIONS_WITH_ITEMS } from "@/data/Prime1.data";
+import {
+  PRIME_1_LOCATIONS_WITH_ITEMS,
+  PRIME_1_REGIONS_WITH_ITEMS,
+} from "@/data/Prime1.data";
 import useRightClick from "@/hooks/useRightClick";
 import { cn, createOptions } from "@/lib/utils";
-import { phazonSuitHintState } from "@/states/Prime1.states";
-import { useAtom } from "jotai";
+import {
+  phazonSuitHintPrecisionState,
+  phazonSuitHintState,
+} from "@/states/Prime1.states";
+import { useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
+import { PhazonSuitHintSchema } from "../../../../src/shared/types";
 
 type Props = {
   className?: string;
@@ -13,6 +20,7 @@ type Props = {
 export default function PhazonSuitHint({ className }: Props) {
   // !STATE
   const [hint, setHint] = useAtom(phazonSuitHintState);
+  const precision = useAtomValue(phazonSuitHintPrecisionState);
 
   // !HOOKS
   const handleRightClick = useRightClick(() =>
@@ -20,7 +28,11 @@ export default function PhazonSuitHint({ className }: Props) {
   );
 
   // !LOCAL
-  const locationOptions = createOptions([...PRIME_1_REGIONS_WITH_ITEMS], true);
+  const locations =
+    precision === PhazonSuitHintSchema.enum.areaName
+      ? [...PRIME_1_REGIONS_WITH_ITEMS]
+      : [...PRIME_1_LOCATIONS_WITH_ITEMS];
+  const locationOptions = createOptions(locations, true);
 
   return (
     <div

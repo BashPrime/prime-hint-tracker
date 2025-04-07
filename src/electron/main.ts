@@ -3,7 +3,7 @@ import path from "path";
 import { isDev } from "./util.js";
 import { createMainWindow } from "./window.js";
 import { readAppConfigFile } from "./config.js";
-import { AppConfig } from "../shared/types.js";
+import { Toggles } from "../shared/types.js";
 import { menu } from "./menu.js";
 import { MENU_IDS } from "./data.js";
 import {
@@ -51,9 +51,10 @@ function setToggle(id: string, checked: boolean) {
   }
 }
 
-function setToggles(toggles: AppConfig["toggles"], window: BrowserWindow) {
+function setToggles(toggles: Toggles, window: BrowserWindow) {
   setToggle(MENU_IDS.alwaysOnTop, toggles.alwaysOnTop);
   setToggle(MENU_IDS.legacyHintsEnabled, toggles.legacyHintsEnabled);
   setToggle(toggles.keybearerRoomLabels, true);
+  setToggle(toggles.phazonSuitHint, true);
   window.setAlwaysOnTop(toggles.alwaysOnTop);
 }

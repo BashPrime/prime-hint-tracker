@@ -1,13 +1,22 @@
 import { dialog, ipcMain } from "electron";
-import { IPC_IDS } from "./data.js";
+import { IPC_IDS, MENU_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
-import { Action, Game, KeybearerRooms, TrackerConfig } from "../shared/types.js";
+import {
+  Action,
+  Game,
+  KeybearerRooms,
+  PhazonSuitHint,
+  TrackerConfig,
+} from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
 import {
   getAppConfigState,
+  getTrackerState,
   readTrackerConfigFile,
+  setGameMenuItem,
   setTrackerState,
 } from "./config.js";
+import { menu } from "./menu.js";
 
 export function requestRendererState(action: Action) {
   const window = getMainWindow();
@@ -31,7 +40,7 @@ export function resetTracker() {
       .showMessageBox(mainWindow, {
         title: "Confirm Reset",
         message:
-          "This will reset the entire tracker. ALL PROGRESS WILL BE LOST.\n\nDo you want to continue?",
+          "This will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
         type: "warning",
         buttons: ["Cancel", "Yes"],
         cancelId,
@@ -55,8 +64,52 @@ export function setKeybearerRoomLabels(value: KeybearerRooms) {
 }
 
 export function setGame(game: Game) {
+  const mainWindow = getMainWindow();
+  const cancelId = 0;
+
+  const state = getTrackerState();
+
+  if (mainWindow && state?.game !== game) {
+    dialog
+      .showMessageBox(mainWindow, {
+        title: "Confirm Game Switch",
+        message:
+          "Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
+        type: "warning",
+        buttons: ["Cancel", "Yes"],
+        cancelId,
+      })
+      .then((value) => {
+        if (value.response !== cancelId) {
+          mainWindow?.webContents.send(IPC_IDS.setGame, game);
+
+          // If the window size is smaller than the game's default, reset the window size
+          const legacyHintsEnabled = menu.getMenuItemById(
+            MENU_IDS.legacyHintsEnabled
+          )?.checked;
+          const gameWindowSize = getDefaultWindowSize(
+            game,
+            legacyHintsEnabled ?? false
+          );
+          const currentWindowSize = mainWindow.getSize();
+
+          if (
+            currentWindowSize[0] < gameWindowSize.width &&
+            currentWindowSize[1] < gameWindowSize.height
+          ) {
+            mainWindow.setSize(gameWindowSize.width, gameWindowSize.height);
+          }
+        } else if (state) {
+          // Need to switch back to the previous radio button
+          setGameMenuItem(state.game);
+        }
+      });
+  }
+}
+
+export function setPhazonSuitHint(value: PhazonSuitHint) {
   const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setGame, game);
+  window?.webContents.send(IPC_IDS.setPhazonSuitHint, value);
 }
 
 export function handleRendererInitialization() {
@@ -74,6 +127,7 @@ export function handleRendererInitialization() {
     if (appConfig) {
       setLegacyHintsEnabled(appConfig.toggles.legacyHintsEnabled);
       setKeybearerRoomLabels(appConfig.toggles.keybearerRoomLabels);
+      setPhazonSuitHint(appConfig.toggles.phazonSuitHint);
     }
   });
 }

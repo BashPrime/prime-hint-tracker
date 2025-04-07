@@ -32,4 +32,8 @@ electron.contextBridge.exposeInMainWorld("electronApi", {
     ),
   setGame: (callback: (game: string) => void) =>
     ipcRenderer.on("set-game", (_, game: string) => callback(game)),
+  setPhazonSuitHint: (callback: (value: string) => void) =>
+    ipcRenderer.on("set-phazon-suit-hint", (_, value: string) =>
+      callback(value)
+    ),
 });
