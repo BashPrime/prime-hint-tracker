@@ -2,13 +2,13 @@ import { z } from "zod";
 import {
   BossKeyHintsSchema,
   KeybearerHintSchema,
-  NewBossHintSchema,
-  NewTranslatorHintSchema,
+  BossHintSchema,
+  TranslatorHintSchema,
 } from "../Prime2.types";
 
 export const TorvusBossHintsSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
+  item: BossHintSchema.shape.item,
+  checked: BossHintSchema.shape.checked,
   keys: BossKeyHintsSchema,
 });
 export type TorvusBossHints = z.infer<typeof TorvusBossHintsSchema>;
@@ -20,11 +20,11 @@ export const TorvusKeybearerHintsSchema = z.object({
 export type TorvusKeybearerHints = z.infer<typeof TorvusKeybearerHintsSchema>;
 
 export const TorvusTranslatorHintsSchema = z.object({
-  torvusEnergyController: NewTranslatorHintSchema,
-  pathOfRoots: NewTranslatorHintSchema,
-  undergroundTunnel: NewTranslatorHintSchema,
-  catacombs: NewTranslatorHintSchema,
-  gatheringHall: NewTranslatorHintSchema,
-  trainingChamber: NewTranslatorHintSchema,
+  torvusEnergyController: TranslatorHintSchema,
+  pathOfRoots: TranslatorHintSchema,
+  undergroundTunnel: TranslatorHintSchema,
+  catacombs: TranslatorHintSchema,
+  gatheringHall: TranslatorHintSchema,
+  trainingChamber: TranslatorHintSchema,
 });
 export type TorvusTranslatorHints = z.infer<typeof TorvusTranslatorHintsSchema>;

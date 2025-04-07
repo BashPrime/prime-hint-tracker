@@ -1,4 +1,4 @@
-import { NewBossKeyHintSchema } from "@/types/Prime2.types";
+import { BossKeyHintSchema } from "@/types/Prime2.types";
 import {
   TorvusBossHints,
   TorvusBossHintsSchema,
@@ -12,9 +12,9 @@ import { atomWithReset } from "jotai/utils";
 export const torvusBossHintsState = atomWithReset<TorvusBossHints>(
   TorvusBossHintsSchema.parse({
     keys: {
-      "Key 1": NewBossKeyHintSchema.parse({}),
-      "Key 2": NewBossKeyHintSchema.parse({}),
-      "Key 3": NewBossKeyHintSchema.parse({}),
+      "Key 1": BossKeyHintSchema.parse({}),
+      "Key 2": BossKeyHintSchema.parse({}),
+      "Key 3": BossKeyHintSchema.parse({}),
     },
   })
 );

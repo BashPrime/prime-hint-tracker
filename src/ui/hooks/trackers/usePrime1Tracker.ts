@@ -1,6 +1,6 @@
 import { unhintedItemsState } from "@/states/App.states";
 import {
-  newArtifactHintsState,
+  artifactHintsState,
   phazonSuitHintState,
 } from "@/states/Prime1.states";
 import { ArtifactHintsSchema, PhazonSuitHintSchema } from "@/types/Prime1.types";
@@ -10,10 +10,10 @@ import { z } from "zod";
 
 export default function usePrime1Tracker() {
   // !STATE
-  const setArtifactHints = useSetAtom(newArtifactHintsState);
+  const setArtifactHints = useSetAtom(artifactHintsState);
   const setUnhintedItems = useSetAtom(unhintedItemsState);
   const setPhazonSuitHint = useSetAtom(phazonSuitHintState);
-  const resetArtifactHints = useResetAtom(newArtifactHintsState);
+  const resetArtifactHints = useResetAtom(artifactHintsState);
   const resetUnhinted = useResetAtom(unhintedItemsState);
   const resetPhazonSuitHint = useResetAtom(phazonSuitHintState);
 

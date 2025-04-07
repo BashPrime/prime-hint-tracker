@@ -17,8 +17,8 @@ import { cn, createOptions } from "@/lib/utils";
 import { legacyHintsEnabledState } from "@/states/App.states";
 import { translatorHintsNamesAtom } from "@/states/Prime2.states";
 import {
-  NewRegionTranslatorHints,
-  NewTranslatorHint,
+  RegionTranslatorHints,
+  TranslatorHint,
 } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -26,8 +26,8 @@ import { useEffect, useState } from "react";
 
 type TranslatorHintProps = {
   name: string;
-  value: NewTranslatorHint;
-  onHintUpdate: (update: NewTranslatorHint) => void;
+  value: TranslatorHint;
+  onHintUpdate: (update: TranslatorHint) => void;
   headerColor?: string;
   className?: string;
 };
@@ -198,7 +198,7 @@ function Hint({
 }
 
 type Props = {
-  atom: PrimitiveAtom<NewRegionTranslatorHints>;
+  atom: PrimitiveAtom<RegionTranslatorHints>;
   variant: string;
   className?: string;
 };
@@ -209,7 +209,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
   const names = useAtomValue(translatorHintsNamesAtom);
 
   // !FUNCTION
-  function buildHintsEntries(hints: NewRegionTranslatorHints) {
+  function buildHintsEntries(hints: RegionTranslatorHints) {
     const final = [];
     const entries = Object.entries(hints);
 
@@ -225,7 +225,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
     return final.sort((a, b) => (a.name < b.name ? -1 : 1));
   }
 
-  function updateHint(key: string, update: NewTranslatorHint) {
+  function updateHint(key: string, update: TranslatorHint) {
     const newHints = { ...hints };
     newHints[key] = update;
     setHints(newHints);

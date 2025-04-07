@@ -6,7 +6,7 @@ import {
 import { cn, createOptions } from "@/lib/utils";
 import {
   BossHints as BossHintsType,
-  NewBossKeyHint,
+  BossKeyHint,
 } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom } from "jotai";
 
@@ -20,8 +20,8 @@ import { useEffect, useState } from "react";
 
 type HintProps = {
   name: string;
-  value: NewBossKeyHint;
-  onKeyHintChange: (update: NewBossKeyHint) => void;
+  value: BossKeyHint;
+  onKeyHintChange: (update: BossKeyHint) => void;
   className?: string;
 };
 
@@ -130,7 +130,7 @@ export function BossHints({ atom, variant, className }: Props) {
     return final;
   }
 
-  function updateBossKey(key: string, update: NewBossKeyHint) {
+  function updateBossKey(key: string, update: BossKeyHint) {
     if (bossHints.keys !== undefined) {
       const newKeys = { ...bossHints.keys };
       newKeys[key as keyof typeof newKeys] = update;

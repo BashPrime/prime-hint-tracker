@@ -4,19 +4,19 @@ import {
   EmptyStringSchema,
 } from "./common.types";
 
-export const NewBossKeyHintSchema = z.object({
+export const BossKeyHintSchema = z.object({
   location: EmptyStringSchema,
   checked: CheckedSchema,
 });
-export type NewBossKeyHint = z.infer<typeof NewBossKeyHintSchema>;
+export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
 export const BossKeyHintsSchema = z.object({
-  "Key 1": NewBossKeyHintSchema,
-  "Key 2": NewBossKeyHintSchema,
-  "Key 3": NewBossKeyHintSchema,
+  "Key 1": BossKeyHintSchema,
+  "Key 2": BossKeyHintSchema,
+  "Key 3": BossKeyHintSchema,
 });
 
-export const NewBossHintSchema = z.object({
+export const BossHintSchema = z.object({
   name: z.string(),
   item: EmptyStringSchema,
   checked: CheckedSchema,
@@ -24,8 +24,8 @@ export const NewBossHintSchema = z.object({
 });
 
 export const BossHintsSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
+  item: BossHintSchema.shape.item,
+  checked: BossHintSchema.shape.checked,
   keys: BossKeyHintsSchema.optional(),
 });
 export type BossHints = z.infer<typeof BossHintsSchema>;
@@ -36,36 +36,36 @@ export const KeybearerHintSchema = z.object({
 });
 export type KeybearerHint = z.infer<typeof KeybearerHintSchema>;
 
-export const NewTranslatorHintSchema = z.object({
+export const TranslatorHintSchema = z.object({
   firstValue: EmptyStringSchema,
   secondValue: EmptyStringSchema,
   proximity: EmptyStringSchema,
   checked: CheckedSchema,
 });
-export type NewTranslatorHint = z.infer<typeof NewTranslatorHintSchema>;
+export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
 
-export const NewRegionTranslatorHintsSchema = z.record(
+export const RegionTranslatorHintsSchema = z.record(
   z.string(),
-  NewTranslatorHintSchema
+  TranslatorHintSchema
 );
-export type NewRegionTranslatorHints = z.infer<
-  typeof NewRegionTranslatorHintsSchema
+export type RegionTranslatorHints = z.infer<
+  typeof RegionTranslatorHintsSchema
 >;
 
-export const NewRegionKeybearerHintsSchema = z.record(
+export const RegionKeybearerHintsSchema = z.record(
   z.string(),
   KeybearerHintSchema
 );
-export type NewRegionKeybearerHints = z.infer<
-  typeof NewRegionKeybearerHintsSchema
+export type RegionKeybearerHints = z.infer<
+  typeof RegionKeybearerHintsSchema
 >;
 
-export const NewRegionHintsSchema = z.object({
+export const RegionHintsSchema = z.object({
   bossHints: BossHintsSchema,
-  keybearerHints: NewRegionKeybearerHintsSchema,
-  translatorHints: NewRegionTranslatorHintsSchema,
+  keybearerHints: RegionKeybearerHintsSchema,
+  translatorHints: RegionTranslatorHintsSchema,
 });
-export type NewRegionHints = z.infer<typeof NewRegionHintsSchema>;
+export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
 export const SkyTempleKeyHintSchema = z.object({
   location: EmptyStringSchema,

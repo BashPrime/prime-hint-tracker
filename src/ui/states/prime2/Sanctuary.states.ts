@@ -1,4 +1,4 @@
-import { NewBossKeyHintSchema } from "@/types/Prime2.types";
+import { BossKeyHintSchema } from "@/types/Prime2.types";
 import {
   SanctuaryBossHints,
   SanctuaryBossHintsSchema,
@@ -12,9 +12,9 @@ import { atomWithReset } from "jotai/utils";
 export const sanctuaryBossHintsState = atomWithReset<SanctuaryBossHints>(
   SanctuaryBossHintsSchema.parse({
     keys: {
-      "Key 1": NewBossKeyHintSchema.parse({}),
-      "Key 2": NewBossKeyHintSchema.parse({}),
-      "Key 3": NewBossKeyHintSchema.parse({}),
+      "Key 1": BossKeyHintSchema.parse({}),
+      "Key 2": BossKeyHintSchema.parse({}),
+      "Key 3": BossKeyHintSchema.parse({}),
     },
   })
 );

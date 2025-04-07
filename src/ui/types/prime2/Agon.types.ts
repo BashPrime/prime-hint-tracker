@@ -2,13 +2,13 @@ import { z } from "zod";
 import {
   BossKeyHintsSchema,
   KeybearerHintSchema,
-  NewBossHintSchema,
-  NewTranslatorHintSchema,
+  BossHintSchema,
+  TranslatorHintSchema,
 } from "../Prime2.types";
 
 export const AgonBossHintsSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
+  item: BossHintSchema.shape.item,
+  checked: BossHintSchema.shape.checked,
   keys: BossKeyHintsSchema,
 });
 export type AgonBossHints = z.infer<typeof AgonBossHintsSchema>;
@@ -20,10 +20,10 @@ export const AgonKeybearerHintsSchema = z.object({
 export type AgonKeybearerHints = z.infer<typeof AgonKeybearerHintsSchema>;
 
 export const AgonTranslatorHintsSchema = z.object({
-  agonEnergyController: NewTranslatorHintSchema,
-  miningPlaza: NewTranslatorHintSchema,
-  portalTerminal: NewTranslatorHintSchema,
-  miningStationA: NewTranslatorHintSchema,
-  miningStationB: NewTranslatorHintSchema,
+  agonEnergyController: TranslatorHintSchema,
+  miningPlaza: TranslatorHintSchema,
+  portalTerminal: TranslatorHintSchema,
+  miningStationA: TranslatorHintSchema,
+  miningStationB: TranslatorHintSchema,
 });
 export type AgonTranslatorHints = z.infer<typeof AgonTranslatorHintsSchema>;

@@ -2,13 +2,13 @@ import { z } from "zod";
 import {
   BossKeyHintsSchema,
   KeybearerHintSchema,
-  NewBossHintSchema,
-  NewTranslatorHintSchema,
+  BossHintSchema,
+  TranslatorHintSchema,
 } from "../Prime2.types";
 
 export const SanctuaryBossHintsSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
+  item: BossHintSchema.shape.item,
+  checked: BossHintSchema.shape.checked,
   keys: BossKeyHintsSchema,
 });
 export type SanctuaryBossHints = z.infer<typeof SanctuaryBossHintsSchema>;
@@ -22,12 +22,12 @@ export type SanctuaryKeybearerHints = z.infer<
 >;
 
 export const SanctuaryTranslatorHintsSchema = z.object({
-  sanctuaryEnergyController: NewTranslatorHintSchema,
-  sanctuaryEntrance: NewTranslatorHintSchema,
-  hallOfCombatMastery: NewTranslatorHintSchema,
-  mainGyroChamber: NewTranslatorHintSchema,
-  mainResearch: NewTranslatorHintSchema,
-  watchStation: NewTranslatorHintSchema,
+  sanctuaryEnergyController: TranslatorHintSchema,
+  sanctuaryEntrance: TranslatorHintSchema,
+  hallOfCombatMastery: TranslatorHintSchema,
+  mainGyroChamber: TranslatorHintSchema,
+  mainResearch: TranslatorHintSchema,
+  watchStation: TranslatorHintSchema,
 });
 export type SanctuaryTranslatorHints = z.infer<
   typeof SanctuaryTranslatorHintsSchema

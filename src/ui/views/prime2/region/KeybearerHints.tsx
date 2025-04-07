@@ -17,7 +17,7 @@ import {
 } from "@/states/Prime2.states";
 import {
   KeybearerHint,
-  NewRegionKeybearerHints,
+  RegionKeybearerHints,
 } from "@/types/Prime2.types";
 import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
@@ -119,7 +119,7 @@ function Hint({
 }
 
 type Props = {
-  atom: PrimitiveAtom<NewRegionKeybearerHints>;
+  atom: PrimitiveAtom<RegionKeybearerHints>;
   variant: string;
   className?: string;
 };
@@ -131,7 +131,7 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
   const keybearerRooms = useAtomValue(keybearerRoomsState);
 
   // !FUNCTION
-  function buildHintsEntries(hints: NewRegionKeybearerHints) {
+  function buildHintsEntries(hints: RegionKeybearerHints) {
     const final = [];
     const entries = Object.entries(hints);
 

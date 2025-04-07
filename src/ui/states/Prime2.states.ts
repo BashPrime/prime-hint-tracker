@@ -1,5 +1,5 @@
 import {
-  NewRegionHints,
+  RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHints,
   SkyTempleKeyHintsSchema,
@@ -157,8 +157,8 @@ export const regionHintsAtomsSelector = atom({
 });
 
 export const templeHintsSelector = atom<
-  NewRegionHints,
-  [update: NewRegionHints],
+  RegionHints,
+  [update: RegionHints],
   void
 >(
   (get) => {
@@ -172,7 +172,7 @@ export const templeHintsSelector = atom<
       translatorHints: translatorHints,
     };
   },
-  (_, set, update: NewRegionHints) => {
+  (_, set, update: RegionHints) => {
     set(templeBossHintsState, TempleBossHintsSchema.parse(update.bossHints));
     set(
       templeKeybearerHintsState,
@@ -186,8 +186,8 @@ export const templeHintsSelector = atom<
 );
 
 export const agonHintsSelector = atom<
-  NewRegionHints,
-  [update: NewRegionHints],
+  RegionHints,
+  [update: RegionHints],
   void
 >(
   (get) => {
@@ -201,7 +201,7 @@ export const agonHintsSelector = atom<
       translatorHints: translatorHints,
     };
   },
-  (_, set, update: NewRegionHints) => {
+  (_, set, update: RegionHints) => {
     set(agonBossHintsState, AgonBossHintsSchema.parse(update.bossHints));
     set(
       agonKeybearerHintsState,
@@ -215,8 +215,8 @@ export const agonHintsSelector = atom<
 );
 
 export const torvusHintsSelector = atom<
-  NewRegionHints,
-  [update: NewRegionHints],
+  RegionHints,
+  [update: RegionHints],
   void
 >(
   (get) => {
@@ -230,7 +230,7 @@ export const torvusHintsSelector = atom<
       translatorHints: translatorHints,
     };
   },
-  (_, set, update: NewRegionHints) => {
+  (_, set, update: RegionHints) => {
     set(torvusBossHintsState, TorvusBossHintsSchema.parse(update.bossHints));
     set(
       torvusKeybearerHintsState,
@@ -244,8 +244,8 @@ export const torvusHintsSelector = atom<
 );
 
 export const sanctuaryHintsSelector = atom<
-  NewRegionHints,
-  [update: NewRegionHints],
+  RegionHints,
+  [update: RegionHints],
   void
 >(
   (get) => {
@@ -259,7 +259,7 @@ export const sanctuaryHintsSelector = atom<
       translatorHints: translatorHints,
     };
   },
-  (_, set, update: NewRegionHints) => {
+  (_, set, update: RegionHints) => {
     set(
       sanctuaryBossHintsState,
       SanctuaryBossHintsSchema.parse(update.bossHints)

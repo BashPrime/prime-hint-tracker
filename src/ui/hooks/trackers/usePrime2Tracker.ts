@@ -7,7 +7,7 @@ import {
   templeHintsSelector,
   torvusHintsSelector,
 } from "@/states/Prime2.states";
-import { NewRegionHintsSchema, SkyTempleKeyHintsSchema } from "@/types/Prime2.types";
+import { RegionHintsSchema, SkyTempleKeyHintsSchema } from "@/types/Prime2.types";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
@@ -50,10 +50,10 @@ export default function usePrime2Tracker() {
   function set(data: any) {
     try {
       // Load regional hints
-      setTempleHints(NewRegionHintsSchema.parse(data.regions.temple));
-      setAgonHints(NewRegionHintsSchema.parse(data.regions.agon));
-      setTorvusHints(NewRegionHintsSchema.parse(data.regions.torvus));
-      setSancHints(NewRegionHintsSchema.parse(data.regions.sanctuary));
+      setTempleHints(RegionHintsSchema.parse(data.regions.temple));
+      setAgonHints(RegionHintsSchema.parse(data.regions.agon));
+      setTorvusHints(RegionHintsSchema.parse(data.regions.torvus));
+      setSancHints(RegionHintsSchema.parse(data.regions.sanctuary));
       setUnhintedItems(data.unhintedItems);
       setStkHints(SkyTempleKeyHintsSchema.parse(data.skyTempleKeys));
     } catch (err) {

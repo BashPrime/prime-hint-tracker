@@ -1,13 +1,13 @@
 import { z } from "zod";
 import {
   KeybearerHintSchema,
-  NewBossHintSchema,
-  NewTranslatorHintSchema,
+  BossHintSchema,
+  TranslatorHintSchema,
 } from "../Prime2.types";
 
 export const TempleBossHintsSchema = z.object({
-  item: NewBossHintSchema.shape.item,
-  checked: NewBossHintSchema.shape.checked,
+  item: BossHintSchema.shape.item,
+  checked: BossHintSchema.shape.checked,
   keys: z.literal(undefined),
 });
 export type TempleBossHints = z.infer<typeof TempleBossHintsSchema>;
@@ -20,10 +20,10 @@ export const TempleKeybearerHintsSchema = z.object({
 export type TempleKeybearerHints = z.infer<typeof TempleKeybearerHintsSchema>;
 
 export const TempleTranslatorHintsSchema = z.object({
-  mainEnergyController: NewTranslatorHintSchema,
-  transportToAgonWastes: NewTranslatorHintSchema,
-  fortressTransportAccess: NewTranslatorHintSchema,
-  meetingGrounds: NewTranslatorHintSchema,
-  pathOfEyes: NewTranslatorHintSchema,
+  mainEnergyController: TranslatorHintSchema,
+  transportToAgonWastes: TranslatorHintSchema,
+  fortressTransportAccess: TranslatorHintSchema,
+  meetingGrounds: TranslatorHintSchema,
+  pathOfEyes: TranslatorHintSchema,
 });
 export type TempleTranslatorHints = z.infer<typeof TempleTranslatorHintsSchema>;

@@ -3,8 +3,8 @@ import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
 import {
   BossHints as BossHintsType,
-  NewRegionKeybearerHints,
-  NewRegionTranslatorHints,
+  RegionKeybearerHints,
+  RegionTranslatorHints,
 } from "@/types/Prime2.types";
 import { cn } from "@/lib/utils";
 import TranslatorHints from "./TranslatorHints";
@@ -14,9 +14,9 @@ type Props = {
   variant: string;
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   bossHintsAtom: WritableAtom<BossHintsType, [SetStateAction<any>], void>;
-  keybearerHintsAtom: PrimitiveAtom<NewRegionKeybearerHints>;
+  keybearerHintsAtom: PrimitiveAtom<RegionKeybearerHints>;
   translatorHintsAtom: WritableAtom<
-    NewRegionTranslatorHints,
+    RegionTranslatorHints,
     /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
     [SetStateAction<any>],
     void
