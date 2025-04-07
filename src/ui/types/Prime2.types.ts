@@ -52,7 +52,7 @@ export const NewTranslatorHintSchema = z.object({
   proximity: EmptyStringSchema,
   checked: CheckedSchema,
 });
-export type NewTranslatorHint = z.infer<typeof NewTranslatorHintSchema>
+export type NewTranslatorHint = z.infer<typeof NewTranslatorHintSchema>;
 
 export const NewRegionTranslatorHintsSchema = z.record(
   z.string(),
@@ -87,58 +87,9 @@ export const KeybearerHintsUpdateSchema = z.tuple([
 export type KeybearerHintsUpdate = z.infer<typeof KeybearerHintsUpdateSchema>;
 
 export const NewRegionHintsSchema = z.object({
-  "Temple Grounds": z.object({
-    boss: z.object({
-      name: z.literal("U-Mos Reward"),
-      item: NewBossHintSchema.shape.item,
-      checked: NewBossHintSchema.shape.checked,
-      keys: z.literal(undefined),
-    }),
-    keybearerHints: z.object({
-      industrialSite: z.object({
-        lightWorldLocation: z.literal("Industrial Site"),
-        darkWorldLocation: z.literal("Accursed Lake"),
-        item: KeybearerHintSchema.shape.item,
-        checked: KeybearerHintSchema.shape.checked,
-      }),
-      landingSite: z.object({
-        lightWorldLocation: z.literal("Landing Site"),
-        darkWorldLocation: z.literal("Defiled Shrine"),
-        item: KeybearerHintSchema.shape.item,
-        checked: KeybearerHintSchema.shape.checked,
-      }),
-      storageCavernA: z.object({
-        lightWorldLocation: z.literal("Storage Cavern A"),
-        darkWorldLocation: z.literal("Ing Reliquary"),
-        item: KeybearerHintSchema.shape.item,
-        checked: KeybearerHintSchema.shape.checked,
-      }),
-    }),
-  }),
-  // "Agon Wastes": z.object({
-  //   boss: z.object({
-  //     name: z.literal("Amorbis"),
-  //     item: NewBossHintSchema.shape.item,
-  //     checked: NewBossHintSchema.shape.checked,
-  //     keys: BossKeyHintsSchema,
-  //   }),
-  //   keybearerHints: z.object({
-  //     centralMiningStation: z.object({
-  //       id: KeybearerHintSchema.shape.id,
-  //       lightWorldLocation: z.literal("Central Mining Station"),
-  //       darkWorldLocation: z.literal("Battleground"),
-  //       item: KeybearerHintSchema.shape.item,
-  //       checked: KeybearerHintSchema.shape.checked
-  //     }),
-  //     mainReactor: z.object({
-  //       id: KeybearerHintSchema.shape.id,
-  //       lightWorldLocation: z.literal("Main Reactor"),
-  //       darkWorldLocation: z.literal("Dark Oasis"),
-  //       item: KeybearerHintSchema.shape.item,
-  //       checked: KeybearerHintSchema.shape.checked
-  //     }),
-  //   }),
-  // }),
+  bossHints: BossHintsSchema,
+  keybearerHints: NewRegionKeybearerHintsSchema,
+  translatorHints: NewRegionTranslatorHintsSchema,
 });
 export type NewRegionHints = z.infer<typeof NewRegionHintsSchema>;
 

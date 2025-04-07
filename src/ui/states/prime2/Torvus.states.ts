@@ -1,17 +1,12 @@
-import {
-  KeybearerHint,
-  KeybearerHintsUpdate,
-  NewBossKeyHintSchema,
-  NewRegionKeybearerHints,
-} from "@/types/Prime2.types";
+import { NewBossKeyHintSchema } from "@/types/Prime2.types";
 import {
   TorvusBossHints,
   TorvusBossHintsSchema,
   TorvusKeybearerHints,
   TorvusKeybearerHintsSchema,
+  TorvusTranslatorHints,
   TorvusTranslatorHintsSchema,
 } from "@/types/prime2/Torvus.types";
-import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
 
 export const torvusBossHintsState = atomWithReset<TorvusBossHints>(
@@ -24,28 +19,14 @@ export const torvusBossHintsState = atomWithReset<TorvusBossHints>(
   })
 );
 
-const _torvusKeybearerHintsState = atomWithReset<TorvusKeybearerHints>(
+export const torvusKeybearerHintsState = atomWithReset<TorvusKeybearerHints>(
   TorvusKeybearerHintsSchema.parse({
     torvusLagoon: {},
     catacombs: {},
   })
 );
 
-export const torvusKeybearerHintsState = atom<
-  NewRegionKeybearerHints,
-  [update: KeybearerHintsUpdate],
-  void
->(
-  (get) => get(_torvusKeybearerHintsState),
-  (get, set, update: [string, KeybearerHint]) => {
-    const updated = { ...get(_torvusKeybearerHintsState) };
-    const [key, value] = update;
-    updated[key as keyof TorvusKeybearerHints] = value;
-    set(_torvusKeybearerHintsState, updated);
-  }
-);
-
-export const torvusTranslatorHintsState = atomWithReset(
+export const torvusTranslatorHintsState = atomWithReset<TorvusTranslatorHints>(
   TorvusTranslatorHintsSchema.parse({
     torvusEnergyController: {},
     pathOfRoots: {},

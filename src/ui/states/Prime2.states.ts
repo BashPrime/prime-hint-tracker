@@ -1,4 +1,5 @@
 import {
+  NewRegionHints,
   RegionHints,
   SkyTempleKeyHint,
   SkyTempleKeyHintSchema,
@@ -37,6 +38,9 @@ import {
   sanctuaryKeybearerHintsState,
   sanctuaryTranslatorHintsState,
 } from "./prime2/Sanctuary.states";
+import { TempleBossHints, TempleBossHintsSchema, TempleKeybearerHintsSchema, TempleTranslatorHintsSchema } from "@/types/prime2/Temple.types";
+
+export const keybearerRoomsState = atom<KeybearerRooms>("both");
 
 export const keybearerHintsNamesAtom = atom({
   industrialSite: {
@@ -131,6 +135,65 @@ export const regionHintsAtomsSelector = atom({
     keybearerHints: sanctuaryKeybearerHintsState,
     translatorHints: sanctuaryTranslatorHintsState,
   },
+});
+
+export const templeHintsSelector = atom<
+  NewRegionHints
+  // [update: NewRegionHints],
+  // void
+>(
+  (get) => {
+    const bossHints = get(templeBossHintsState);
+    const keybearerHints = get(templeKeybearerHintsState);
+    const translatorHints = get(templeTranslatorHintsState);
+
+    return {
+      bossHints: bossHints,
+      keybearerHints: keybearerHints,
+      translatorHints: translatorHints,
+    };
+  },
+  // (get, set, update: NewRegionHints) => {
+  //   set(templeBossHintsState, TempleBossHintsSchema.parse(update.bossHints));
+  //   set(templeKeybearerHintsState, TempleKeybearerHintsSchema.parse(update.keybearerHints));
+  //   set(templeTranslatorHintsState, TempleTranslatorHintsSchema.parse(update.translatorHints));
+  // }
+);
+
+export const agonHintsSelector = atom<NewRegionHints>((get) => {
+  const bossHints = get(agonBossHintsState);
+  const keybearerHints = get(agonKeybearerHintsState);
+  const translatorHints = get(agonTranslatorHintsState);
+
+  return {
+    bossHints: bossHints,
+    keybearerHints: keybearerHints,
+    translatorHints: translatorHints,
+  };
+});
+
+export const torvusHintsSelector = atom<NewRegionHints>((get) => {
+  const bossHints = get(torvusBossHintsState);
+  const keybearerHints = get(torvusKeybearerHintsState);
+  const translatorHints = get(torvusTranslatorHintsState);
+
+  return {
+    bossHints: bossHints,
+    keybearerHints: keybearerHints,
+    translatorHints: translatorHints,
+  };
+});
+
+export const sanctuaryHintsSelector = atom<NewRegionHints>((get) => {
+  const bossHints = get(sanctuaryBossHintsState);
+  const keybearerHints = get(sanctuaryKeybearerHintsState);
+  const translatorHints = get(sanctuaryTranslatorHintsState);
+
+  return {
+    bossHints: bossHints,
+    keybearerHints: keybearerHints,
+    translatorHints: translatorHints,
+  };
 });
 
 export const templeGroundsHintsState = atomWithReset<RegionHints>({
@@ -273,8 +336,6 @@ export const prime2TrackerSelector = atom((get) => {
     skyTempleKeys,
   };
 });
-
-export const keybearerRoomsState = atom<KeybearerRooms>("both");
 
 export const prime2UnhintedItemOptionsSelector = atom<HintOption[]>((get) => {
   const legacyHintsEnabled = get(legacyHintsEnabledState);

@@ -20,7 +20,7 @@ import {
   KeybearerHintsUpdate,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
-import { useAtom, useAtomValue, WritableAtom } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue, WritableAtom } from "jotai";
 import { Check } from "lucide-react";
 
 type HintProps = {
@@ -120,11 +120,7 @@ function Hint({
 }
 
 type Props = {
-  atom: WritableAtom<
-    NewRegionKeybearerHints,
-    [update: KeybearerHintsUpdate],
-    void
-  >;
+  atom: PrimitiveAtom<NewRegionKeybearerHints>;
   variant: string;
   className?: string;
 };
@@ -159,6 +155,12 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
     });
   }
 
+  function updateHint(key: string, update: KeybearerHint) {
+    const newHints = { ...hints };
+    newHints[key] = update;
+    setHints(newHints);
+  }
+
   // !LOCAL
   const hintsEntries = buildHintsEntries(hints);
 
@@ -173,7 +175,7 @@ export default function KeybearerHints({ atom, variant, className }: Props) {
             lightWorldName={hint.lightWorld}
             darkWorldName={hint.darkWorld}
             value={hint.value}
-            onUpdate={(update) => setHints([hint.key, update])}
+            onUpdate={(update) => updateHint(hint.key, update)}
             key={`${variant}-cache-${idx}`}
             className="border-b md:border-r border-zinc-900"
           />

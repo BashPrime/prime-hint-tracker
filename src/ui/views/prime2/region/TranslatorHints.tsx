@@ -227,7 +227,7 @@ export default function TranslatorHints({ atom, variant, className }: Props) {
 
   function updateHint(key: string, update: NewTranslatorHint) {
     const newHints = { ...hints };
-    newHints[key as keyof typeof newHints] = update;
+    newHints[key] = update;
     setHints(newHints);
   }
 
