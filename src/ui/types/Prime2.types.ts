@@ -2,8 +2,6 @@ import z from "zod";
 import {
   CheckedSchema,
   EmptyStringSchema,
-  EndgameHint,
-  EndgameHintSchema,
 } from "./common.types";
 
 export const NewBossKeyHintSchema = z.object({
@@ -24,14 +22,6 @@ export const NewBossHintSchema = z.object({
   checked: CheckedSchema,
   keys: BossKeyHintsSchema.optional(),
 });
-
-export const BossKeyHintSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  location: EmptyStringSchema,
-  checked: CheckedSchema,
-});
-export type BossKeyHint = z.infer<typeof BossKeyHintSchema>;
 
 export const BossHintsSchema = z.object({
   item: NewBossHintSchema.shape.item,
@@ -62,16 +52,6 @@ export type NewRegionTranslatorHints = z.infer<
   typeof NewRegionTranslatorHintsSchema
 >;
 
-export const TranslatorHintSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  firstValue: EmptyStringSchema,
-  secondValue: EmptyStringSchema,
-  proximity: EmptyStringSchema,
-  checked: CheckedSchema,
-});
-export type TranslatorHint = z.infer<typeof TranslatorHintSchema>;
-
 export const NewRegionKeybearerHintsSchema = z.record(
   z.string(),
   KeybearerHintSchema
@@ -80,24 +60,12 @@ export type NewRegionKeybearerHints = z.infer<
   typeof NewRegionKeybearerHintsSchema
 >;
 
-export const KeybearerHintsUpdateSchema = z.tuple([
-  z.string(),
-  KeybearerHintSchema,
-]);
-export type KeybearerHintsUpdate = z.infer<typeof KeybearerHintsUpdateSchema>;
-
 export const NewRegionHintsSchema = z.object({
   bossHints: BossHintsSchema,
   keybearerHints: NewRegionKeybearerHintsSchema,
   translatorHints: NewRegionTranslatorHintsSchema,
 });
 export type NewRegionHints = z.infer<typeof NewRegionHintsSchema>;
-
-export const RegionHintsSchema = z.object({
-  variant: z.enum(["temple", "agon", "torvus", "sanctuary"]),
-  translatorHints: z.array(TranslatorHintSchema),
-});
-export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
 export const SkyTempleKeyHintSchema = z.object({
   location: EmptyStringSchema,

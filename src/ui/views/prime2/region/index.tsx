@@ -1,9 +1,8 @@
-import { SetStateAction, WritableAtom } from "jotai";
+import { PrimitiveAtom, SetStateAction, WritableAtom } from "jotai";
 import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
 import {
   BossHints as BossHintsType,
-  KeybearerHintsUpdate,
   NewRegionKeybearerHints,
   NewRegionTranslatorHints,
 } from "@/types/Prime2.types";
@@ -15,11 +14,7 @@ type Props = {
   variant: string;
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   bossHintsAtom: WritableAtom<BossHintsType, [SetStateAction<any>], void>;
-  keybearerHintsAtom: WritableAtom<
-    NewRegionKeybearerHints,
-    [update: KeybearerHintsUpdate],
-    void
-  >;
+  keybearerHintsAtom: PrimitiveAtom<NewRegionKeybearerHints>;
   translatorHintsAtom: WritableAtom<
     NewRegionTranslatorHints,
     /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */

@@ -3,8 +3,6 @@ import {
   SkyTempleKeyHint,
   SkyTempleKeyHints,
   SkyTempleKeyHintsSchema,
-  RegionHints,
-  TranslatorHintSchema,
 } from "@/types/Prime2.types";
 import { atom } from "jotai";
 import { atomWithReset } from "jotai/utils";
@@ -276,115 +274,6 @@ export const sanctuaryHintsSelector = atom<
     );
   }
 );
-
-export const templeGroundsHintsState = atomWithReset<RegionHints>({
-  variant: "temple",
-  translatorHints: [
-    TranslatorHintSchema.parse({
-      id: 1,
-      name: "Main Energy Controller",
-    }),
-    TranslatorHintSchema.parse({
-      id: 2,
-      name: "Transport to Agon Wastes",
-    }),
-    TranslatorHintSchema.parse({
-      id: 3,
-      name: "Meeting Grounds",
-    }),
-    TranslatorHintSchema.parse({
-      id: 4,
-      name: "Fortress Transport Access",
-    }),
-    TranslatorHintSchema.parse({
-      id: 5,
-      name: "Path of Eyes",
-    }),
-  ],
-});
-export const agonHintsState = atomWithReset<RegionHints>({
-  variant: "agon",
-  translatorHints: [
-    TranslatorHintSchema.parse({
-      id: 1,
-      name: "Agon Energy Controller",
-    }),
-    TranslatorHintSchema.parse({
-      id: 2,
-      name: "Mining Plaza",
-    }),
-    TranslatorHintSchema.parse({
-      id: 3,
-      name: "Portal Terminal",
-    }),
-    TranslatorHintSchema.parse({
-      id: 4,
-      name: "Mining Station A",
-    }),
-    TranslatorHintSchema.parse({
-      id: 5,
-      name: "Mining Station B",
-    }),
-  ],
-});
-export const torvusHintsState = atomWithReset<RegionHints>({
-  variant: "torvus",
-  translatorHints: [
-    TranslatorHintSchema.parse({
-      id: 1,
-      name: "Torvus Energy Controller",
-    }),
-    TranslatorHintSchema.parse({
-      id: 2,
-      name: "Path of Roots",
-    }),
-    TranslatorHintSchema.parse({
-      id: 3,
-      name: "Underground Tunnel",
-    }),
-    TranslatorHintSchema.parse({
-      id: 4,
-      name: "Catacombs",
-    }),
-    TranslatorHintSchema.parse({
-      id: 5,
-      name: "Gathering Hall",
-    }),
-    TranslatorHintSchema.parse({
-      id: 6,
-      name: "Training Chamber",
-    }),
-  ],
-});
-export const sanctuaryHintsState = atomWithReset<RegionHints>({
-  variant: "sanctuary",
-  translatorHints: [
-    TranslatorHintSchema.parse({
-      id: 1,
-      name: "Sanctuary Energy Controller",
-    }),
-    TranslatorHintSchema.parse({
-      id: 2,
-      name: "Sanctuary Entrance",
-    }),
-    TranslatorHintSchema.parse({
-      id: 3,
-      name: "Hall of Combat Mastery",
-    }),
-    TranslatorHintSchema.parse({
-      id: 4,
-      name: "Main Gyro Chamber",
-    }),
-    TranslatorHintSchema.parse({
-      id: 5,
-      name: "Main Research",
-    }),
-    TranslatorHintSchema.parse({
-      id: 6,
-      name: "Watch Station",
-    }),
-  ],
-});
 
 export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHints>(
   SkyTempleKeyHintsSchema.parse({

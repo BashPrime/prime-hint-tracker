@@ -17,10 +17,9 @@ import {
 } from "@/states/Prime2.states";
 import {
   KeybearerHint,
-  KeybearerHintsUpdate,
   NewRegionKeybearerHints,
 } from "@/types/Prime2.types";
-import { PrimitiveAtom, useAtom, useAtomValue, WritableAtom } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { Check } from "lucide-react";
 
 type HintProps = {
