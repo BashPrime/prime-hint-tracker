@@ -104,20 +104,20 @@ const template: MenuItemConstructorOptions[] = [
         label: "Prime 1 Phazon Suit Hint",
         submenu: [
           {
-            id: MENU_IDS.phazonSuitHint.areaNameOnly,
-            label: "Area Name Only",
+            id: PhazonSuitHintSchema.enum.areaName,
+            label: "Area Name",
             type: "radio",
             checked: true,
             click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaNameOnly),
+              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaName),
           },
           {
-            id: MENU_IDS.phazonSuitHint.areaNameOnly,
-            label: "Area and Room Name",
+            id: PhazonSuitHintSchema.enum.roomName,
+            label: "Room Name",
             type: "radio",
             checked: false,
             click: () =>
-              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaAndRoomName),
+              togglePhazonSuitHint(PhazonSuitHintSchema.enum.roomName),
           },
         ],
       },

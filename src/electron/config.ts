@@ -117,7 +117,7 @@ function getTogglesState(): Toggles {
       }
     }
 
-    return PhazonSuitHintSchema.enum.areaNameOnly;
+    return PhazonSuitHintSchema.enum.areaName;
   }
 
   return {

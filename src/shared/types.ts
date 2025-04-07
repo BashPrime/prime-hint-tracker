@@ -16,7 +16,7 @@ export type TrackerConfig = z.infer<typeof TrackerConfigSchema>;
 export const KeybearerRoomsSchema = z.enum(["aether", "darkAether", "both"]);
 export type KeybearerRooms = z.infer<typeof KeybearerRoomsSchema>;
 
-export const PhazonSuitHintSchema = z.enum(["areaNameOnly", "areaAndRoomName"]);
+export const PhazonSuitHintSchema = z.enum(["areaName", "roomName"]);
 export type PhazonSuitHint = z.infer<typeof PhazonSuitHintSchema>;
 
 export const TogglesSchema = z.object({
@@ -26,7 +26,7 @@ export const TogglesSchema = z.object({
     KeybearerRoomsSchema.enum.both
   ),
   phazonSuitHint: PhazonSuitHintSchema.default(
-    PhazonSuitHintSchema.enum.areaNameOnly
+    PhazonSuitHintSchema.enum.areaName
   ),
 });
 export type Toggles = z.infer<typeof TogglesSchema>;

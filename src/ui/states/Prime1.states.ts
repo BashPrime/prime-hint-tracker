@@ -74,7 +74,7 @@ export const prime1TrackerSelector = atom((get) => {
 });
 
 export const phazonSuitHintPrecisionState = atom<PhazonSuitHintShared>(
-  PhazonSuitHintSchema.enum.areaNameOnly
+  PhazonSuitHintSchema.enum.areaName
 );
 
 export const prime1UnhintedItemOptionsSelector = atom<HintOption[]>(

@@ -6,11 +6,6 @@ export const MENU_IDS = {
     darkAether: "darkAether",
     both: "both",
   },
-  phazonSuitHint: {
-    areaNameOnly: "areaNameOnly",
-    areaAndRoomName: "areaAndRoomName"
-
-  },
   legacyHintsEnabled: "legacyHintsEnabled",
 };
 

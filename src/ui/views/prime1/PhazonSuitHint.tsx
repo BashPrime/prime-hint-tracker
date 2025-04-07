@@ -29,7 +29,7 @@ export default function PhazonSuitHint({ className }: Props) {
 
   // !LOCAL
   const locations =
-    precision === PhazonSuitHintSchema.enum.areaNameOnly
+    precision === PhazonSuitHintSchema.enum.areaName
       ? [...PRIME_1_REGIONS_WITH_ITEMS]
       : [...PRIME_1_LOCATIONS_WITH_ITEMS];
   const locationOptions = createOptions(locations, true);
