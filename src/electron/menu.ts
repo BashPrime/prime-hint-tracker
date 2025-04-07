@@ -13,12 +13,15 @@ import {
   setGame,
   setKeybearerRoomLabels,
   setLegacyHintsEnabled,
+  setPhazonSuitHint,
 } from "./ipc.js";
 import {
   Game,
   GameSchema,
   KeybearerRooms,
   KeybearerRoomsSchema,
+  PhazonSuitHint,
+  PhazonSuitHintSchema,
 } from "../shared/types.js";
 
 function toggleAlwaysOnTop(checked: boolean) {
@@ -39,6 +42,12 @@ function toggleKeybearerRooms(value: KeybearerRooms) {
 
 function toggleGame(game: Game) {
   setGame(game);
+  handleSaveAppConfig();
+}
+
+function togglePhazonSuitHint(value: PhazonSuitHint) {
+  setPhazonSuitHint(value);
+  handleSaveAppConfig();
 }
 
 const template: MenuItemConstructorOptions[] = [
@@ -61,14 +70,14 @@ const template: MenuItemConstructorOptions[] = [
         id: GameSchema.enum.prime,
         type: "radio",
         checked: true,
-        click: () => toggleGame(GameSchema.enum.prime)
+        click: () => toggleGame(GameSchema.enum.prime),
       },
       {
         label: "Metroid Prime 2: Echoes",
         id: GameSchema.enum.echoes,
         type: "radio",
         checked: false,
-        click: () => toggleGame(GameSchema.enum.echoes)
+        click: () => toggleGame(GameSchema.enum.echoes),
       },
     ],
   },
@@ -92,6 +101,27 @@ const template: MenuItemConstructorOptions[] = [
         },
       },
       {
+        label: "Prime 1 Phazon Suit Hint",
+        submenu: [
+          {
+            id: MENU_IDS.phazonSuitHint.areaNameOnly,
+            label: "Area Name Only",
+            type: "radio",
+            checked: true,
+            click: () =>
+              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaNameOnly),
+          },
+          {
+            id: MENU_IDS.phazonSuitHint.areaNameOnly,
+            label: "Area and Room Name",
+            type: "radio",
+            checked: false,
+            click: () =>
+              togglePhazonSuitHint(PhazonSuitHintSchema.enum.areaAndRoomName),
+          },
+        ],
+      },
+      {
         label: "Prime 2 Keybearer Room Labels",
         submenu: [
           {
@@ -106,8 +136,7 @@ const template: MenuItemConstructorOptions[] = [
             label: "Aether only",
             type: "radio",
             checked: false,
-            click: () =>
-              toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
+            click: () => toggleKeybearerRooms(KeybearerRoomsSchema.enum.aether),
           },
           {
             id: MENU_IDS.keybearerRoomLabels.darkAether,

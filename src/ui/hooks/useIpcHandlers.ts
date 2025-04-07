@@ -12,8 +12,10 @@ import {
   ActionSchema,
   GameSchema,
   KeybearerRoomsSchema,
+  PhazonSuitHintSchema,
 } from "../../../src/shared/types";
 import { z } from "zod";
+import { phazonSuitHintPrecisionState } from "@/states/Prime1.states";
 
 export default function useIpcHandlers() {
   // !STATE
@@ -24,6 +26,7 @@ export default function useIpcHandlers() {
   const setAppSessionLoaded = useSetAtom(appSessionLoadedState);
   const setAppLoadingMsg = useSetAtom(appLoadingMsgAtom);
   const setKeybearerRooms = useSetAtom(keybearerRoomsState);
+  const setPhazonSuitHintPrecision = useSetAtom(phazonSuitHintPrecisionState);
 
   // !HOOKS
   const trackerState = useTrackerState();
@@ -105,6 +108,17 @@ export default function useIpcHandlers() {
         }, 1);
       }
     });
+
+    window.electronApi.setPhazonSuitHint((precision) => {
+      try {
+        const parsed = PhazonSuitHintSchema.parse(precision);
+        setPhazonSuitHintPrecision(parsed);
+      } catch (err) {
+        if (err instanceof z.ZodError) {
+          console.error("cannot parse phazon suit hint precision:", err.issues);
+        } else console.error(String(err));
+      }
+    });
   }, [
     currentGame,
     legacyHintsEnabled,
@@ -114,5 +128,6 @@ export default function useIpcHandlers() {
     setLegacyHintsEnabled,
     setAppSessionLoaded,
     setAppLoadingMsg,
+    setPhazonSuitHintPrecision,
   ]);
 }

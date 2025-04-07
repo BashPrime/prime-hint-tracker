@@ -11,5 +11,6 @@ interface Window {
     ) => void;
     setKeybearerRooms: (callback: (value: string) => void) => void;
     setGame: (callback: (game: string) => void) => void;
+    setPhazonSuitHint: (callback: (value: string) => void) => void;
   };
 }

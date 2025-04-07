@@ -6,6 +6,11 @@ export const MENU_IDS = {
     darkAether: "darkAether",
     both: "both",
   },
+  phazonSuitHint: {
+    areaNameOnly: "areaNameOnly",
+    areaAndRoomName: "areaAndRoomName"
+
+  },
   legacyHintsEnabled: "legacyHintsEnabled",
 };
 
@@ -19,6 +24,7 @@ export const IPC_IDS = {
   loadTrackerSession: "load-tracker-session",
   setKeybearerRooms: "set-keybearer-rooms",
   setGame: "set-game",
+  setPhazonSuitHint: "set-phazon-suit-hint",
 };
 
 type WindowSize = {

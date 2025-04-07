@@ -1,7 +1,13 @@
 import { dialog, ipcMain } from "electron";
 import { IPC_IDS } from "./data.js";
 import { getMainWindow } from "./window.js";
-import { Action, Game, KeybearerRooms, TrackerConfig } from "../shared/types.js";
+import {
+  Action,
+  Game,
+  KeybearerRooms,
+  PhazonSuitHint,
+  TrackerConfig,
+} from "../shared/types.js";
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
 import {
   getAppConfigState,
@@ -59,6 +65,11 @@ export function setGame(game: Game) {
   window?.webContents.send(IPC_IDS.setGame, game);
 }
 
+export function setPhazonSuitHint(value: PhazonSuitHint) {
+  const window = getMainWindow();
+  window?.webContents.send(IPC_IDS.setPhazonSuitHint, value);
+}
+
 export function handleRendererInitialization() {
   ipcMain.handle(IPC_IDS.requestMainState, () => {
     const trackerConfig = readTrackerConfigFile();
@@ -74,6 +85,7 @@ export function handleRendererInitialization() {
     if (appConfig) {
       setLegacyHintsEnabled(appConfig.toggles.legacyHintsEnabled);
       setKeybearerRoomLabels(appConfig.toggles.keybearerRoomLabels);
+      setPhazonSuitHint(appConfig.toggles.phazonSuitHint);
     }
   });
 }

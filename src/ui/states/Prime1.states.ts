@@ -11,9 +11,12 @@ import { HintOption } from "@/types/common.types";
 import { createOptions } from "@/lib/utils";
 import {
   PRIME_1_DISTINCT_LOCATIONS_WITH_ITEMS,
-  PRIME_1_LOCATIONS_WITH_ITEMS,
   PRIME_1_MAJOR_UPGRADES,
 } from "@/data/Prime1.data";
+import {
+  PhazonSuitHintSchema,
+  PhazonSuitHint as PhazonSuitHintShared,
+} from "../../../src/shared/types";
 
 export const artifactHintsState = atomWithReset<ArtifactHints>(
   ArtifactHintsSchema.parse({
@@ -69,6 +72,10 @@ export const prime1TrackerSelector = atom((get) => {
     phazonSuit,
   };
 });
+
+export const phazonSuitHintPrecisionState = atom<PhazonSuitHintShared>(
+  PhazonSuitHintSchema.enum.areaNameOnly
+);
 
 export const prime1UnhintedItemOptionsSelector = atom<HintOption[]>(
   createOptions([...PRIME_1_MAJOR_UPGRADES], true)
