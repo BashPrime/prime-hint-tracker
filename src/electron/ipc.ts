@@ -11,7 +11,9 @@ import {
 import { getDefaultWindowSize, parseTrackerConfig } from "./util.js";
 import {
   getAppConfigState,
+  getTrackerState,
   readTrackerConfigFile,
+  setGameMenuItem,
   setTrackerState,
 } from "./config.js";
 
@@ -61,8 +63,32 @@ export function setKeybearerRoomLabels(value: KeybearerRooms) {
 }
 
 export function setGame(game: Game) {
-  const window = getMainWindow();
-  window?.webContents.send(IPC_IDS.setGame, game);
+  const mainWindow = getMainWindow();
+  const cancelId = 0;
+
+  if (mainWindow) {
+    dialog
+      .showMessageBox(mainWindow, {
+        title: "Confirm Game Switch",
+        message:
+          "Switching games will reset the tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
+        type: "warning",
+        buttons: ["Cancel", "Yes"],
+        cancelId,
+      })
+      .then((value) => {
+        if (value.response !== cancelId) {
+          mainWindow?.webContents.send(IPC_IDS.setGame, game);
+        } else {
+          // Need to switch back to the previous radio button
+          const state = getTrackerState();
+
+          if (state) {
+            setGameMenuItem(state.game);
+          }
+        }
+      });
+  }
 }
 
 export function setPhazonSuitHint(value: PhazonSuitHint) {

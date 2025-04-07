@@ -22,7 +22,7 @@ const APP_CONFIG_PATH = path.join(app.getPath("userData"), "config.json");
 
 let trackerState: TrackerConfig | null = null;
 
-function setGameMenuItem(game: Game) {
+export function setGameMenuItem(game: Game) {
   const menuItem = menu.getMenuItemById(game);
 
   if (menuItem) {
