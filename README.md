@@ -1,8 +1,8 @@
 # Metroid Prime Hint Tracker
 
-A hint tracker which helps organize the hints that players write down during a play session.
+A tracker which helps organize the hints that players write down during a randomizer play session.
 
-The following games are supported:
+The following game randomizers are supported:
 
 * Metroid Prime
 * Metroid Prime 2: Echoes
