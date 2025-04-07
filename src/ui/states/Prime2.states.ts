@@ -38,7 +38,6 @@ import {
   sanctuaryTranslatorHintsState,
 } from "./prime2/Sanctuary.states";
 import {
-  TempleBossHints,
   TempleBossHintsSchema,
   TempleKeybearerHintsSchema,
   TempleTranslatorHintsSchema,
