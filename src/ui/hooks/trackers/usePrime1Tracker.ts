@@ -3,7 +3,8 @@ import {
   artifactHintsState,
   phazonSuitHintState,
 } from "@/states/Prime1.states";
-import { ArtifactHintsSchema, PhazonSuitHintSchema } from "@/types/Prime1.types";
+import { ItemHintSchema } from "@/types/common.types";
+import { ArtifactHintsSchema } from "@/types/Prime1.types";
 import { useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
@@ -23,7 +24,7 @@ export default function usePrime1Tracker() {
     try {
       // Load regional hints
       setArtifactHints(ArtifactHintsSchema.parse(data.artifacts));
-      setPhazonSuitHint(PhazonSuitHintSchema.parse(data.phazonSuit));
+      setPhazonSuitHint(ItemHintSchema.parse(data.phazonSuit));
       setUnhintedItems(data.unhintedItems);
     } catch (err) {
       if (err instanceof z.ZodError) {

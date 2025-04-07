@@ -5,17 +5,16 @@ import {
   ArtifactHint,
   ArtifactHints,
   ArtifactHintsSchema,
-  PhazonSuitHint,
 } from "@/types/Prime1.types";
-import { HintOption } from "@/types/common.types";
+import { HintOption, ItemHint, ItemHintSchema } from "@/types/common.types";
 import { createOptions } from "@/lib/utils";
 import {
   PRIME_1_DISTINCT_LOCATIONS_WITH_ITEMS,
   PRIME_1_MAJOR_UPGRADES,
 } from "@/data/Prime1.data";
 import {
+  PhazonSuitHint,
   PhazonSuitHintSchema,
-  PhazonSuitHint as PhazonSuitHintShared,
 } from "../../../src/shared/types";
 
 export const artifactHintsState = atomWithReset<ArtifactHints>(
@@ -56,10 +55,9 @@ export const artifactHintsArraySelector = atom((get) => {
     .sort((a, b) => a.id - b.id);
 });
 
-export const phazonSuitHintState = atomWithReset<PhazonSuitHint>({
-  location: "",
-  checked: false,
-});
+export const phazonSuitHintState = atomWithReset<ItemHint>(
+  ItemHintSchema.parse({})
+);
 
 export const prime1TrackerSelector = atom((get) => {
   const unhintedItems = get(unhintedItemsState);
@@ -73,7 +71,7 @@ export const prime1TrackerSelector = atom((get) => {
   };
 });
 
-export const phazonSuitHintPrecisionState = atom<PhazonSuitHintShared>(
+export const phazonSuitHintPrecisionState = atom<PhazonSuitHint>(
   PhazonSuitHintSchema.enum.areaName
 );
 

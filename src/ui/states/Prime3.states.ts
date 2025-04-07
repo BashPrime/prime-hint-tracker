@@ -4,8 +4,11 @@ import {
   PRIME_3_PROGRESSIVE_MAJORS,
 } from "@/data/Prime3.data";
 import { createOptions } from "@/lib/utils";
-import { HintOption } from "@/types/common.types";
+import { HintOption, ItemHint, ItemHintSchema } from "@/types/common.types";
 import { atom } from "jotai";
+
+export const hyperMissileHintState = atom<ItemHint>(ItemHintSchema.parse({}));
+export const hyperGrappleHintState = atom<ItemHint>(ItemHintSchema.parse({}));
 
 export const prime3UnhintedItemOptionsSelector = atom<HintOption[]>(
   createOptions(
