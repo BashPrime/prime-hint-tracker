@@ -22,7 +22,7 @@ export default function LayoutSelector() {
           className={cn(
             "flex flex-col justify-center items-center w-full h-full"
           )}
-          data-name="tracker-session-loading-wrapper"
+          data-name="tracker-session-unrecognized-game"
         >
           <div className={cn("flex flex-col items-center gap-4")}>
             <h1 className={cn("text-5xl text-center font-semibold")}>Oops!</h1>
