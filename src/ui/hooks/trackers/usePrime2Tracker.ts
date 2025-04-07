@@ -4,7 +4,6 @@ import {
   newSkyTempleKeyHintsState,
   regionHintsAtomsSelector,
   sanctuaryHintsSelector,
-  skyTempleKeyHintsState,
   templeHintsSelector,
   torvusHintsSelector,
 } from "@/states/Prime2.states";

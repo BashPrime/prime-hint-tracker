@@ -390,15 +390,15 @@ export const sanctuaryHintsState = atomWithReset<RegionHints>({
 
 export const newSkyTempleKeyHintsState = atomWithReset<NewSkyTempleKeyHints>(
   NewSkyTempleKeyHintsSchema.parse({
-    "Key 1": { id: 1 },
-    "Key 2": { id: 2 },
-    "Key 3": { id: 3 },
-    "Key 4": { id: 4 },
-    "Key 5": { id: 5 },
-    "Key 6": { id: 6 },
-    "Key 7": { id: 7 },
-    "Key 8": { id: 8 },
-    "Key 9": { id: 9 },
+    "Key 1": {},
+    "Key 2": {},
+    "Key 3": {},
+    "Key 4": {},
+    "Key 5": {},
+    "Key 6": {},
+    "Key 7": {},
+    "Key 8": {},
+    "Key 9": {},
   })
 );
 
@@ -414,16 +414,13 @@ export const updateSkyTempleKeyHintAtom = atom(
 
 export const skyTempleKeyHintsArraySelector = atom((get) => {
   const stkHints = get(newSkyTempleKeyHintsState);
-  const arr = [];
-  const sortedEntries = Object.entries(stkHints).sort(
-    ([, valueA], [, valueB]) => valueA.id - valueB.id
-  );
-
-  for (const [key, stk] of sortedEntries) {
-    arr.push({ key, value: stk });
-  }
-
-  return arr;
+  return Object.entries(stkHints)
+    .map(([key, value], idx) => ({
+      key,
+      value,
+      id: idx + 1,
+    }))
+    .sort((a, b) => a.id - b.id);
 });
 
 export const skyTempleKeyHintsState = atomWithReset<SkyTempleKeyHint[]>([

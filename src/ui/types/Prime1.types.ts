@@ -2,7 +2,6 @@ import { z } from "zod";
 import { CheckedSchema, EmptyStringSchema } from "./common.types";
 
 export const ArtifactHintSchema = z.object({
-  id: z.number(),
   location: EmptyStringSchema,
   checked: CheckedSchema,
 });

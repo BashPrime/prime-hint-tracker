@@ -100,7 +100,6 @@ export const RegionHintsSchema = z.object({
 export type RegionHints = z.infer<typeof RegionHintsSchema>;
 
 export const NewSkyTempleKeyHintSchema = z.object({
-  id: z.number(),
   location: EmptyStringSchema,
   checked: CheckedSchema,
 });
