@@ -20,7 +20,7 @@ export default function Prime3Layout() {
       data-name="prime1-layout"
     >
       <div className="flex flex-col grid-cols-1" data-name="core-hints">
-        <Prime3Hints />
+        <Prime3Hints className="border-l-2 border-blue-400" />
         <UnhintedItems
           itemOptions={unhintedItemOptions}
           locationOptions={unhintedLocationOptions}
