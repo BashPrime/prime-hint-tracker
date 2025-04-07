@@ -1,6 +1,12 @@
 # Metroid Prime Hint Tracker
 
-A hint tracker for Metroid Prime 2: Echoes Randomizer which helps organize the hints that players write down during a play session.
+A hint tracker which helps organize the hints that players write down during a play session.
+
+The following games are supported:
+
+* Metroid Prime
+* Metroid Prime 2: Echoes
+* Metroid Prime 3: Corruption
 
 ![echoestracker](https://github.com/user-attachments/assets/e5bf8eb4-f0b6-4f54-a056-9cac4c9d4463)
 
