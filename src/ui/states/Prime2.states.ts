@@ -444,7 +444,7 @@ export const prime2TrackerSelector = atom((get) => {
   const torvusHints = get(torvusHintsSelector);
   const sanctuaryHints = get(sanctuaryHintsSelector);
   const unhintedItems = get(unhintedItemsState);
-  const skyTempleKeys = get(skyTempleKeyHintsState);
+  const skyTempleKeys = get(newSkyTempleKeyHintsState);
 
   return {
     regions: {

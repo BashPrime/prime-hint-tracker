@@ -1,13 +1,14 @@
 import { unhintedItemsState } from "@/states/App.states";
 import {
   agonHintsSelector,
+  newSkyTempleKeyHintsState,
   regionHintsAtomsSelector,
   sanctuaryHintsSelector,
   skyTempleKeyHintsState,
   templeHintsSelector,
   torvusHintsSelector,
 } from "@/states/Prime2.states";
-import { NewRegionHintsSchema } from "@/types/Prime2.types";
+import { NewRegionHintsSchema, NewSkyTempleKeyHintsSchema } from "@/types/Prime2.types";
 import { useAtomValue, useSetAtom } from "jotai";
 import { useResetAtom } from "jotai/utils";
 import { z } from "zod";
@@ -22,10 +23,10 @@ export default function usePrime2Tracker() {
   const setTorvusHints = useSetAtom(torvusHintsSelector);
   const setSancHints = useSetAtom(sanctuaryHintsSelector);
   const setUnhintedItems = useSetAtom(unhintedItemsState);
-  const setStkHints = useSetAtom(skyTempleKeyHintsState);
+  const setStkHints = useSetAtom(newSkyTempleKeyHintsState);
   // Resetters
   const resetUnhinted = useResetAtom(unhintedItemsState);
-  const resetStkHints = useResetAtom(skyTempleKeyHintsState);
+  const resetStkHints = useResetAtom(newSkyTempleKeyHintsState);
   const resetTempleBossHints = useResetAtom(templeGrounds.bossHints);
   const resetTempleKeybearerHints = useResetAtom(templeGrounds.keybearerHints);
   const resetTempleTranslatorHints = useResetAtom(
@@ -55,7 +56,7 @@ export default function usePrime2Tracker() {
       setTorvusHints(NewRegionHintsSchema.parse(data.regions.torvus));
       setSancHints(NewRegionHintsSchema.parse(data.regions.sanctuary));
       setUnhintedItems(data.unhintedItems);
-      setStkHints(data.skyTempleKeys);
+      setStkHints(NewSkyTempleKeyHintsSchema.parse(data.skyTempleKeys));
     } catch (err) {
       if (err instanceof z.ZodError) {
         console.error(
