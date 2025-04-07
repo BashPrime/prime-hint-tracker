@@ -95,7 +95,6 @@ export default function useIpcHandlers() {
         try {
           const parsed = GameSchema.parse(game);
           setCurrentGame(parsed);
-          window.electronApi.resetSize(game, legacyHintsEnabled);
         } catch (err) {
           if (err instanceof z.ZodError) {
             console.error("cannot parse game:", err.issues);
