@@ -45,15 +45,15 @@ export const WINDOW_SIZE: WindowSize = {
     height: 862,
   },
   prime: {
-    width: 1024,
-    height: 768,
+    width: 640,
+    height: 600,
   },
   corruption: {
     width: 1024,
     height: 768,
   },
   default: {
-    width: 1366,
-    height: 854,
+    width: 640,
+    height: 480,
   },
 };
