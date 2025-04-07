@@ -90,7 +90,7 @@ export default function ArtifactHints({ className }: Props) {
           <Hint
             name={artifact.key}
             value={artifact.value}
-            key={`artifact-${artifact.value.id}`}
+            key={`artifact-${artifact.id}`}
             className="border-b md:border-r border-zinc-900"
           />
         ))}

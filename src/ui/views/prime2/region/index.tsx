@@ -1,4 +1,4 @@
-import { PrimitiveAtom, SetStateAction, WritableAtom } from "jotai";
+import { SetStateAction, WritableAtom } from "jotai";
 import { BossHints } from "./BossHints";
 import KeybearerHints from "./KeybearerHints";
 import {
@@ -14,7 +14,12 @@ type Props = {
   variant: string;
   /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
   bossHintsAtom: WritableAtom<BossHintsType, [SetStateAction<any>], void>;
-  keybearerHintsAtom: PrimitiveAtom<RegionKeybearerHints>;
+  keybearerHintsAtom: WritableAtom<
+    RegionKeybearerHints,
+    /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
+    [SetStateAction<any>],
+    void
+  >;
   translatorHintsAtom: WritableAtom<
     RegionTranslatorHints,
     /* eslint-disable-next-line  @typescript-eslint/no-explicit-any */
