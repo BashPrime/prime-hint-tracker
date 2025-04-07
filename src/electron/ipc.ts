@@ -31,7 +31,7 @@ export function resetTracker() {
       .showMessageBox(mainWindow, {
         title: "Confirm Reset",
         message:
-          "This will reset the entire tracker. ALL PROGRESS WILL BE LOST.\n\nDo you want to continue?",
+          "This will reset the entire tracker. ALL UNSAVED PROGRESS WILL BE LOST.\n\nDo you want to continue?",
         type: "warning",
         buttons: ["Cancel", "Yes"],
         cancelId,
