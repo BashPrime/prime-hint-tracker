@@ -31,7 +31,7 @@ export function Hint({ name, value, onUpdate, className }: HintProps) {
   return (
     <div
       className={cn(
-        "px-2 py-1 bg-zinc-800",
+        "px-2 py-1 bg-zinc-800 flex-auto",
         className,
         value.checked && "bg-green-900"
       )}
@@ -78,12 +78,12 @@ export default function Prime3Hints({ className }: Props) {
   const [grappleHint, setGrappleHint] = useAtom(hyperGrappleHintState);
 
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn("flex flex-row", className)}>
       <Hint
         name="Hyper Missile"
         value={missileHint}
         onUpdate={setMissileHint}
-        className="border-b border-zinc-900"
+        className="border-r border-zinc-900"
       />
       <Hint
         name="Hyper Grapple"
