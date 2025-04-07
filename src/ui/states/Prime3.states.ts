@@ -1,4 +1,5 @@
 import {
+  PRIME_3_LOCATIONS_WITH_ITEMS,
   PRIME_3_MAJOR_UPGRADES,
   PRIME_3_PROGRESSIVE_MAJORS,
 } from "@/data/Prime3.data";
@@ -14,5 +15,5 @@ export const prime3UnhintedItemOptionsSelector = atom<HintOption[]>(
 );
 
 export const prime3UnhintedLocationOptionsSelector = atom<HintOption[]>(
-  createOptions([], true)
+  createOptions([...PRIME_3_LOCATIONS_WITH_ITEMS], true)
 );
